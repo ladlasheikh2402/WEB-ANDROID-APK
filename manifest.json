@@ -1,0 +1,46 @@
+{
+  "name": "𝐋𝗮𝗱𝗹𝗮 𝐒𝗵𝗲𝗶𝗸𝗵 - 𝗢𝗳𝗳𝗰𝗶𝗮𝗹 𝗔𝗽𝗸",
+  "short_name": "𝐋ᴀᴅʟᴀ 𝐒ʜᴇɪᴋʜ Oғғɪᴄɪᴀʟ",
+  "description": "Ladla Sheikh Official Apk. Premium unlocked free Tools and Tech Methods.",
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0a0a21",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "favicon-16x16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "splash192.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "utilities",
+    "technology"
+  ],
+  "lang": "en"
+}

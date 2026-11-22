@@ -1,0 +1,933 @@
+/* ══════════════════════════════════════════════════════════════
+   MOTION.CSS — animation layer for the whole site (loads AFTER site.css)
+   0. Brand colours: social buttons + coloured icons
+   1. Icons: every Bootstrap icon gets its own small personality
+   2. Scroll reveals (text blocks, icons pop, images rise bottom -> top)
+   3. Typing "chat" greeting in the contact form
+   4. Install toast
+   5. Hero portrait rises bottom -> top
+   6. Mobile polish (when image / text / buttons stack)
+   Everything is off when "reduce motion" is on.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ───────── 0. BRAND COLOURS ───────── */
+.soc a {
+  --b: #f1f0ff;
+  --b-rgb: 241, 240, 255;
+  position: relative;
+  color: var(--b);
+  border-color: rgba(var(--b-rgb), 0.4);
+  background: rgba(var(--b-rgb), 0.1);
+  -webkit-tap-highlight-color: transparent;
+}
+.soc a[aria-label="YouTube"] {
+  --b: #ff2d3f;
+  --b-rgb: 255, 45, 63;
+}
+.soc a[aria-label="Telegram"] {
+  --b: #229ed9;
+  --b-rgb: 34, 158, 217;
+}
+.soc a[aria-label^="WhatsApp"] {
+  --b: #1fb855;
+  --b-rgb: 31, 184, 85;
+}
+.soc a:hover,
+.soc a:focus-visible {
+  background: var(--b);
+  color: #fff;
+  border-color: var(--b);
+  box-shadow: 0 14px 30px -10px rgba(var(--b-rgb), 0.85);
+}
+/* ring that "pings" outward from each social button */
+.soc a::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 50%;
+  border: 1.5px solid var(--b);
+  opacity: 0;
+  pointer-events: none;
+}
+@media (hover: none) {
+  .soc a:active {
+    background: var(--b);
+    color: #fff;
+    transform: scale(0.9);
+  }
+}
+
+/* other icons get a meaningful colour too */
+.bi-geo-alt {
+  color: #ff5a6e;
+}
+.bi-telephone {
+  color: #1fb855;
+}
+.bi-envelope {
+  color: #ea4335;
+}
+.s-dark .bi-envelope,
+.site-footer .bi-envelope {
+  color: #ff7266;
+}
+.bi-patch-check-fill {
+  color: #22d3ee;
+}
+.bi-play-circle-fill {
+  color: #ff4d5e;
+}
+.bi-cloud-arrow-down,
+.bi-download {
+  color: inherit;
+}
+.tcp-btn .bi-cloud-arrow-down {
+  color: #22d3ee;
+}
+.bi-lightning-charge-fill {
+  color: #ffd24a;
+}
+.bi-cloud-slash-fill {
+  color: #5ee1f5;
+}
+.bi-phone-fill {
+  color: #b79cff;
+}
+.bi-volume-mute-fill,
+.bi-volume-up-fill {
+  color: #ff8ac6;
+}
+.tcp-fav-btn .bi-heart-fill {
+  color: #ff3d71;
+}
+
+/* ───────── 1. ICONS ───────── */
+.bi::before {
+  transform-origin: 50% 55%;
+}
+
+@keyframes mxFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes mxWiggle {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20% {
+    transform: rotate(-14deg) scale(1.12);
+  }
+  45% {
+    transform: rotate(11deg) scale(1.12);
+  }
+  70% {
+    transform: rotate(-6deg);
+  }
+}
+@keyframes mxDownload {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(4px);
+  }
+  70% {
+    transform: translateY(-2px);
+  }
+}
+@keyframes mxPulseSoft {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.14);
+  }
+}
+@keyframes mxScan {
+  0%,
+  62%,
+  100% {
+    transform: rotate(0) scale(1);
+  }
+  70% {
+    transform: rotate(-16deg) scale(1.12);
+  }
+  80% {
+    transform: rotate(12deg) scale(1.12);
+  }
+  90% {
+    transform: rotate(-4deg);
+  }
+}
+@keyframes mxBadge {
+  0%,
+  100% {
+    transform: rotate(0) scale(1);
+    filter: drop-shadow(0 0 0 rgba(34, 211, 238, 0));
+  }
+  50% {
+    transform: rotate(14deg) scale(1.14);
+    filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.85));
+  }
+}
+@keyframes mxChev {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(4px);
+    opacity: 1;
+  }
+}
+@keyframes mxHop {
+  0%,
+  55%,
+  100% {
+    transform: translateY(0);
+  }
+  65% {
+    transform: translateY(-5px);
+  }
+  78% {
+    transform: translateY(0);
+  }
+  86% {
+    transform: translateY(-2px);
+  }
+}
+@keyframes mxRing {
+  0%,
+  55%,
+  100% {
+    transform: rotate(0);
+  }
+  60% {
+    transform: rotate(-18deg);
+  }
+  66% {
+    transform: rotate(16deg);
+  }
+  72% {
+    transform: rotate(-14deg);
+  }
+  78% {
+    transform: rotate(10deg);
+  }
+  84% {
+    transform: rotate(0);
+  }
+}
+@keyframes mxMail {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0) rotate(0);
+  }
+  70% {
+    transform: translateY(-3px) rotate(-8deg);
+  }
+  82% {
+    transform: translateY(0) rotate(6deg);
+  }
+}
+@keyframes mxFly {
+  0% {
+    transform: translate(0, 0);
+  }
+  45% {
+    transform: translate(7px, -7px) scale(0.8);
+    opacity: 0;
+  }
+  46% {
+    transform: translate(-7px, 7px) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+@keyframes mxFlicker {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  8% {
+    opacity: 0.45;
+  }
+  14% {
+    opacity: 1;
+    transform: scale(1.18);
+  }
+  26% {
+    opacity: 0.7;
+  }
+  34% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes mxSway {
+  0%,
+  100% {
+    transform: rotate(-8deg);
+  }
+  50% {
+    transform: rotate(8deg);
+  }
+}
+@keyframes mxShake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3px) rotate(-6deg);
+  }
+  75% {
+    transform: translateX(3px) rotate(6deg);
+  }
+}
+@keyframes mxBeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  14% {
+    transform: scale(1.2);
+  }
+  28% {
+    transform: scale(1);
+  }
+  42% {
+    transform: scale(1.12);
+  }
+  56% {
+    transform: scale(1);
+  }
+}
+@keyframes mxGlide {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0);
+  }
+  50% {
+    transform: translate(2px, -3px) rotate(10deg);
+  }
+}
+@keyframes mxBuzz {
+  0%,
+  70%,
+  100% {
+    transform: rotate(0);
+  }
+  74% {
+    transform: rotate(-14deg);
+  }
+  78% {
+    transform: rotate(12deg);
+  }
+  82% {
+    transform: rotate(-10deg);
+  }
+  86% {
+    transform: rotate(7deg);
+  }
+  90% {
+    transform: rotate(0);
+  }
+}
+@keyframes mxPing {
+  0% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  70%,
+  100% {
+    transform: scale(1.65);
+    opacity: 0;
+  }
+}
+@keyframes mxHeart {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.22);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.14);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* social icons: each brand has its own movement + a soft ping ring */
+  .soc .bi-youtube::before {
+    animation: mxBeat 3s ease-in-out infinite;
+  }
+  .soc .bi-telegram::before {
+    animation: mxGlide 3.4s ease-in-out infinite;
+  }
+  .soc .bi-whatsapp::before {
+    animation: mxBuzz 4s ease-in-out infinite;
+  }
+  .soc a:hover .bi::before,
+  .soc a:focus-visible .bi::before {
+    animation: mxWiggle 0.7s ease-in-out;
+  }
+  .soc a::after {
+    animation: mxPing 3.6s ease-out infinite;
+  }
+  .soc a:nth-child(2)::after {
+    animation-delay: 1.2s;
+  }
+  .soc a:nth-child(3)::after {
+    animation-delay: 2.4s;
+  }
+  .soc a:nth-child(2) .bi::before {
+    animation-delay: -1.2s;
+  }
+  .soc a:nth-child(3) .bi::before {
+    animation-delay: -2.4s;
+  }
+  .soc a:hover::after {
+    animation: none;
+  }
+
+  .tool-card-pro:hover .bi-cloud-arrow-down::before,
+  .tcp-btn:hover .bi-cloud-arrow-down::before,
+  .btn:hover .bi-download::before {
+    animation: mxDownload 1s ease-in-out infinite;
+  }
+
+  .bi-arrow-up-right::before {
+    transition: transform 0.35s var(--ease);
+  }
+  a:hover .bi-arrow-up-right::before,
+  button:hover .bi-arrow-up-right::before {
+    transform: translate(3px, -3px);
+  }
+  .bi-arrow-right::before,
+  .bi-box-arrow-in-right::before,
+  .bi-arrow-left::before {
+    transition: transform 0.35s var(--ease);
+  }
+  a:hover .bi-arrow-right::before,
+  button:hover .bi-arrow-right::before,
+  a:hover .bi-box-arrow-in-right::before,
+  button:hover .bi-box-arrow-in-right::before {
+    transform: translateX(5px);
+  }
+  a:hover .bi-arrow-left::before {
+    transform: translateX(-5px);
+  }
+
+  .bi-play-circle-fill::before {
+    animation: mxPulseSoft 2.8s ease-in-out infinite;
+  }
+  .project-card-pro:nth-child(3n + 2) .bi-play-circle-fill::before {
+    animation-delay: -0.9s;
+  }
+  .project-card-pro:nth-child(3n) .bi-play-circle-fill::before {
+    animation-delay: -1.8s;
+  }
+  .project-card-pro:hover .bi-play-circle-fill::before {
+    animation-duration: 1s;
+  }
+
+  .bi-search::before {
+    animation: mxScan 6s ease-in-out infinite;
+  }
+  .section-search-wrap:focus-within .bi-search::before {
+    animation: mxWiggle 0.8s ease-in-out;
+  }
+
+  .bi-patch-check-fill::before {
+    animation: mxBadge 3.6s ease-in-out infinite;
+  }
+  .bi-chevron-down::before {
+    animation: mxChev 1.8s ease-in-out infinite;
+  }
+  .bi-geo-alt::before {
+    animation: mxHop 3.2s ease-in-out infinite;
+  }
+  .bi-telephone::before {
+    animation: mxRing 4s ease-in-out infinite;
+  }
+  .bi-envelope::before {
+    animation: mxMail 4.6s ease-in-out infinite;
+  }
+  .btn:hover .bi-send::before {
+    animation: mxFly 0.9s ease-in-out infinite;
+  }
+  .tcp-fav-btn .bi-heart-fill::before {
+    animation: mxHeart 1.8s ease-in-out infinite;
+  }
+
+  .bi-volume-mute-fill::before,
+  .bi-volume-up-fill::before {
+    transition: transform 0.3s var(--ease);
+  }
+  button:hover .bi-volume-mute-fill::before,
+  button:hover .bi-volume-up-fill::before {
+    animation: mxShake 0.5s ease-in-out 2;
+  }
+  .bi-x-lg::before {
+    transition: transform 0.4s var(--ease);
+  }
+  button:hover .bi-x-lg::before {
+    transform: rotate(90deg) scale(1.15);
+  }
+  .bi-lightning-charge-fill::before {
+    animation: mxFlicker 2.4s ease-in-out infinite;
+  }
+  .bi-cloud-slash-fill::before {
+    animation: mxSway 3s ease-in-out infinite;
+  }
+  .bi-phone-fill::before {
+    animation: mxWiggle 3.6s ease-in-out infinite;
+  }
+}
+
+/* ───────── 2. SCROLL REVEALS (class set by motion.js, so nothing hides without JS) ───────── */
+html.mx-on [data-mx] {
+  opacity: 0;
+  transition:
+    opacity 0.8s var(--ease) var(--mxd, 0s),
+    translate 0.95s var(--ease) var(--mxd, 0s),
+    scale 0.95s var(--ease) var(--mxd, 0s),
+    rotate 0.95s var(--ease) var(--mxd, 0s),
+    filter 0.9s var(--ease) var(--mxd, 0s),
+    clip-path 1.1s var(--ease) var(--mxd, 0s);
+}
+html.mx-on [data-mx="up"] {
+  translate: 0 34px;
+  filter: blur(6px);
+}
+html.mx-on [data-mx="rise"] {
+  translate: 0 46px;
+}
+html.mx-on [data-mx="left"] {
+  translate: -42px 0;
+}
+html.mx-on [data-mx="right"] {
+  translate: 42px 0;
+}
+html.mx-on [data-mx="zoom"] {
+  scale: 0.88;
+  filter: blur(4px);
+}
+html.mx-on [data-mx="wipe"] {
+  clip-path: inset(0 100% 0 0);
+}
+html.mx-on [data-mx="pop"] {
+  scale: 0;
+  rotate: -40deg;
+}
+html.mx-on [data-mx].mx-in {
+  opacity: 1;
+  translate: 0 0;
+  scale: 1;
+  rotate: 0deg;
+  filter: blur(0);
+  clip-path: inset(-20% -5% -20% -5%);
+}
+
+/* social / small icons: spring in */
+html.mx-on [data-mx="pop"] {
+  transition-timing-function: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+html.mx-on [data-mx="pop"].mx-in {
+  clip-path: none;
+}
+
+/* images: the picture is uncovered from its bottom edge up to the top */
+html.mx-on [data-mx="img"] {
+  opacity: 1;
+  translate: 0 0;
+  filter: none;
+  clip-path: inset(100% 0 0 0);
+  scale: 1.14;
+  transition:
+    clip-path 1.35s cubic-bezier(0.76, 0, 0.24, 1) var(--mxd, 0s),
+    scale 1.7s var(--ease) var(--mxd, 0s);
+}
+html.mx-on [data-mx="img"].mx-in {
+  opacity: 1;
+  scale: 1;
+  clip-path: inset(0 0 0 0);
+}
+
+/* ───────── 3. TYPING CHAT in the contact form ───────── */
+.mx-chat {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  margin: 0 0 18px;
+  min-height: 52px;
+}
+.mx-chat .av {
+  flex: none;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  background: linear-gradient(135deg, #6d4aff, #ff4fa3);
+  box-shadow: 0 8px 18px -8px rgba(255, 79, 163, 0.8);
+  transform: scale(0);
+  transition: transform 0.5s var(--ease);
+}
+.mx-chat .av img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.mx-chat .av::after {
+  content: "";
+  position: absolute;
+  right: 1px;
+  bottom: 1px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #22d3ee;
+  box-shadow: 0 0 0 2px var(--card, #fff);
+}
+.mx-chat .bub {
+  position: relative;
+  max-width: 100%;
+  padding: 11px 15px;
+  border-radius: 18px 18px 18px 6px;
+  background: var(--card-2, #f3f0ff);
+  color: var(--fg, #0f1024);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  border: 1px solid var(--line, rgba(7, 9, 20, 0.13));
+  opacity: 0;
+  transform: translateY(8px) scale(0.96);
+  transform-origin: 0 100%;
+  transition:
+    opacity 0.35s,
+    transform 0.5s var(--ease);
+}
+.mx-chat .dots {
+  display: none;
+  gap: 4px;
+  padding: 4px 0;
+}
+.mx-chat .dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--mut, #55587a);
+  animation: mxDot 1s ease-in-out infinite;
+}
+.mx-chat .dots i:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.mx-chat .dots i:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes mxDot {
+  0%,
+  60%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+  30% {
+    transform: translateY(-5px);
+    opacity: 1;
+  }
+}
+.mx-chat.is-in .av {
+  transform: scale(1);
+}
+.mx-chat.is-typing .bub,
+.mx-chat.is-done .bub {
+  opacity: 1;
+  transform: none;
+}
+.mx-chat.is-typing .dots {
+  display: inline-flex;
+}
+.mx-chat.is-typing .txt {
+  display: none;
+}
+.mx-chat .txt.caret::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  vertical-align: -0.12em;
+  background: currentColor;
+  animation: blink 0.8s steps(1) infinite;
+}
+
+/* ───────── 4. INSTALL TOAST ───────── */
+.ic-toast {
+  position: fixed;
+  z-index: 760;
+  right: var(--gutter);
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px 12px 12px;
+  border-radius: 18px;
+  color: #f1f0ff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: linear-gradient(160deg, #1d2050, #0b0e25);
+  box-shadow:
+    0 30px 60px -22px rgba(0, 0, 0, 0.8),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  transform: translateY(30px) scale(0.95);
+  opacity: 0;
+  transition:
+    transform 0.6s var(--ease),
+    opacity 0.3s;
+}
+.ic-toast.show {
+  transform: none;
+  opacity: 1;
+}
+.ic-toast .tick {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(135deg, #22d3ee, #6d4aff);
+  box-shadow: 0 0 0 0 rgba(34, 211, 238, 0.6);
+}
+.ic-toast.show .tick {
+  animation:
+    mxTick 0.9s var(--ease) 0.15s both,
+    mxTickRing 1.4s ease-out 0.3s;
+}
+.ic-toast svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: #fff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: mxDraw 0.5s ease-out 0.45s forwards;
+}
+@keyframes mxTick {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes mxTickRing {
+  to {
+    box-shadow: 0 0 0 16px rgba(34, 211, 238, 0);
+  }
+}
+@keyframes mxDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@media (max-width: 520px) {
+  .ic-toast {
+    left: 12px;
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* ───────── 5. HERO PORTRAIT: rises from the bottom up to the head ───────── */
+@keyframes mxRevealUp {
+  from {
+    clip-path: inset(100% -40% 0 -40%);
+  }
+  to {
+    clip-path: inset(-10% -40% 0 -40%);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-art > .hero-photo {
+    animation:
+      heroIn 1s var(--ease) calc(var(--d) + 0.25s) forwards,
+      mxRevealUp 1.8s cubic-bezier(0.76, 0, 0.24, 1) calc(var(--d) + 0.25s) both;
+  }
+}
+
+/* ───────── 6. MOBILE POLISH (image -> text -> buttons stacked) ───────── */
+@media (max-width: 900px) {
+  /* accent bar marks where the picture ends and the text begins */
+  .hero-body {
+    position: relative;
+  }
+  .hero-body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: min(150px, 38%);
+    height: 3px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--brass), var(--emerald-b));
+  }
+  .hero-body p.hero-desc {
+    max-width: none;
+    font-size: 1.02rem;
+  }
+  .hero-body .soc {
+    gap: 12px;
+  }
+  .hero-body .soc a {
+    width: 50px;
+    height: 50px;
+    font-size: 1.15rem;
+  }
+  .about-photo {
+    margin-inline: auto;
+    width: min(100%, 380px);
+  }
+  .about-copy {
+    text-align: left;
+  }
+}
+
+@media (max-width: 700px) {
+  /* filter chips: one swipeable row instead of three wrapped lines */
+  .filter-row {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+    margin-inline: calc(var(--gutter) * -1);
+    padding: 4px var(--gutter);
+  }
+  .filter-row::-webkit-scrollbar {
+    display: none;
+  }
+  .filter-row .chip,
+  .filter-row .result-count {
+    flex: none;
+    scroll-snap-align: start;
+  }
+  .section-search-wrap {
+    gap: 10px;
+  }
+  .tools-fav-filter {
+    min-height: 44px;
+  }
+  .more-wrap .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 520px) {
+  .hero-ctas .btn {
+    min-height: 54px;
+  }
+  .hero-ctas .btn-primary {
+    box-shadow: 0 18px 36px -14px rgba(255, 79, 163, 0.75);
+  }
+
+  /* about: stats become tidy cards, buttons full width */
+  .stats {
+    gap: 10px;
+  }
+  .stats li,
+  .stats li + li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 16px;
+    background: var(--card);
+  }
+  .about-cta {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .about-cta .btn {
+    width: 100%;
+  }
+  .about-cta .soc {
+    justify-content: center;
+  }
+
+  /* cards: the action button spans the card, easy to hit with a thumb */
+  .tcp-btn,
+  .ppc-btn {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    min-height: 48px;
+  }
+
+  /* contact: centered profile card, full width send button */
+  .connect {
+    text-align: center;
+    justify-items: center;
+    padding: 22px 18px;
+  }
+  .connect img {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+  }
+  .connect .soc {
+    justify-content: center;
+  }
+  .form-actions .btn {
+    width: 100%;
+  }
+  .site-footer {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .soc a::after {
+    display: none;
+  }
+  .mx-chat .av,
+  .mx-chat .bub {
+    transition: none;
+    transform: none;
+    opacity: 1;
+  }
+  .ic-toast,
+  .ic-toast .tick,
+  .ic-toast svg {
+    animation: none !important;
+    transition: none;
+  }
+  .ic-toast svg {
+    stroke-dashoffset: 0;
+  }
+}

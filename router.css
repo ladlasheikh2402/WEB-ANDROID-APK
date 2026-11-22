@@ -1,0 +1,6 @@
+/* ROUTER — login, signup, privacy, terms and data-deletion are shown INSIDE index.html.
+   While one of those pages is open, everything else in <body> is hidden (display:none),
+   so the page behaves exactly like the old standalone file (normal scrolling, sticky bits). */
+#pgRoot { display: contents; }
+html.pg-mode body > *:not(#pgRoot):not(#socialConfirmOverlay):not(script):not(style):not(link):not(template) { display: none !important; }
+html.pg-mode { scroll-behavior: auto; }

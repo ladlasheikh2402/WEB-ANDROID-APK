@@ -1,0 +1,52 @@
+LADLA SHEIKH — MERGED SITE (sab pages ab index.html ke andar)
+=============================================================
+
+KYA HUA
+  login, signup, privacy-policy, terms-of-service aur data-deletion ab index.html ke andar hain
+  (<template> blocks mein, neeche file ke aakhir mein). Alag page load nahi hota — address
+  mein ye route aata hai:
+
+      /#/login        /#/signup        /#/privacy-policy
+      /#/terms-of-service              /#/data-deletion
+      /#/login?next=about-me           (login ke baad seedha About section khulta hai)
+
+  Purane links (login.html, privacy-policy.html ...) ab bhi waise hi likhe hain; seedha click karne
+  par page ke andar khulte hain, aur Ctrl/middle-click ya Google ke liye asli file khulti hai.
+
+NAYI FILES
+  router.js    — routes, links, "next" aur wapsi ka kaam
+  router.css   — view khulne par baqi site chhupa deta hai
+
+BADLI HUI FILES
+  index.html       — router/legal ke links + 5 templates (auth-pro.css ko chhod kar sab yahin linked hain)
+  auth.js          — sign-in ke baad page reload ki jagah view band hota hai (purana standalone tareeqa bhi chalta hai)
+  auth-glass.js    — listeners dobara dobara jama nahi hote
+  auth-gate.js     — "Sign in" button ab in-page login kholta hai
+  favourites.js    — ♥ dabane par in-page login (next=section ke saath)
+  legal.js         — har legal page khulne par chalta hai (purana standalone tareeqa bhi chalta hai)
+  manifest.json    — "orientation": "portrait-primary" -> "any"   (isi ki wajah se APK/PWA mein video fullscreen par rotate nahi hoti thi)
+  sw.js            — purani file mein syntax error tha ('/favourites'.js') aur nonexistent files (style.css, script.js, auth.css, auth-glass.css)
+                     ki wajah se install fail hota tha. Theek kar di, cache version v2.
+
+JO FILES LAZY LOAD HOTI HAIN (sirf login/signup khulne par)
+  auth-pro.css, auth.js, auth-glass.js, auth-typing.js, Google Fonts (Bricolage Grotesque + Inter).
+  auth-pro.css poori site par asar daalti hai (body, *, button ...) isliye login band hote hi hata di jati hai.
+
+JAN BUJH KAR NAHI JORI
+  motion.css / motion.js — ye sirf legal pages ke liye thi, aur index par animations.js pehle se hai.
+  Dono ko index mein jorne se main site ke animations dohre ho jate. Legal pages bina uske bilkul theek dikhte hain.
+  (Ye file standalone privacy/terms/data-deletion pages ke liye waisi hi rakhi hai.)
+
+RAKHNI HAIN (delete na karein)
+  privacy-policy.html, terms-of-service.html, data-deletion.html
+      Facebook / Google / Play Store ko asli URL chahiye hota hai, aur search engines isse index karte hain.
+  googled64552ce62527548.html
+      Google Search Console ki verification file hai; ye hamesha alag file hi rehti hai.
+  login.html, signup.html
+      firebase-auth.js ka continue URL (/login.html) aur purane links inhi par jate hain.
+  courses.js / courses.css — aap ki apni (nayi) versions, maine inhe haath nahi lagaya.
+
+UPLOAD KAISE KAREIN
+  Poora zip kholkar saari files repo ke root mein replace kar dein (images/ folder wahin rahega).
+  Phir browser mein Ctrl+F5, aur PWA/APK mein purani app uninstall kar ke dobara install karein
+  (naya manifest aur service worker tabhi lagta hai).
