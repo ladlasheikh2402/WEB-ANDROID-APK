@@ -33,20 +33,6 @@
     });
   });
 
-  /* ── 1b. scroll hint: no scrollbar, just a soft fade while there is more to scroll ── */
-  var sc = document.querySelector('.ap-scroll');
-  if (sc) {
-    var hint = function () {
-      sc.classList.toggle('has-more', sc.scrollHeight - sc.clientHeight - sc.scrollTop > 6);
-      sc.classList.toggle('has-less', sc.scrollTop > 6);
-    };
-    sc.addEventListener('scroll', hint, { passive: true });
-    window.addEventListener('resize', hint);
-    if (window.ResizeObserver) new ResizeObserver(hint).observe(sc);
-    if (window.MutationObserver) new MutationObserver(hint).observe(sc, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style', 'hidden'] });
-    hint(); setTimeout(hint, 600); setTimeout(hint, 2500);
-  }
-
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) return;   // animation nahi chahiye to yahin ruk jao
 
@@ -54,7 +40,8 @@
 
   /* intro khatam hone ke baad intro-animations band (taake email/username
      toggle karne par field dobara na "aaye") */
-  var playedTimer = setTimeout(function () { body.classList.add('ag-played'); }, 4800);
+  clearTimeout(window.__agTimer);
+  var playedTimer = window.__agTimer = setTimeout(function () { body.classList.add('ag-played'); }, 4800);
   var toggle = document.getElementById('loginToggleMode');
   if (toggle) toggle.addEventListener('click', function () {
     clearTimeout(playedTimer);
@@ -77,12 +64,14 @@
         raf = 0;
       }
     };
-    window.addEventListener('mousemove', function (e) {
+    if (window.__agMove) window.removeEventListener('mousemove', window.__agMove);
+    window.__agMove = function (e) {
       if (window.innerWidth <= 900) return;
       tx = (e.clientX / window.innerWidth - 0.5) * 2;
       ty = (e.clientY / window.innerHeight - 0.5) * 2;
       if (!raf) raf = requestAnimationFrame(tick);
-    }, { passive: true });
+    };
+    window.addEventListener('mousemove', window.__agMove, { passive: true });
   }
 
   /* ── 3. card spotlight ── */
@@ -96,7 +85,8 @@
   }
 
   /* ── 4. ripple ── */
-  document.addEventListener('click', function (e) {
+  if (window.__agClick) document.removeEventListener('click', window.__agClick);
+  window.__agClick = function (e) {
     var host = e.target.closest && e.target.closest('.fld-next, .auth-submit, .social-btn');
     if (!host) return;
     var r = host.getBoundingClientRect();
@@ -108,5 +98,6 @@
     dot.style.top = (e.clientY - r.top - size / 2) + 'px';
     host.appendChild(dot);
     dot.addEventListener('animationend', function () { dot.remove(); });
-  });
+  };
+  document.addEventListener('click', window.__agClick);
 })();
