@@ -1,178 +1,119 @@
 /* ══════════════════════════════════════════════════════════════
-   ROUTER — login, signup, privacy policy, terms and data-deletion
-   now live inside index.html (no separate page load).
+   ROUTER.JS — login / signup / privacy / terms / data-deletion now live INSIDE index.html
+   (no more separate .html files => no page loads => nothing to go blank in the Android app).
 
-   #/login   #/signup   #/privacy-policy   #/terms-of-service   #/data-deletion
-   #/login?next=about-me   → after sign-in the visitor lands on that section.
+   #/login  #/signup  (+ ?next=about-me)   -> #view-auth  (filled from <template id="tpl-login|tpl-signup">)
+   #/privacy  #/terms  #/data-deletion     -> <section id="view-…">
+   any other hash (#about-me, #my-tools …) -> the normal one-page site
 
-   • Page markup comes from the <template id="tpl-…"> blocks at the bottom of index.html.
-   • auth-pro.css + auth.js + auth-glass.js + auth-typing.js are loaded only when
-     login/signup opens (auth-pro.css is global, so it is removed again on close).
-   • Normal <a href="login.html"> links keep working (crawlers, middle-click, no-JS):
-     a plain left click is intercepted and opened in-page instead.
+   Old links still work: login.html / signup.html redirect here.
    ══════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
+  var html = document.documentElement;
+  var authRoot = document.getElementById('view-auth');
+  var siteTitle = document.title;
 
-  var FILES = {
-    'login.html': 'login', 'signup.html': 'signup',
-    'privacy-policy.html': 'privacy-policy', 'terms-of-service.html': 'terms-of-service', 'data-deletion.html': 'data-deletion'
+  var ROUTES = {
+    'login':         { kind: 'auth',  tpl: 'tpl-login',  title: 'Sign In | Ladla Sheikh' },
+    'signup':        { kind: 'auth',  tpl: 'tpl-signup', title: 'Create Account | Ladla Sheikh' },
+    'privacy':       { kind: 'legal', view: 'view-privacy',       title: 'Privacy Policy | Ladla Sheikh' },
+    'terms':         { kind: 'legal', view: 'view-terms',         title: 'Terms of Service | Ladla Sheikh' },
+    'data-deletion': { kind: 'legal', view: 'view-data-deletion', title: 'Delete your data | Ladla Sheikh' }
   };
-  var TYPE = { 'login': 'auth', 'signup': 'auth', 'privacy-policy': 'legal', 'terms-of-service': 'legal', 'data-deletion': 'legal' };
-  var AUTH_CSS = 'auth-pro.css';
-  var AUTH_JS = ['auth.js', 'auth-glass.js', 'auth-typing.js'];
 
-  var root = null, cur = null, savedY = 0, savedTitle = '', authLink = null, authLoaded = null, legalOff = null, token = 0;
+  var state = { name: null, unmounts: [], token: 0, siteScroll: 0 };
 
-  function parseHash() {
-    var m = /^#\/([a-z-]+)(?:\?(.*))?$/.exec(location.hash || '');
-    if (!m || !TYPE[m[1]]) return null;
-    return { route: m[1], qs: new URLSearchParams(m[2] || '') };
+  // site.css has scroll-behavior:smooth -> force an instant jump when swapping views
+  function jump(y) { window.scrollTo({ top: y, left: 0, behavior: 'instant' }); }
+
+  function parse() {
+    var h = location.hash || '';
+    if (h.indexOf('#/') !== 0) return null;
+    var rest = h.slice(2), q = rest.indexOf('?');
+    var name = (q > -1 ? rest.slice(0, q) : rest).replace(/\/+$/, '');
+    if (!ROUTES.hasOwnProperty(name)) return null;
+    return { name: name, route: ROUTES[name], params: new URLSearchParams(q > -1 ? rest.slice(q + 1) : '') };
   }
-  function fileOf(u) { return (u.pathname.split('/').pop() || ''); }
 
-  /* ── assets ── */
-  function loadAuthCss() {
-    if (authLoaded) return authLoaded;
-    authLink = document.createElement('link'); authLink.rel = 'stylesheet'; authLink.href = AUTH_CSS; authLink.id = 'pgAuthCss';
-    authLoaded = new Promise(function (res) {
-      var done = false; function fin() { if (!done) { done = true; res(); } }
-      authLink.onload = fin; authLink.onerror = fin; setTimeout(fin, 4000);
+  function unmountAuth() {
+    var fns = state.unmounts; state.unmounts = [];
+    fns.forEach(function (fn) { try { fn(); } catch (e) {} });
+    if (authRoot) { authRoot.innerHTML = ''; authRoot.className = 'route-view'; authRoot.hidden = true; }
+  }
+
+  function mountAuth(r) {
+    var tpl = document.getElementById(r.route.tpl);
+    if (!tpl || !authRoot) return;
+    authRoot.innerHTML = '';
+    authRoot.className = 'route-view';
+    authRoot.appendChild(tpl.content.cloneNode(true));
+    authRoot.hidden = false;
+    var token = ++state.token;
+    var ctx = {
+      params: r.params,
+      go: function (hash) { location.replace(hash); },          // replace: "Back" doesn't return to a finished sign-in
+      onUnmount: function (fn) { state.unmounts.push(fn); },
+      alive: function () { return state.token === token && state.name === r.name; }
+    };
+    ((window.AuthPages && window.AuthPages.mounts) || []).forEach(function (mount) {
+      try { mount(authRoot, ctx); } catch (e) { if (window.console) console.error('[router] mount failed', e); }
     });
-    document.head.appendChild(authLink);
-    return authLoaded;
-  }
-  function dropAuthCss() {
-    if (authLink) { authLink.remove(); authLink = null; authLoaded = null; }
-    document.body.classList.remove('ag-played');
-    clearTimeout(window.__agTimer);
-  }
-  function loadScript(src) {
-    return new Promise(function (res) {
-      var s = document.createElement('script'); s.src = src; s.async = false;
-      s.onload = s.onerror = function () { s.remove(); res(); };
-      document.head.appendChild(s);
-    });
-  }
-  function runAuthScripts() {
-    return AUTH_JS.reduce(function (p, src) { return p.then(function () { return loadScript(src); }); }, Promise.resolve());
-  }
-  function removeExtras() {
-    ['socialConfirmOverlay', 'socialConfirmStyle'].forEach(function (id) { var el = document.getElementById(id); if (el) el.remove(); });
   }
 
-  /* the little mouse-parallax that used to be an inline <script> in login.html / signup.html */
-  function bindParallax() {
-    var a = root.querySelector('.ap-aside'), w = root.querySelector('.ap-wall');
-    if (!a || !w || !matchMedia('(hover:hover)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    a.addEventListener('pointermove', function (e) {
-      var r = a.getBoundingClientRect();
-      w.style.setProperty('--tx', (((e.clientX - r.left) / r.width - 0.5) * -26).toFixed(1) + 'px');
-      w.style.setProperty('--ty', (((e.clientY - r.top) / r.height - 0.5) * -18).toFixed(1) + 'px');
-    });
-    a.addEventListener('pointerleave', function () { w.style.setProperty('--tx', '0px'); w.style.setProperty('--ty', '0px'); });
+  function hideLegal() {
+    Array.prototype.forEach.call(document.querySelectorAll('.route-view.legal-page'), function (el) { el.hidden = true; });
   }
 
-  /* ── open / close ── */
-  function open(r) {
-    var tpl = document.getElementById('tpl-' + r.route);
-    if (!tpl) return;
-    var my = ++token, type = TYPE[r.route];
-    if (!cur) {
-      savedY = window.pageYOffset || 0; savedTitle = document.title;
-      document.documentElement.classList.add('pg-mode');
-    }
-    cur = r;
-    if (legalOff) { legalOff(); legalOff = null; }
-    removeExtras();
-    root.style.visibility = 'hidden';
-    root.textContent = '';
-    root.appendChild(tpl.content.cloneNode(true));
-    document.body.classList.toggle('legal-page', type === 'legal');
-    document.title = tpl.getAttribute('data-title') || document.title;
-    window.scrollTo(0, 0);
+  function apply() {
+    var r = parse();
+    var cameFromRoute = !!state.name;
 
-    var ready = type === 'auth' ? loadAuthCss() : Promise.resolve(dropAuthCss());
-    ready.then(function () {
-      if (my !== token) return;
-      document.body.classList.remove('ag-played');
-      if (type === 'auth') {
-        return runAuthScripts().then(function () { if (my === token) bindParallax(); });
+    unmountAuth();
+    hideLegal();
+    html.classList.remove('route-auth', 'route-legal');
+    state.token++;
+
+    if (r) {
+      if (!cameFromRoute) state.siteScroll = window.pageYOffset || 0;   // remember where you were on the home page
+      state.name = r.name;
+      html.classList.add(r.route.kind === 'auth' ? 'route-auth' : 'route-legal');
+      if (r.route.kind === 'auth') mountAuth(r);
+      else { var v = document.getElementById(r.route.view); if (v) v.hidden = false; }
+      document.title = r.route.title;
+      jump(0);
+    } else {
+      state.name = null;
+      document.title = siteTitle;
+      if (cameFromRoute) {
+        var id = (location.hash || '').slice(1);
+        var el = id ? document.getElementById(id) : null;
+        requestAnimationFrame(function () {
+          if (el) el.scrollIntoView({ behavior: 'instant', block: 'start' });
+          else jump(state.siteScroll);
+        });
       }
-      if (window.PGLegal) legalOff = window.PGLegal(root);
-    }).then(function () { if (my === token) root.style.visibility = ''; });
-  }
-
-  function goSection(target) {
-    if (!target || target === 'home') { window.scrollTo(0, savedY); return; }
-    var link = document.querySelector('.navbar-nav .nav-btn[data-target="' + target + '"]');
-    if (link) link.click();
-    else { var el = document.getElementById(target); if (el) el.scrollIntoView({ block: 'start' }); }
-  }
-
-  function close(target, fromHistory) {
-    if (!cur) return;
-    token++; cur = null;
-    root.textContent = '';
-    if (legalOff) { legalOff(); legalOff = null; }
-    removeExtras(); dropAuthCss();
-    document.body.classList.remove('legal-page');
-    document.documentElement.classList.remove('pg-mode');
-    document.title = savedTitle;
-    if (!fromHistory && /^#\//.test(location.hash) && history.replaceState) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} }
-    root.style.visibility = '';
-    requestAnimationFrame(function () { goSection(target); });
-  }
-
-  function go(route, query) {
-    if (!TYPE[route]) return;
-    var qs = new URLSearchParams(query || {});
-    if (cur && TYPE[route] === 'auth' && !qs.has('next') && cur.qs.get('next')) qs.set('next', cur.qs.get('next'));
-    var h = '#/' + route + (qs.toString() ? '?' + qs.toString() : '');
-    if (location.hash === h) { sync(); return; }
-    location.hash = h;
-  }
-
-  function sync() {
-    var r = parseHash();
-    if (r) { if (cur && cur.route === r.route && cur.qs.toString() === r.qs.toString()) return; open(r); }
-    else if (cur) close(null, true);
-  }
-
-  /* ── clicks: open the in-page version of the old links ── */
-  document.addEventListener('click', function (e) {
-    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-    var a = e.target.closest && e.target.closest('a[href]');
-    if (!a || a.target === '_blank' || a.hasAttribute('download')) return;
-    var href = a.getAttribute('href'); if (!href) return;
-    var inView = !!(root && root.contains(a));
-
-    if (inView && href.charAt(0) === '#') {                       // table-of-contents / in-page anchors: scroll, don't change the URL
-      e.preventDefault();
-      var el = href.length > 1 ? document.getElementById(href.slice(1)) : null;
-      if (el) el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
-      return;
     }
-    var u; try { u = new URL(href, location.href); } catch (x) { return; }
-    if (u.origin !== location.origin) return;
-    var file = fileOf(u);
-    if (FILES[file]) { e.preventDefault(); go(FILES[file], u.searchParams); return; }
-    if (inView && (file === '' || file === 'index.html')) { e.preventDefault(); close(u.hash ? u.hash.slice(1) : ''); }
+
+    html.classList.remove('route-pending');
+    try { window.dispatchEvent(new Event('routechange')); } catch (e) {}
+  }
+
+  /* While a route page is open the home sections are hidden, so header/footer links such as #about-me
+     must first switch back to the site. Capture phase = runs before site.js' own click handlers. */
+  document.addEventListener('click', function (e) {
+    if (!state.name) return;
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var href = a.getAttribute('href');
+    if (!href || href === '#' || href.indexOf('#/') === 0 || href.indexOf('#lg-') === 0) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    location.hash = href;
   }, true);
 
-  window.PG = {
-    go: go,
-    close: close,
-    afterAuth: function (next) { close(next || ''); },
-    query: function (k) { return cur ? cur.qs.get(k) : null; },
-    current: function () { return cur && cur.route; }
-  };
+  window.addEventListener('hashchange', apply);
+  apply();
 
-  function start() {
-    root = document.getElementById('pgRoot');
-    if (!root) return;
-    window.addEventListener('hashchange', sync);
-    sync();
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+  window.Router = { go: function (path) { location.hash = '#/' + path; }, current: function () { return state.name; } };
 })();

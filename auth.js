@@ -9,15 +9,30 @@
 
 (function () {
   'use strict';
+  /* mountable: router.js calls this every time #/login or #/signup is shown (root = #view-auth) */
+  window.AuthPages = window.AuthPages || { mounts: [] };
+  window.AuthPages.mounts.push(function (root, ctx) {
+  function byId(id) { return root.querySelector('#' + id); }
+
+  // phone sign-in keeps one global reCAPTCHA verifier: drop the stale one that points at the previous view
+  function dropRecaptcha() {
+    if (window.recaptchaVerifier) { try { window.recaptchaVerifier.clear(); } catch (e) {} window.recaptchaVerifier = null; }
+  }
+  dropRecaptcha();
+  ctx.onUnmount(function () {
+    dropRecaptcha();
+    var o = byId('socialConfirmOverlay');   // "confirm account" popup lives on <body>
+    if (o) o.classList.remove('open');
+  });
 
   function authReady() {
     return !!window.LadlaAuth;
   }
 
   /* ── password show/hide toggle ── */
-  document.querySelectorAll('.auth-toggle-visibility').forEach(function (btn) {
+  root.querySelectorAll('.auth-toggle-visibility').forEach(function (btn) {
     btn.addEventListener('click', function () {
-      var input = document.getElementById(btn.dataset.target);
+      var input = byId(btn.dataset.target);
       if (!input) return;
       var showing = input.type === 'text';
       input.type = showing ? 'password' : 'text';
@@ -28,7 +43,7 @@
   });
 
   /* ── clear a field's error state as soon as the user edits it ── */
-  document.querySelectorAll('.auth-form input').forEach(function (input) {
+  root.querySelectorAll('.auth-form input').forEach(function (input) {
     input.addEventListener('input', function () {
       input.classList.remove('error');
       var wrap = input.closest('.fld, .contactX-group');
@@ -68,34 +83,22 @@
      (auth-gate.js sets that when it redirects a signed-out visitor
      away from a gated section), so bounce back to that same section
      on the homepage instead of just the homepage's top. ── */
-  // name of the homepage file — change this one line if your homepage is
-  // called something else
-  var HOME_PAGE = 'index.html';
-
-  // inside index.html the router (router.js) knows the ?next=… value; on the old standalone pages it is in the URL
-  function nextTarget() {
-    if (window.PG) return window.PG.query('next') || '';
-    return new URLSearchParams(window.location.search).get('next') || '';
-  }
-
   function postAuthRedirect() {
-    // Only called right before leaving the page after a successful sign-in /
-    // sign-up. Tell the homepage's gate (auth-gate.js) straight away that this
-    // visitor is signed in, so it doesn't send them back to login.html while
-    // Firebase is still loading on the homepage.
+    // Tell the homepage's gate (auth-gate.js) straight away that this visitor is signed in,
+    // so it doesn't bounce them back to the login view while Firebase is still loading.
     try { localStorage.setItem('ls_demo_logged_in', '1'); } catch (e) {}
-    var next = nextTarget();
-    return HOME_PAGE + (next ? '#' + next : '');
+    var next = ctx.params.get('next');
+    return next ? '#' + next : '#home';
   }
 
   // keep ?next=… when the visitor hops between the "Sign Up" and "Sign in"
   // links, so they still land on the section they originally wanted
   (function keepNextOnSwitchLinks() {
-    var search = window.location.search;
-    if (!new URLSearchParams(search).get('next')) return;
-    document.querySelectorAll('.auth-switch a').forEach(function (link) {
+    var next = ctx.params.get('next');
+    if (!next) return;
+    root.querySelectorAll('.auth-switch a').forEach(function (link) {
       var href = link.getAttribute('href');
-      if (href && href.indexOf('?') === -1) link.setAttribute('href', href + search);
+      if (href && href.indexOf('?') === -1) link.setAttribute('href', href + '?next=' + encodeURIComponent(next));
     });
   })();
 
@@ -112,8 +115,7 @@
       if (navigated) return;
       navigated = true;
       if (unsubscribe) unsubscribe();
-      if (window.PG) { postAuthRedirect(); window.PG.afterAuth(nextTarget()); }   // in-page: just close the login view
-      else window.location.href = postAuthRedirect();
+      if (ctx.alive()) ctx.go(postAuthRedirect());
     }
     var unsubscribe = window.LadlaAuth.onAuthChange(function (user) {
       if (user) goNow();
@@ -132,9 +134,9 @@
   }
 
   /* ── email / username toggle link (login form) ── */
-  var loginToggleMode = document.getElementById('loginToggleMode');
-  var loginEmailGroup = document.getElementById('loginEmailGroup');
-  var loginUsernameGroup = document.getElementById('loginUsernameGroup');
+  var loginToggleMode = byId('loginToggleMode');
+  var loginEmailGroup = byId('loginEmailGroup');
+  var loginUsernameGroup = byId('loginUsernameGroup');
   var usingUsername = false;
 
   if (loginToggleMode) {
@@ -143,21 +145,21 @@
       loginEmailGroup.style.display = usingUsername ? 'none' : 'block';
       loginUsernameGroup.style.display = usingUsername ? 'block' : 'none';
       loginToggleMode.textContent = usingUsername ? 'Continue with email' : 'Continue with username';
-      setFieldError(document.getElementById('loginEmail'), document.getElementById('loginEmailError'), '');
-      setFieldError(document.getElementById('loginUsername'), document.getElementById('loginEmailError'), '');
+      setFieldError(byId('loginEmail'), byId('loginEmailError'), '');
+      setFieldError(byId('loginUsername'), byId('loginEmailError'), '');
     });
   }
 
   /* ══════════════════════════════════════════════
      LOGIN FORM
      ══════════════════════════════════════════════ */
-  var loginForm = document.getElementById('loginForm');
+  var loginForm = byId('loginForm');
   if (loginForm) {
-    var loginEmail = document.getElementById('loginEmail');
-    var loginUsername = document.getElementById('loginUsername');
-    var loginPassword = document.getElementById('loginPassword');
-    var loginToast = document.getElementById('loginToast');
-    var loginBtn = document.getElementById('loginSubmitBtn');
+    var loginEmail = byId('loginEmail');
+    var loginUsername = byId('loginUsername');
+    var loginPassword = byId('loginPassword');
+    var loginToast = byId('loginToast');
+    var loginBtn = byId('loginSubmitBtn');
 
     loginForm.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -165,25 +167,25 @@
 
       if (usingUsername) {
         if (loginUsername.value.trim().length < 3) {
-          setFieldError(loginUsername, document.getElementById('loginEmailError'), 'Enter your username.');
+          setFieldError(loginUsername, byId('loginEmailError'), 'Enter your username.');
           valid = false;
         } else {
-          setFieldError(loginUsername, document.getElementById('loginEmailError'), '');
+          setFieldError(loginUsername, byId('loginEmailError'), '');
         }
       } else {
         if (!EMAIL_RE.test(loginEmail.value.trim())) {
-          setFieldError(loginEmail, document.getElementById('loginEmailError'), 'Enter a valid email address.');
+          setFieldError(loginEmail, byId('loginEmailError'), 'Enter a valid email address.');
           valid = false;
         } else {
-          setFieldError(loginEmail, document.getElementById('loginEmailError'), '');
+          setFieldError(loginEmail, byId('loginEmailError'), '');
         }
       }
 
       if (loginPassword.value.length < 1) {
-        setFieldError(loginPassword, document.getElementById('loginPasswordError'), 'Enter your password.');
+        setFieldError(loginPassword, byId('loginPasswordError'), 'Enter your password.');
         valid = false;
       } else {
-        setFieldError(loginPassword, document.getElementById('loginPasswordError'), '');
+        setFieldError(loginPassword, byId('loginPasswordError'), '');
       }
 
       if (!valid) return;
@@ -215,7 +217,7 @@
        Firebase's reset email, then locks the link for 30s so it can't be
        spammed. The success message is the same whether or not an account
        exists, so this can't be used to find out who has an account. ── */
-    var forgotLink = document.getElementById('forgotPasswordLink') || loginForm.querySelector('.auth-link');
+    var forgotLink = byId('forgotPasswordLink') || loginForm.querySelector('.auth-link');
     if (forgotLink) {
       var forgotBusy = false;
       var forgotLabel = forgotLink.textContent;
@@ -248,7 +250,7 @@
         if (forgotBusy) return;
 
         var field = usingUsername ? loginUsername : loginEmail;
-        var errEl = document.getElementById('loginEmailError');
+        var errEl = byId('loginEmailError');
         var value = field.value.trim();
 
         if (!value || (!usingUsername && !EMAIL_RE.test(value))) {
@@ -290,18 +292,18 @@
   /* ══════════════════════════════════════════════
      SIGNUP FORM
      ══════════════════════════════════════════════ */
-  var signupForm = document.getElementById('signupForm');
+  var signupForm = byId('signupForm');
   if (signupForm) {
-    var suName = document.getElementById('signupName');
-    var suUsername = document.getElementById('signupUsername');
-    var suEmail = document.getElementById('signupEmail');
-    var suPassword = document.getElementById('signupPassword');
-    var suConfirm = document.getElementById('signupConfirm');
-    var suTerms = document.getElementById('signupTerms');
-    var suToast = document.getElementById('signupToast');
-    var suBtn = document.getElementById('signupSubmitBtn');
-    var strengthBar = document.getElementById('pwStrengthBar');
-    var strengthLabel = document.getElementById('pwStrengthLabel');
+    var suName = byId('signupName');
+    var suUsername = byId('signupUsername');
+    var suEmail = byId('signupEmail');
+    var suPassword = byId('signupPassword');
+    var suConfirm = byId('signupConfirm');
+    var suTerms = byId('signupTerms');
+    var suToast = byId('signupToast');
+    var suBtn = byId('signupSubmitBtn');
+    var strengthBar = byId('pwStrengthBar');
+    var strengthLabel = byId('pwStrengthLabel');
 
     if (suPassword && strengthBar) {
       var labels = ['Very weak', 'Weak', 'Okay', 'Good', 'Strong'];
@@ -320,39 +322,39 @@
       var valid = true;
 
       if (suName.value.trim().length < 2) {
-        setFieldError(suName, document.getElementById('signupNameError'), 'Enter your full name.');
+        setFieldError(suName, byId('signupNameError'), 'Enter your full name.');
         valid = false;
       } else {
-        setFieldError(suName, document.getElementById('signupNameError'), '');
+        setFieldError(suName, byId('signupNameError'), '');
       }
 
       var USERNAME_RE = /^[a-zA-Z0-9_.]{3,20}$/;
       if (!USERNAME_RE.test(suUsername.value.trim())) {
-        setFieldError(suUsername, document.getElementById('signupUsernameError'), '3-20 characters: letters, numbers, _ or . only.');
+        setFieldError(suUsername, byId('signupUsernameError'), '3-20 characters: letters, numbers, _ or . only.');
         valid = false;
       } else {
-        setFieldError(suUsername, document.getElementById('signupUsernameError'), '');
+        setFieldError(suUsername, byId('signupUsernameError'), '');
       }
 
       if (!EMAIL_RE.test(suEmail.value.trim())) {
-        setFieldError(suEmail, document.getElementById('signupEmailError'), 'Enter a valid email address.');
+        setFieldError(suEmail, byId('signupEmailError'), 'Enter a valid email address.');
         valid = false;
       } else {
-        setFieldError(suEmail, document.getElementById('signupEmailError'), '');
+        setFieldError(suEmail, byId('signupEmailError'), '');
       }
 
       if (suPassword.value.length < 8) {
-        setFieldError(suPassword, document.getElementById('signupPasswordError'), 'Use at least 8 characters.');
+        setFieldError(suPassword, byId('signupPasswordError'), 'Use at least 8 characters.');
         valid = false;
       } else {
-        setFieldError(suPassword, document.getElementById('signupPasswordError'), '');
+        setFieldError(suPassword, byId('signupPasswordError'), '');
       }
 
       if (suConfirm.value !== suPassword.value || suConfirm.value === '') {
-        setFieldError(suConfirm, document.getElementById('signupConfirmError'), 'Passwords don\'t match.');
+        setFieldError(suConfirm, byId('signupConfirmError'), 'Passwords don\'t match.');
         valid = false;
       } else {
-        setFieldError(suConfirm, document.getElementById('signupConfirmError'), '');
+        setFieldError(suConfirm, byId('signupConfirmError'), '');
       }
 
       if (suTerms && !suTerms.checked) {
@@ -382,7 +384,7 @@
         suBtn.classList.remove('loading');
         suBtn.disabled = false;
         if (err.code === 'custom/username-taken') {
-          setFieldError(suUsername, document.getElementById('signupUsernameError'), window.LadlaAuth.friendlyError(err.code));
+          setFieldError(suUsername, byId('signupUsernameError'), window.LadlaAuth.friendlyError(err.code));
         } else {
           showToast(suToast, 'error', window.LadlaAuth.friendlyError(err.code));
         }
@@ -409,7 +411,6 @@
     if (document.getElementById('socialConfirmOverlay')) return;
 
     var style = document.createElement('style');
-    style.id = 'socialConfirmStyle';
     style.textContent =
       '#socialConfirmOverlay{position:fixed;inset:0;background:rgba(4,4,14,.86);' +
       'backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);display:none;' +
@@ -549,7 +550,7 @@
               '<li><i class="bi bi-check-circle-fill"></i><span>If this is your first time here, a new Ladla Sheikh account will be created for this identity.</span></li>' +
             '</ul>' +
             '<p id="socialConfirmLegal">' +
-              'By continuing, you agree to Ladla Sheikh\u2019s <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a> and Terms of Service.' +
+              'By continuing, you agree to Ladla Sheikh\u2019s <a href="#/privacy">Privacy Policy</a> and Terms of Service.' +
             '</p>' +
             '<div id="socialConfirmActions">' +
               '<button type="button" id="socialConfirmContinue"><i class="bi bi-shield-lock-fill"></i><span>Continue</span></button>' +
@@ -614,7 +615,7 @@
   // back from Google/Facebook/GitHub's sign-in pop-up.
   function handleSocialProfile(profile, toastEl) {
     if (!profile) return;
-    var allowCreate = document.getElementById('signupForm') !== null;
+    var allowCreate = byId('signupForm') !== null;
 
     showSocialConfirm(profile, function onContinue() {
       window.LadlaAuth.confirmSocialSignIn(allowCreate).then(function () {
@@ -630,7 +631,7 @@
     });
   }
 
-  document.querySelectorAll('[data-social]').forEach(function (btn) {
+  root.querySelectorAll('[data-social]').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var provider = btn.dataset.social;
       var toast = btn.closest('.auth-card, .auth-card-login').querySelector('.auth-toast');
@@ -663,26 +664,26 @@
      verified phone number is simply signed in, creating the
      account on first use automatically.
      ══════════════════════════════════════════════ */
-  var phoneContinueBtn = document.getElementById('phoneContinueBtn');
+  var phoneContinueBtn = byId('phoneContinueBtn');
   if (phoneContinueBtn) {
-    var socialStack = document.getElementById('socialStack');
-    var emailDivider = document.querySelector('.auth-divider'); // "or sign in/up with email" — same class on both pages
-    var phoneAuthPanel = document.getElementById('phoneAuthPanel');
-    var phoneAuthBack = document.getElementById('phoneAuthBack');
-    var phoneToast = document.getElementById('phoneToast');
-    var phoneNumberInput = document.getElementById('phoneNumber');
-    var phoneCodeGroup = document.getElementById('phoneCodeGroup');
-    var phoneCodeInput = document.getElementById('phoneCode');
-    var sendCodeBtn = document.getElementById('sendCodeBtn');
-    var verifyCodeBtn = document.getElementById('verifyCodeBtn');
-    var authCard = document.querySelector('.auth-card, .auth-card-login');
+    var socialStack = byId('socialStack');
+    var emailDivider = root.querySelector('.auth-divider'); // "or sign in/up with email" — same class on both pages
+    var phoneAuthPanel = byId('phoneAuthPanel');
+    var phoneAuthBack = byId('phoneAuthBack');
+    var phoneToast = byId('phoneToast');
+    var phoneNumberInput = byId('phoneNumber');
+    var phoneCodeGroup = byId('phoneCodeGroup');
+    var phoneCodeInput = byId('phoneCode');
+    var sendCodeBtn = byId('sendCodeBtn');
+    var verifyCodeBtn = byId('verifyCodeBtn');
+    var authCard = root.querySelector('.auth-card, .auth-card-login');
 
     function showPhonePanel(show) {
       socialStack.style.display = show ? 'none' : 'flex';
       if (emailDivider) emailDivider.style.display = show ? 'none' : 'flex';
-      var authForm = document.getElementById('loginForm') || document.getElementById('signupForm');
+      var authForm = byId('loginForm') || byId('signupForm');
       if (authForm) authForm.style.display = show ? 'none' : 'flex';
-      var switchLine = document.querySelector('.auth-switch');
+      var switchLine = root.querySelector('.auth-switch');
       if (switchLine) switchLine.style.display = show ? 'none' : 'block';
       if (authCard) authCard.classList.toggle('phone-mode', show);
       phoneAuthPanel.classList.toggle('open', show);
@@ -694,11 +695,11 @@
     sendCodeBtn.addEventListener('click', function () {
       var phone = phoneNumberInput.value.trim();
       if (!/^\+[1-9]\d{7,14}$/.test(phone)) {
-        setFieldError(phoneNumberInput, document.getElementById('phoneNumberError'),
+        setFieldError(phoneNumberInput, byId('phoneNumberError'),
           'Include your country code, e.g. +923001234567.');
         return;
       }
-      setFieldError(phoneNumberInput, document.getElementById('phoneNumberError'), '');
+      setFieldError(phoneNumberInput, byId('phoneNumberError'), '');
 
       if (!authReady()) {
         showToast(phoneToast, 'error', 'Still loading — please try again in a second.');
@@ -725,15 +726,15 @@
     verifyCodeBtn.addEventListener('click', function () {
       var code = phoneCodeInput.value.trim();
       if (code.length < 4) {
-        setFieldError(phoneCodeInput, document.getElementById('phoneCodeError'), 'Enter the code you received.');
+        setFieldError(phoneCodeInput, byId('phoneCodeError'), 'Enter the code you received.');
         return;
       }
-      setFieldError(phoneCodeInput, document.getElementById('phoneCodeError'), '');
+      setFieldError(phoneCodeInput, byId('phoneCodeError'), '');
 
       verifyCodeBtn.classList.add('loading');
       verifyCodeBtn.disabled = true;
 
-      window.LadlaAuth.confirmPhoneCode(code, document.getElementById('signupForm') !== null).then(function () {
+      window.LadlaAuth.confirmPhoneCode(code, byId('signupForm') !== null).then(function () {
         showToast(phoneToast, 'success', 'Signed in — redirecting…');
         redirectAfterAuth();
       }).catch(function (err) {
@@ -743,5 +744,5 @@
       });
     });
   }
-
+  });
 })();

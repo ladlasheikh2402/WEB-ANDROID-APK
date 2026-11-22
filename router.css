@@ -1,6 +1,22 @@
-/* ROUTER — login, signup, privacy, terms and data-deletion are shown INSIDE index.html.
-   While one of those pages is open, everything else in <body> is hidden (display:none),
-   so the page behaves exactly like the old standalone file (normal scrolling, sticky bits). */
-#pgRoot { display: contents; }
-html.pg-mode body > *:not(#pgRoot):not(#socialConfirmOverlay):not(script):not(style):not(link):not(template) { display: none !important; }
-html.pg-mode { scroll-behavior: auto; }
+/* ROUTER.CSS — show / hide the home page and the merged login / signup / legal views */
+.route-view[hidden] { display: none !important; }
+
+/* login / signup: full-screen, home page chrome is hidden (same as the old standalone pages) */
+html.route-auth .site-header,
+html.route-auth #main,
+html.route-auth .site-footer,
+html.route-auth .mobile-menu,
+html.route-auth .aw-dock,
+html.route-auth .install-card,
+html.route-auth #gx-top { display: none !important; }
+#view-auth { position: relative; min-height: 100dvh; }
+
+/* privacy / terms / data-deletion: header + footer stay, only the home sections are swapped out */
+html.route-legal #main { display: none !important; }
+
+/* opened straight on a route: keep the home page from flashing (fail-safe reveal after 2.5 s) */
+html.route-pending body { opacity: 0; animation: routeReveal 0.01s 2.5s forwards; }
+@keyframes routeReveal { to { opacity: 1; } }
+
+/* inside the Android app: no "Install the app" popup */
+html.in-app .install-card { display: none !important; }

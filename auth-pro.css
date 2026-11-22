@@ -1,3 +1,5 @@
+/* auth-pro.css — SCOPED to #view-auth (login / signup views inside index.html).
+   Generated from the standalone-page version; global html/body/:root rules now apply to #view-auth only. */
 /* ═════════════════════════════════════════════════════════════
    LADLA SHEIKH — auth-pro.css  (login.html + signup.html)
    Same tokens as site.css. Hooks kept for auth.js:
@@ -5,7 +7,7 @@
    .auth-toast(.show .error/.success), .auth-submit(.loading),
    .auth-card / .auth-card-login(.phone-mode), .phone-auth-panel(.open)
    ═════════════════════════════════════════════════════════════ */
-:root {
+#view-auth {
   --bg: #09090b;
   --bg-2: #0f0f12;
   --surface: #141418;
@@ -25,15 +27,15 @@
   --f-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
-*,
-*::before,
-*::after {
+#view-auth *,
+#view-auth *::before,
+#view-auth *::after {
   box-sizing: border-box;
 }
-html {
+#view-auth {
   -webkit-text-size-adjust: 100%;
 }
-body {
+#view-auth {
   margin: 0;
   min-height: 100svh;
   background: var(--bg);
@@ -42,32 +44,32 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
 }
-img {
+#view-auth img {
   display: block;
   max-width: 100%;
 }
-a {
+#view-auth a {
   color: inherit;
   text-decoration: none;
 }
-button,
-input {
+#view-auth button,
+#view-auth input {
   font: inherit;
   color: inherit;
 }
-button {
+#view-auth button {
   cursor: pointer;
 }
-h1,
-p {
+#view-auth h1,
+#view-auth p {
   margin: 0;
 }
-:focus-visible {
+#view-auth :focus-visible {
   outline: 2px solid var(--accent-ink);
   outline-offset: 3px;
   border-radius: 6px;
 }
-.sr-only {
+#view-auth .sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -77,14 +79,14 @@ p {
 }
 
 /* ── shell ── */
-.ap-shell {
+#view-auth .ap-shell {
   min-height: 100svh;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
 /* aside (brand side) */
-.ap-aside {
+#view-auth .ap-aside {
   position: sticky;
   top: 0;
   height: 100svh;
@@ -96,7 +98,7 @@ p {
   isolation: isolate;
   border-right: 1px solid var(--line);
 }
-.ap-aside > img {
+#view-auth .ap-aside > img {
   position: absolute;
   inset: 0;
   z-index: -2;
@@ -107,7 +109,7 @@ p {
   opacity: 0.5;
   filter: grayscale(0.25);
 }
-.ap-aside::before {
+#view-auth .ap-aside::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -121,7 +123,7 @@ p {
     ),
     radial-gradient(70% 50% at 20% 100%, rgba(139, 92, 246, 0.28), transparent);
 }
-.ap-brand {
+#view-auth .ap-brand {
   display: inline-flex;
   align-items: center;
   gap: 11px;
@@ -131,32 +133,32 @@ p {
   letter-spacing: -0.02em;
   width: fit-content;
 }
-.ap-brand img {
+#view-auth .ap-brand img {
   width: 30px;
   height: 30px;
   border-radius: 9px;
   object-fit: cover;
 }
-.ap-brand span {
+#view-auth .ap-brand span {
   color: var(--muted);
   font-weight: 600;
 }
-.ap-mark {
+#view-auth .ap-mark {
   font-family: var(--f-display);
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 0.8;
   font-size: clamp(3.4rem, 8.4vw, 9rem);
 }
-.ap-mark span {
+#view-auth .ap-mark span {
   display: block;
 }
-.ap-mark span + span {
+#view-auth .ap-mark span + span {
   color: transparent;
   -webkit-text-stroke: 1.5px rgba(244, 244, 246, 0.85);
   margin-top: 0.02em;
 }
-.ap-points {
+#view-auth .ap-points {
   margin-top: 28px;
   display: grid;
   gap: 12px;
@@ -164,33 +166,33 @@ p {
   font-size: 0.95rem;
   max-width: 38ch;
 }
-.ap-points li {
+#view-auth .ap-points li {
   display: flex;
   gap: 12px;
   align-items: flex-start;
 }
-.ap-points i {
+#view-auth .ap-points i {
   color: var(--accent-ink);
   margin-top: 3px;
 }
 
 /* main (form side) */
-.ap-main {
+#view-auth .ap-main {
   display: flex;
   flex-direction: column;
   min-height: 100svh;
   padding: clamp(20px, 3vw, 36px) var(--g, clamp(18px, 4vw, 56px));
 }
-.ap-top {
+#view-auth .ap-top {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
 }
-.ap-top .ap-brand {
+#view-auth .ap-top .ap-brand {
   display: none;
 }
-.ap-back {
+#view-auth .ap-back {
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -201,22 +203,22 @@ p {
   font-weight: 500;
   transition: color 0.2s;
 }
-.ap-back:hover {
+#view-auth .ap-back:hover {
   color: var(--text);
 }
-.ap-center {
+#view-auth .ap-center {
   flex: 1;
   display: grid;
   place-items: center;
   padding: clamp(16px, 4vh, 40px) 0;
 }
-.auth-card,
-.auth-card-login {
+#view-auth .auth-card,
+#view-auth .auth-card-login {
   width: 100%;
   max-width: 420px;
 }
 
-.auth-card-head h1 {
+#view-auth .auth-card-head h1 {
   font-family: var(--f-display);
   font-weight: 700;
   font-size: clamp(2rem, 4.4vw, 2.8rem);
@@ -224,13 +226,13 @@ p {
   line-height: 1.05;
   text-wrap: balance;
 }
-.auth-card-head p {
+#view-auth .auth-card-head p {
   margin-top: 10px;
   color: var(--muted);
 }
 
 /* toast */
-.auth-toast {
+#view-auth .auth-toast {
   display: none;
   align-items: flex-start;
   gap: 10px;
@@ -241,56 +243,56 @@ p {
   font-size: 0.9rem;
   line-height: 1.45;
 }
-.auth-toast.show {
+#view-auth .auth-toast.show {
   display: flex;
 }
-.auth-toast i {
+#view-auth .auth-toast i {
   margin-top: 2px;
 }
-.auth-toast.error {
+#view-auth .auth-toast.error {
   color: var(--err);
   border-color: rgba(248, 113, 113, 0.4);
   background: rgba(248, 113, 113, 0.08);
 }
-.auth-toast.success {
+#view-auth .auth-toast.success {
   color: var(--ok);
   border-color: rgba(74, 222, 128, 0.4);
   background: rgba(74, 222, 128, 0.08);
 }
 
 /* form */
-.auth-form {
+#view-auth .auth-form {
   margin-top: 28px;
   display: grid;
   gap: 16px;
 }
-.pair {
+#view-auth .pair {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 14px;
 }
-.pair > div {
+#view-auth .pair > div {
   min-width: 0;
 }
-.fld > label {
+#view-auth .fld > label {
   display: block;
   margin-bottom: 8px;
   font-size: 0.86rem;
   font-weight: 500;
 }
-.fld-box {
+#view-auth .fld-box {
   position: relative;
   display: flex;
   align-items: center;
 }
-.fld-icon {
+#view-auth .fld-icon {
   position: absolute;
   left: 15px;
   color: var(--faint);
   pointer-events: none;
   transition: color 0.2s;
 }
-.fld-box input {
+#view-auth .fld-box input {
   width: 100%;
   height: 52px;
   padding: 0 16px 0 44px;
@@ -304,29 +306,29 @@ p {
     box-shadow 0.2s,
     background 0.2s;
 }
-.fld-box input::placeholder {
+#view-auth .fld-box input::placeholder {
   color: var(--faint);
 }
-.fld-box input:focus {
+#view-auth .fld-box input:focus {
   border-color: var(--accent);
   background: var(--surface-2);
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
-.fld-box:focus-within .fld-icon {
+#view-auth .fld-box:focus-within .fld-icon {
   color: var(--accent-ink);
 }
-.fld-box input.error {
+#view-auth .fld-box input.error {
   border-color: #f87171;
 }
-.fld-box input:-webkit-autofill {
+#view-auth .fld-box input:-webkit-autofill {
   -webkit-text-fill-color: var(--text);
   box-shadow: 0 0 0 60px var(--surface) inset;
   caret-color: var(--text);
 }
-.fld-box:has(.auth-toggle-visibility) input {
+#view-auth .fld-box:has(.auth-toggle-visibility) input {
   padding-right: 52px;
 }
-.auth-toggle-visibility {
+#view-auth .auth-toggle-visibility {
   position: absolute;
   right: 4px;
   width: 44px;
@@ -339,20 +341,20 @@ p {
   border-radius: 10px;
   transition: color 0.2s;
 }
-.auth-toggle-visibility:hover {
+#view-auth .auth-toggle-visibility:hover {
   color: var(--text);
 }
-.auth-field-error {
+#view-auth .auth-field-error {
   display: none;
   margin-top: 7px;
   color: var(--err);
   font-size: 0.83rem;
 }
-.auth-field-error.show {
+#view-auth .auth-field-error.show {
   display: block;
 }
-.auth-toggle-mode,
-.auth-link {
+#view-auth .auth-toggle-mode,
+#view-auth .auth-link {
   background: none;
   border: 0;
   padding: 0;
@@ -363,20 +365,20 @@ p {
   width: fit-content;
   min-height: 32px;
 }
-.auth-toggle-mode:hover,
-.auth-link:hover {
+#view-auth .auth-toggle-mode:hover,
+#view-auth .auth-link:hover {
   color: #fff;
   text-decoration: underline;
   text-underline-offset: 3px;
 }
-.auth-row-between {
+#view-auth .auth-row-between {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
 }
-.auth-checkbox {
+#view-auth .auth-checkbox {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -384,7 +386,7 @@ p {
   color: var(--muted);
   cursor: pointer;
 }
-.auth-checkbox input {
+#view-auth .auth-checkbox input {
   appearance: none;
   -webkit-appearance: none;
   width: 20px;
@@ -401,11 +403,11 @@ p {
     border-color 0.2s;
   margin: 0;
 }
-.auth-checkbox input:checked {
+#view-auth .auth-checkbox input:checked {
   background: var(--accent-solid);
   border-color: var(--accent-solid);
 }
-.auth-checkbox input:checked::after {
+#view-auth .auth-checkbox input:checked::after {
   content: "";
   width: 5px;
   height: 10px;
@@ -413,28 +415,28 @@ p {
   border-width: 0 2px 2px 0;
   transform: translateY(-1px) rotate(45deg);
 }
-.auth-terms a {
+#view-auth .auth-terms a {
   color: var(--text);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 /* strength meter */
-.pw-meter {
+#view-auth .pw-meter {
   display: flex;
   align-items: center;
   gap: 12px;
   margin-top: 10px;
   min-height: 18px;
 }
-.pw-track {
+#view-auth .pw-track {
   flex: 1;
   height: 4px;
   border-radius: 4px;
   background: var(--line);
   overflow: hidden;
 }
-#pwStrengthBar {
+#view-auth #pwStrengthBar {
   height: 100%;
   width: 0;
   border-radius: 4px;
@@ -442,7 +444,7 @@ p {
     width 0.3s var(--ease),
     background 0.3s;
 }
-#pwStrengthLabel {
+#view-auth #pwStrengthLabel {
   font-size: 0.8rem;
   color: var(--muted);
   min-width: 64px;
@@ -450,7 +452,7 @@ p {
 }
 
 /* submit */
-.auth-submit {
+#view-auth .auth-submit {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -469,47 +471,47 @@ p {
     transform 0.2s var(--ease),
     opacity 0.2s;
 }
-.auth-submit:hover {
+#view-auth .auth-submit:hover {
   background: #fff;
   transform: translateY(-1px);
 }
-.auth-submit:active {
+#view-auth .auth-submit:active {
   transform: scale(0.985);
 }
-.auth-submit i {
+#view-auth .auth-submit i {
   transition: transform 0.25s var(--ease);
 }
-.auth-submit:hover i {
+#view-auth .auth-submit:hover i {
   transform: translateX(3px);
 }
-.auth-submit .spin {
+#view-auth .auth-submit .spin {
   display: none;
   width: 16px;
   height: 16px;
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: 50%;
-  animation: spin 0.7s linear infinite;
+  animation: apx-spin 0.7s linear infinite;
 }
-.auth-submit.loading .spin {
+#view-auth .auth-submit.loading .spin {
   display: inline-block;
 }
-.auth-submit.loading i {
+#view-auth .auth-submit.loading i {
   display: none;
 }
-.auth-submit:disabled {
+#view-auth .auth-submit:disabled {
   opacity: 0.7;
   cursor: progress;
   transform: none;
 }
-@keyframes spin {
+@keyframes apx-spin {
   to {
     transform: rotate(360deg);
   }
 }
 
 /* divider + social */
-.auth-divider {
+#view-auth .auth-divider {
   display: flex;
   align-items: center;
   gap: 14px;
@@ -517,19 +519,19 @@ p {
   color: var(--faint);
   font-size: 0.84rem;
 }
-.auth-divider::before,
-.auth-divider::after {
+#view-auth .auth-divider::before,
+#view-auth .auth-divider::after {
   content: "";
   flex: 1;
   height: 1px;
   background: var(--line);
 }
-.social-stack {
+#view-auth .social-stack {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
 }
-.social-btn {
+#view-auth .social-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -545,22 +547,22 @@ p {
     border-color 0.2s,
     background 0.2s;
 }
-.social-btn:hover {
+#view-auth .social-btn:hover {
   border-color: rgba(255, 255, 255, 0.4);
   background: rgba(255, 255, 255, 0.04);
 }
-.social-btn svg {
+#view-auth .social-btn svg {
   width: 19px;
   height: 19px;
   flex: none;
 }
-.auth-switch {
+#view-auth .auth-switch {
   margin-top: 28px;
   color: var(--muted);
   font-size: 0.94rem;
   text-align: center;
 }
-.auth-switch a {
+#view-auth .auth-switch a {
   color: var(--text);
   font-weight: 600;
   text-decoration: underline;
@@ -568,15 +570,15 @@ p {
 }
 
 /* phone panel (hidden unless the phone button is re-enabled) */
-.phone-auth-panel {
+#view-auth .phone-auth-panel {
   display: none;
   margin-top: 22px;
   gap: 14px;
 }
-.phone-auth-panel.open {
+#view-auth .phone-auth-panel.open {
   display: grid;
 }
-.phone-auth-back {
+#view-auth .phone-auth-back {
   background: none;
   border: 0;
   color: var(--muted);
@@ -584,11 +586,11 @@ p {
   width: fit-content;
   min-height: 40px;
 }
-.phone-auth-back:hover {
+#view-auth .phone-auth-back:hover {
   color: var(--text);
 }
-.auth-card.phone-mode .auth-form,
-.auth-card-login.phone-mode .auth-form {
+#view-auth .auth-card.phone-mode .auth-form,
+#view-auth .auth-card-login.phone-mode .auth-form {
   display: none;
 }
 
@@ -596,42 +598,42 @@ p {
 
 /* ── responsive ── */
 @media (max-width: 960px) {
-  .ap-shell {
+  #view-auth .ap-shell {
     grid-template-columns: 1fr;
   }
-  .ap-aside {
+  #view-auth .ap-aside {
     display: none;
   }
-  .ap-top .ap-brand {
+  #view-auth .ap-top .ap-brand {
     display: inline-flex;
   }
-  .ap-center {
+  #view-auth .ap-center {
     place-items: start center;
     padding-top: clamp(20px, 5vh, 56px);
   }
 }
 @media (max-width: 440px) {
-  .pair {
+  #view-auth .pair {
     grid-template-columns: 1fr;
   }
-  .social-stack {
+  #view-auth .social-stack {
     grid-template-columns: 1fr;
   }
-  .ap-top .ap-brand span {
+  #view-auth .ap-top .ap-brand span {
     display: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  #view-auth *,
+#view-auth *::before,
+#view-auth *::after {
     animation-duration: 0.001ms !important;
     transition-duration: 0.001ms !important;
   }
 }
 
 /* ═══ v2 theme: Ivory & Ink (overrides the tokens above) ═══ */
-:root {
+#view-auth {
   --bg: #f1f0ff;
   --surface: #fbfaff;
   --surface-2: #ffffff;
@@ -648,27 +650,27 @@ p {
   --err: #b3261e;
   --f-display: "Bricolage Grotesque", "Sora", "Segoe UI", system-ui, sans-serif;
 }
-body {
+#view-auth {
   background: var(--bg);
   color: var(--text);
 }
-.ap-brand {
+#view-auth .ap-brand {
   font-family: var(--f-display);
   font-weight: 600;
   font-size: 1.5rem;
   letter-spacing: 0;
   line-height: 1;
 }
-.ap-brand em {
+#view-auth .ap-brand em {
   color: #ff4fa3;
 }
-.ap-top .ap-brand em {
+#view-auth .ap-top .ap-brand em {
   color: #6d4aff;
 }
-.ap-brand span {
+#view-auth .ap-brand span {
   display: none;
 }
-.ap-aside {
+#view-auth .ap-aside {
   background: #070914;
   color: #f1f0ff;
   --text: #f1f0ff;
@@ -676,7 +678,7 @@ body {
   --accent-ink: #ff8ac6;
   border-right: 0;
 }
-.ap-aside::before {
+#view-auth .ap-aside::before {
   background:
     linear-gradient(
       180deg,
@@ -686,105 +688,105 @@ body {
     ),
     radial-gradient(70% 55% at 80% 20%, rgba(109, 74, 255, 0.45), transparent);
 }
-.ap-aside > img {
+#view-auth .ap-aside > img {
   opacity: 0.32;
 }
-.ap-mark {
+#view-auth .ap-mark {
   font-weight: 400;
   letter-spacing: -0.02em;
   line-height: 0.84;
   font-size: clamp(4rem, 9.4vw, 10rem);
 }
-.ap-mark span + span {
+#view-auth .ap-mark span + span {
   color: #ff4fa3;
   -webkit-text-stroke: 0;
   font-style: italic;
   padding-left: 0.5em;
 }
-.ap-points i {
+#view-auth .ap-points i {
   color: #ff8ac6;
 }
-.auth-card-head h1 {
+#view-auth .auth-card-head h1 {
   font-weight: 400;
   font-size: clamp(2.6rem, 5vw, 3.6rem);
   letter-spacing: -0.015em;
   line-height: 0.95;
 }
-.fld-box input {
+#view-auth .fld-box input {
   background: #fff;
   border-color: var(--line-strong);
 }
-.fld-box input:focus {
+#view-auth .fld-box input:focus {
   background: #fff;
 }
-.fld-box input:-webkit-autofill {
+#view-auth .fld-box input:-webkit-autofill {
   box-shadow: 0 0 0 60px #fff inset;
 }
-.auth-submit {
+#view-auth .auth-submit {
   background: #070914;
   color: #f1f0ff;
 }
-.auth-submit:hover {
+#view-auth .auth-submit:hover {
   background: #6d4aff;
   color: #fff;
 }
-.social-btn {
+#view-auth .social-btn {
   background: var(--surface);
 }
-.social-btn:hover {
+#view-auth .social-btn:hover {
   background: #fff;
   border-color: #070914;
 }
-.auth-toggle-mode:hover,
-.auth-link:hover {
+#view-auth .auth-toggle-mode:hover,
+#view-auth .auth-link:hover {
   color: #070914;
 }
-.auth-checkbox input {
+#view-auth .auth-checkbox input {
   background: #fff;
 }
-.auth-toast.error {
+#view-auth .auth-toast.error {
   background: rgba(179, 38, 30, 0.08);
   border-color: rgba(179, 38, 30, 0.35);
 }
-.auth-toast.success {
+#view-auth .auth-toast.success {
   background: rgba(109, 74, 255, 0.09);
   border-color: rgba(109, 74, 255, 0.35);
 }
-.pw-track {
+#view-auth .pw-track {
   background: rgba(7, 9, 20, 0.1);
 }
 
 /* ═══════════════════════════════════════════════════════════
    v3 — modern luxury auth (all hooks for auth.js untouched)
    ═══════════════════════════════════════════════════════════ */
-:root {
+#view-auth {
   --brass: #ff4fa3;
   --card-glass: rgba(251, 249, 244, 0.86);
   --card-shadow:
     0 1px 0 rgba(255, 255, 255, 0.9) inset,
     0 40px 90px -40px rgba(7, 9, 20, 0.38), 0 2px 8px rgba(7, 9, 20, 0.05);
 }
-html {
+#view-auth {
   scroll-behavior: smooth;
 }
-body {
+#view-auth {
   font-size: clamp(15px, 0.3vw + 14px, 16.5px);
   min-height: 100dvh;
 }
-::selection {
+#view-auth ::selection {
   background: rgba(255, 79, 163, 0.35);
 }
 
 /* shell + brand side */
-.ap-shell {
+#view-auth .ap-shell {
   min-height: 100dvh;
   grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
 }
-.ap-aside {
+#view-auth .ap-aside {
   height: 100dvh;
   padding: clamp(24px, 3.6vw, 56px);
 }
-.ap-aside::after {
+#view-auth .ap-aside::after {
   content: "";
   position: absolute;
   right: clamp(24px, 5vw, 72px);
@@ -798,20 +800,20 @@ body {
   pointer-events: none;
   z-index: -1;
 }
-.ap-mark {
+#view-auth .ap-mark {
   font-size: clamp(3.6rem, min(8.6vw, 17svh), 9.6rem);
 }
-.ap-points {
+#view-auth .ap-points {
   gap: 14px;
   margin-top: clamp(18px, 3.4vh, 32px);
   font-size: clamp(0.88rem, 0.9vw, 0.98rem);
   max-width: 42ch;
 }
-.ap-points li {
+#view-auth .ap-points li {
   align-items: center;
   gap: 14px;
 }
-.ap-points i {
+#view-auth .ap-points i {
   flex: none;
   display: grid;
   place-items: center;
@@ -825,14 +827,14 @@ body {
 }
 
 /* form side */
-.ap-main {
+#view-auth .ap-main {
   position: relative;
   isolation: isolate;
   min-height: 100dvh;
   padding-top: max(clamp(18px, 2.6vw, 32px), env(safe-area-inset-top));
   padding-bottom: max(clamp(18px, 2.6vw, 32px), env(safe-area-inset-bottom));
 }
-.ap-main::before {
+#view-auth .ap-main::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -850,7 +852,7 @@ body {
       transparent 70%
     );
 }
-.ap-back {
+#view-auth .ap-back {
   min-height: 42px;
   padding: 0 16px;
   border: 1px solid var(--line);
@@ -862,20 +864,20 @@ body {
     background 0.2s,
     transform 0.25s var(--ease);
 }
-.ap-back:hover {
+#view-auth .ap-back:hover {
   border-color: var(--text);
   background: #fff;
 }
-.ap-back i {
+#view-auth .ap-back i {
   transition: transform 0.25s var(--ease);
 }
-.ap-back:hover i {
+#view-auth .ap-back:hover i {
   transform: translateX(-3px);
 }
 
 /* the card */
-.auth-card,
-.auth-card-login {
+#view-auth .auth-card,
+#view-auth .auth-card-login {
   max-width: 452px;
   padding: clamp(24px, 3.2vw, 40px);
   background: var(--card-glass);
@@ -886,7 +888,7 @@ body {
   box-shadow: var(--card-shadow);
   animation: apRise 0.9s var(--ease) both;
 }
-.auth-card {
+#view-auth .auth-card {
   max-width: 520px;
 }
 @keyframes apRise {
@@ -899,15 +901,15 @@ body {
     transform: none;
   }
 }
-.auth-card-head h1 {
+#view-auth .auth-card-head h1 {
   font-size: clamp(2.3rem, 3.9vw, 3.2rem);
   line-height: 0.98;
 }
-.auth-card-head p {
+#view-auth .auth-card-head p {
   font-size: clamp(0.92rem, 1vw, 1rem);
   max-width: 42ch;
 }
-.auth-card-head::after {
+#view-auth .auth-card-head::after {
   content: "";
   display: block;
   width: 46px;
@@ -916,23 +918,23 @@ body {
   border-radius: 2px;
   background: linear-gradient(90deg, var(--brass), transparent);
 }
-.auth-form {
+#view-auth .auth-form {
   margin-top: 24px;
   gap: 14px;
 }
 
 /* fields */
-.fld > label {
+#view-auth .fld > label {
   font-weight: 600;
   font-size: 0.84rem;
   letter-spacing: 0.01em;
   margin-bottom: 7px;
 }
-.fld-icon {
+#view-auth .fld-icon {
   left: 16px;
   font-size: 1rem;
 }
-.fld-box input {
+#view-auth .fld-box input {
   height: 54px;
   padding-left: 46px;
   border-radius: 14px;
@@ -940,27 +942,27 @@ body {
   box-shadow: 0 1px 2px rgba(7, 9, 20, 0.04) inset;
   font-size: max(16px, 1rem); /* 16px+ stops iOS zoom-on-focus */
 }
-.fld-box input:hover {
+#view-auth .fld-box input:hover {
   border-color: rgba(7, 9, 20, 0.34);
 }
-.fld-box input:focus {
+#view-auth .fld-box input:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 4px var(--accent-soft);
 }
-.fld-box input.error {
+#view-auth .fld-box input.error {
   box-shadow: 0 0 0 4px rgba(179, 38, 30, 0.1);
 }
-.auth-toast {
+#view-auth .auth-toast {
   border-radius: 14px;
   margin-top: 20px;
 }
-.auth-field-error {
+#view-auth .auth-field-error {
   font-size: 0.82rem;
   margin-top: 6px;
 }
 
 /* primary button */
-.auth-submit {
+#view-auth .auth-submit {
   min-height: 54px;
   overflow: hidden;
   background: linear-gradient(135deg, #070914, #1a1d45);
@@ -968,7 +970,7 @@ body {
   letter-spacing: 0.01em;
   box-shadow: 0 14px 30px -16px rgba(7, 9, 20, 0.7);
 }
-.auth-submit::after {
+#view-auth .auth-submit::after {
   content: "";
   position: absolute;
   inset: 0 auto 0 0;
@@ -982,20 +984,20 @@ body {
   transform: translateX(-130%) skewX(-18deg);
   pointer-events: none;
 }
-.auth-submit:hover {
+#view-auth .auth-submit:hover {
   background: linear-gradient(135deg, #6d4aff, #8b6bff);
   box-shadow: 0 18px 36px -16px rgba(109, 74, 255, 0.75);
 }
-.auth-submit:hover::after {
+#view-auth .auth-submit:hover::after {
   transform: translateX(280%) skewX(-18deg);
   transition: transform 0.8s var(--ease);
 }
 
 /* social buttons */
-.auth-divider {
+#view-auth .auth-divider {
   margin: 24px 0 16px;
 }
-.social-btn {
+#view-auth .social-btn {
   min-height: 52px;
   background: #fff;
   transition:
@@ -1003,58 +1005,58 @@ body {
     box-shadow 0.25s,
     transform 0.25s var(--ease);
 }
-.social-btn:hover {
+#view-auth .social-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 24px -16px rgba(7, 9, 20, 0.5);
 }
-.auth-switch {
+#view-auth .auth-switch {
   margin-top: 24px;
 }
-.auth-switch a {
+#view-auth .auth-switch a {
   color: var(--accent);
 }
-.auth-switch a:hover {
+#view-auth .auth-switch a:hover {
   color: var(--text);
 }
 
 /* ── responsive ── */
 @media (min-width: 1600px) {
-  .auth-card-login {
+  #view-auth .auth-card-login {
     max-width: 480px;
   }
-  .auth-card {
+  #view-auth .auth-card {
     max-width: 560px;
   }
 }
 @media (min-width: 961px) and (max-height: 640px) {
-  .ap-points {
+  #view-auth .ap-points {
     display: none;
   }
 }
 @media (max-width: 960px) {
-  .ap-shell {
+  #view-auth .ap-shell {
     grid-template-columns: 1fr;
   }
-  .ap-main {
+  #view-auth .ap-main {
     padding-inline: clamp(16px, 5vw, 40px);
   }
-  .ap-top {
+  #view-auth .ap-top {
     padding-bottom: 6px;
   }
-  .ap-center {
+  #view-auth .ap-center {
     place-items: start center;
     padding-top: clamp(14px, 4vh, 44px);
   }
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     max-width: 500px;
     margin-inline: auto;
   }
 }
 @media (max-width: 520px) {
   /* roomy, borderless on phones: the form itself is the page */
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     padding: 4px 0 0;
     background: transparent;
     border: 0;
@@ -1062,53 +1064,53 @@ body {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
-  .auth-card-head h1 {
+  #view-auth .auth-card-head h1 {
     font-size: clamp(2.2rem, 10.5vw, 2.8rem);
   }
-  .ap-back {
+  #view-auth .ap-back {
     padding: 0 14px;
   }
 }
 @media (max-width: 360px) {
-  .fld-box input {
+  #view-auth .fld-box input {
     height: 50px;
   }
-  .auth-submit,
-  .social-btn {
+  #view-auth .auth-submit,
+#view-auth .social-btn {
     min-height: 50px;
   }
-  .auth-row-between {
+  #view-auth .auth-row-between {
     gap: 8px;
   }
 }
 @media (max-height: 500px) and (orientation: landscape) {
-  .ap-center {
+  #view-auth .ap-center {
     padding-block: 10px;
   }
-  .auth-card-head::after {
+  #view-auth .auth-card-head::after {
     display: none;
   }
 }
 @media (hover: none) {
-  .social-btn:hover,
-  .auth-submit:hover {
+  #view-auth .social-btn:hover,
+#view-auth .auth-submit:hover {
     transform: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     animation: none;
   }
 }
 
 /* v3 fixes: list reset so the points line up with the wordmark, and a soft fade on the arch */
-.ap-points {
+#view-auth .ap-points {
   padding: 0;
   margin-left: 0;
   list-style: none;
 }
-.ap-aside::after {
+#view-auth .ap-aside::after {
   -webkit-mask-image: linear-gradient(#000 35%, transparent 100%);
   mask-image: linear-gradient(#000 35%, transparent 100%);
 }
@@ -1129,10 +1131,10 @@ body {
 }
 
 /* brand side */
-.ap-aside {
+#view-auth .ap-aside {
   background: #05060f;
 }
-.ap-aside::before {
+#view-auth .ap-aside::before {
   background:
     radial-gradient(
       60% 50% at 72% 34%,
@@ -1146,16 +1148,16 @@ body {
     ),
     linear-gradient(180deg, transparent 40%, rgba(5, 6, 15, 0.7));
 }
-.ap-aside::after {
+#view-auth .ap-aside::after {
   display: none;
 }
-.ap-art {
+#view-auth .ap-art {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
 }
-.ap-fig {
+#view-auth .ap-fig {
   position: absolute;
   right: clamp(24px, 5vw, 76px);
   top: clamp(76px, 13svh, 140px);
@@ -1163,7 +1165,7 @@ body {
   aspect-ratio: 4 / 5.3;
   animation: apRise 1.1s var(--ease) 0.1s both;
 }
-.ap-arch {
+#view-auth .ap-arch {
   position: absolute;
   inset: 0;
   border-radius: 999px 999px 0 0;
@@ -1171,7 +1173,7 @@ body {
   border: 1px solid rgba(255, 79, 163, 0.5);
   box-shadow: 0 0 90px rgba(34, 211, 238, 0.16);
 }
-.ap-arch::after {
+#view-auth .ap-arch::after {
   content: "";
   position: absolute;
   inset: 12px 12px 0;
@@ -1179,7 +1181,7 @@ body {
   border: 1px solid rgba(255, 79, 163, 0.28);
   border-bottom: 0;
 }
-.ap-portrait {
+#view-auth .ap-portrait {
   position: absolute;
   left: 50%;
   bottom: 0;
@@ -1190,35 +1192,35 @@ body {
   object-fit: contain;
   object-position: center bottom;
 }
-.ap-spark {
+#view-auth .ap-spark {
   position: absolute;
   color: var(--brass);
   font-style: normal;
   line-height: 1;
   animation: apTwinkle 3.6s ease-in-out infinite;
 }
-.ap-spark.s1 {
+#view-auth .ap-spark.s1 {
   left: -7%;
   top: 22%;
   font-size: 1.5rem;
 }
-.ap-spark.s2 {
+#view-auth .ap-spark.s2 {
   right: -5%;
   top: 46%;
   font-size: 1rem;
   animation-delay: 1.4s;
 }
-.ap-copy {
+#view-auth .ap-copy {
   position: relative;
   z-index: 2;
 }
-.ap-mark {
+#view-auth .ap-mark {
   font-size: clamp(3.4rem, min(7.6vw, 14svh), 8.6rem);
   text-shadow: 0 2px 30px rgba(5, 6, 15, 0.55);
 }
 
 /* form side: tabs */
-.ap-tabs {
+#view-auth .ap-tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4px;
@@ -1228,7 +1230,7 @@ body {
   border-radius: 999px;
   background: rgba(7, 9, 20, 0.04);
 }
-.ap-tabs a {
+#view-auth .ap-tabs a {
   display: grid;
   place-items: center;
   min-height: 42px;
@@ -1243,17 +1245,17 @@ body {
     background 0.25s,
     box-shadow 0.25s;
 }
-.ap-tabs a:hover {
+#view-auth .ap-tabs a:hover {
   color: var(--text);
 }
-.ap-tabs a.is-active {
+#view-auth .ap-tabs a.is-active {
   background: #070914;
   color: #f1f0ff;
   box-shadow: 0 10px 20px -12px rgba(7, 9, 20, 0.75);
 }
 
 /* fields: icon sits in its own tinted tile */
-.fld-icon {
+#view-auth .fld-icon {
   left: 7px;
   width: 40px;
   height: 40px;
@@ -1267,70 +1269,70 @@ body {
     background 0.25s,
     color 0.25s;
 }
-.fld-box input {
+#view-auth .fld-box input {
   padding-left: 58px;
 }
-.fld-box:focus-within .fld-icon {
+#view-auth .fld-box:focus-within .fld-icon {
   background: var(--accent);
   color: #fff;
 }
 
 /* one orchestrated entrance: the card's parts rise in sequence */
-.auth-card,
-.auth-card-login {
+#view-auth .auth-card,
+#view-auth .auth-card-login {
   animation: none;
 }
-.auth-card > *,
-.auth-card-login > * {
+#view-auth .auth-card > *,
+#view-auth .auth-card-login > * {
   animation: apRise 0.8s var(--ease) both;
 }
-.auth-card > :nth-child(1),
-.auth-card-login > :nth-child(1) {
+#view-auth .auth-card > :nth-child(1),
+#view-auth .auth-card-login > :nth-child(1) {
   animation-delay: 0.05s;
 }
-.auth-card > :nth-child(2),
-.auth-card-login > :nth-child(2) {
+#view-auth .auth-card > :nth-child(2),
+#view-auth .auth-card-login > :nth-child(2) {
   animation-delay: 0.12s;
 }
-.auth-card > :nth-child(3),
-.auth-card-login > :nth-child(3) {
+#view-auth .auth-card > :nth-child(3),
+#view-auth .auth-card-login > :nth-child(3) {
   animation-delay: 0.19s;
 }
-.auth-card > :nth-child(4),
-.auth-card-login > :nth-child(4) {
+#view-auth .auth-card > :nth-child(4),
+#view-auth .auth-card-login > :nth-child(4) {
   animation-delay: 0.26s;
 }
-.auth-card > :nth-child(5),
-.auth-card-login > :nth-child(5) {
+#view-auth .auth-card > :nth-child(5),
+#view-auth .auth-card-login > :nth-child(5) {
   animation-delay: 0.33s;
 }
-.auth-card > :nth-child(n + 6),
-.auth-card-login > :nth-child(n + 6) {
+#view-auth .auth-card > :nth-child(n + 6),
+#view-auth .auth-card-login > :nth-child(n + 6) {
   animation-delay: 0.4s;
 }
 
 @media (min-width: 961px) and (max-height: 720px) {
-  .ap-points {
+  #view-auth .ap-points {
     display: none;
   }
 }
 @media (max-width: 520px) {
-  .ap-tabs {
+  #view-auth .ap-tabs {
     margin-bottom: 22px;
   }
-  .fld-icon {
+  #view-auth .fld-icon {
     width: 38px;
     height: 38px;
   }
-  .fld-box input {
+  #view-auth .fld-box input {
     padding-left: 56px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ap-fig,
-  .ap-spark,
-  .auth-card > *,
-  .auth-card-login > * {
+  #view-auth .ap-fig,
+#view-auth .ap-spark,
+#view-auth .auth-card > *,
+#view-auth .auth-card-login > * {
     animation: none;
   }
 }
@@ -1339,7 +1341,7 @@ body {
    v5 — brand side redesigned: a live "favourites" card stack
    (replaces the portrait arch — nothing here echoes the hero)
    ═══════════════════════════════════════════════════════════ */
-.ap-aside::before {
+#view-auth .ap-aside::before {
   background:
     radial-gradient(
       55% 45% at 50% 38%,
@@ -1352,7 +1354,7 @@ body {
       transparent 70%
     );
 }
-.ap-aside::after {
+#view-auth .ap-aside::after {
   /* fine dot grid, fading toward the edges */
   display: block;
   content: "";
@@ -1384,13 +1386,13 @@ body {
   );
 }
 
-.ap-stage {
+#view-auth .ap-stage {
   position: relative;
   flex: 1;
   min-height: 170px;
   margin: clamp(8px, 2svh, 24px) 0;
 }
-.ap-card {
+#view-auth .ap-card {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1408,7 +1410,7 @@ body {
     0 0 0 1px rgba(7, 9, 20, 0.06);
   animation: apFloat 8s ease-in-out infinite alternate;
 }
-.ap-card .ic {
+#view-auth .ap-card .ic {
   flex: none;
   width: 46px;
   height: 46px;
@@ -1419,22 +1421,22 @@ body {
   color: #ff8ac6;
   font-size: 1.25rem;
 }
-.ap-card .tx {
+#view-auth .ap-card .tx {
   flex: 1;
   min-width: 0;
   display: grid;
   gap: 2px;
 }
-.ap-card b {
+#view-auth .ap-card b {
   font-size: 0.95rem;
   font-weight: 600;
   line-height: 1.25;
 }
-.ap-card small {
+#view-auth .ap-card small {
   color: #5f6286;
   font-size: 0.78rem;
 }
-.ap-card .hrt {
+#view-auth .ap-card .hrt {
   position: relative;
   flex: none;
   width: 36px;
@@ -1446,14 +1448,14 @@ body {
   color: #5f6286;
   font-size: 0.9rem;
 }
-.ap-card .hrt i {
+#view-auth .ap-card .hrt i {
   grid-area: 1 / 1;
   line-height: 1;
 }
-.ap-card .hrt .on {
+#view-auth .ap-card .hrt .on {
   opacity: 0;
 }
-.ap-card .hrt::after {
+#view-auth .ap-card .hrt::after {
   content: "";
   position: absolute;
   inset: -1px;
@@ -1461,32 +1463,32 @@ body {
   border: 2px solid #e5486f;
   opacity: 0;
 }
-.ap-card .hrt.is-saved {
+#view-auth .ap-card .hrt.is-saved {
   background: #e5486f;
   border-color: #e5486f;
   color: #fff;
 }
-.ap-card .hrt.is-saved .off {
+#view-auth .ap-card .hrt.is-saved .off {
   opacity: 0;
 }
-.ap-card .hrt.is-saved .on {
+#view-auth .ap-card .hrt.is-saved .on {
   opacity: 1;
 }
 
 /* the fan: back → front */
-.ap-card.c3 {
+#view-auth .ap-card.c3 {
   translate: calc(-50% - 38px) calc(-50% - 74px);
   rotate: -5deg;
   opacity: 0.55;
   animation-delay: -2s;
 }
-.ap-card.c2 {
+#view-auth .ap-card.c2 {
   translate: calc(-50% + 26px) calc(-50% - 8px);
   rotate: 3deg;
   opacity: 0.85;
   animation-delay: -5s;
 }
-.ap-card.c1 {
+#view-auth .ap-card.c1 {
   translate: calc(-50% - 10px) calc(-50% + 60px);
   rotate: -1.5deg;
 }
@@ -1500,16 +1502,16 @@ body {
 }
 
 /* the loop on the front card: heart it → ring → chip appears → un-heart */
-.ap-card.c1 .hrt {
+#view-auth .ap-card.c1 .hrt {
   animation: apHeartBg 7s ease-in-out infinite;
 }
-.ap-card.c1 .hrt .off {
+#view-auth .ap-card.c1 .hrt .off {
   animation: apHeartOff 7s ease-in-out infinite;
 }
-.ap-card.c1 .hrt .on {
+#view-auth .ap-card.c1 .hrt .on {
   animation: apHeartOn 7s ease-in-out infinite;
 }
-.ap-card.c1 .hrt::after {
+#view-auth .ap-card.c1 .hrt::after {
   animation: apRing 7s ease-out infinite;
 }
 @keyframes apHeartBg {
@@ -1583,7 +1585,7 @@ body {
     transform: scale(2.5);
   }
 }
-.ap-chip {
+#view-auth .ap-chip {
   position: absolute;
   left: 50%;
   top: 50%;
@@ -1602,7 +1604,7 @@ body {
   opacity: 0;
   animation: apChip 7s ease-in-out infinite;
 }
-.ap-chip i {
+#view-auth .ap-chip i {
   color: #e5486f;
 }
 @keyframes apChip {
@@ -1624,7 +1626,7 @@ body {
 }
 
 /* headline block */
-.ap-head {
+#view-auth .ap-head {
   margin: 0;
   font-family: var(--f-display);
   font-weight: 600;
@@ -1633,81 +1635,81 @@ body {
   letter-spacing: -0.015em;
   color: #f1f0ff;
 }
-.ap-head span {
+#view-auth .ap-head span {
   display: block;
 }
-.ap-head span + span {
+#view-auth .ap-head span + span {
   color: #ff8ac6;
   font-style: italic;
   padding-left: 0.4em;
 }
-.ap-sub {
+#view-auth .ap-sub {
   margin: 14px 0 0;
   max-width: 40ch;
   color: var(--muted);
   font-size: clamp(0.92rem, 1vw, 1rem);
 }
-.ap-copy .ap-points {
+#view-auth .ap-copy .ap-points {
   margin-top: clamp(14px, 2.6svh, 26px);
 }
 @media (min-width: 961px) and (max-height: 820px) {
-  .ap-points {
+  #view-auth .ap-points {
     display: none;
   }
 }
 @media (min-width: 961px) and (max-height: 640px) {
-  .ap-sub {
+  #view-auth .ap-sub {
     display: none;
   }
-  .ap-stage {
+  #view-auth .ap-stage {
     min-height: 130px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ap-card,
-  .ap-card.c1 .hrt,
-  .ap-card.c1 .hrt i,
-  .ap-card.c1 .hrt::after,
-  .ap-chip {
+  #view-auth .ap-card,
+#view-auth .ap-card.c1 .hrt,
+#view-auth .ap-card.c1 .hrt i,
+#view-auth .ap-card.c1 .hrt::after,
+#view-auth .ap-chip {
     animation: none !important;
   }
-  .ap-card.c1 .hrt {
+  #view-auth .ap-card.c1 .hrt {
     background: #e5486f;
     border-color: #e5486f;
     color: #fff;
   }
-  .ap-card.c1 .hrt .off {
+  #view-auth .ap-card.c1 .hrt .off {
     opacity: 0;
   }
-  .ap-card.c1 .hrt .on {
+  #view-auth .ap-card.c1 .hrt .on {
     opacity: 1;
   }
-  .ap-chip {
+  #view-auth .ap-chip {
     opacity: 1;
   }
 }
 
 /* v5 spacing: give each card its own band so titles never overlap */
-.ap-card.c3 {
+#view-auth .ap-card.c3 {
   translate: calc(-50% - 34px) calc(-50% - 92px);
 }
-.ap-card.c2 {
+#view-auth .ap-card.c2 {
   translate: calc(-50% + 22px) calc(-50% - 14px);
 }
-.ap-card.c1 {
+#view-auth .ap-card.c1 {
   translate: calc(-50% - 8px) calc(-50% + 68px);
 }
-.ap-chip {
+#view-auth .ap-chip {
   translate: calc(-50% + 70px) calc(-50% + 136px);
 }
 
 /* ═══════════════════════════════════════════════════════════
    v6 — brand side: a drifting, tilted library of real tools
    ═══════════════════════════════════════════════════════════ */
-.ap-aside {
+#view-auth .ap-aside {
   background: #05060f;
 }
-.ap-aside::before {
+#view-auth .ap-aside::before {
   z-index: -2;
   background:
     radial-gradient(
@@ -1721,11 +1723,11 @@ body {
       transparent 70%
     );
 }
-.ap-aside::after {
+#view-auth .ap-aside::after {
   display: none;
 }
 
-.ap-wall {
+#view-auth .ap-wall {
   position: absolute;
   inset: -18% -12%;
   z-index: -3;
@@ -1745,26 +1747,26 @@ body {
     opacity: 1;
   }
 }
-.ap-col {
+#view-auth .ap-col {
   flex: 0 0 clamp(158px, 15.5vw, 222px);
 }
-.ap-col:nth-child(2) {
+#view-auth .ap-col:nth-child(2) {
   margin-top: -120px;
 }
-.ap-col:nth-child(3) {
+#view-auth .ap-col:nth-child(3) {
   margin-top: -50px;
 }
-.ap-track {
+#view-auth .ap-track {
   display: flex;
   flex-direction: column;
   will-change: transform;
   animation: wcUp 78s linear infinite;
 }
-.ap-col:nth-child(2) .ap-track {
+#view-auth .ap-col:nth-child(2) .ap-track {
   animation-name: wcDown;
   animation-duration: 92s;
 }
-.ap-col:nth-child(3) .ap-track {
+#view-auth .ap-col:nth-child(3) .ap-track {
   animation-duration: 84s;
 }
 @keyframes wcUp {
@@ -1784,7 +1786,7 @@ body {
   }
 }
 
-.wc {
+#view-auth .wc {
   position: relative;
   display: grid;
   gap: 4px;
@@ -1801,7 +1803,7 @@ body {
     0 1px 0 rgba(255, 255, 255, 0.08) inset,
     0 22px 40px -26px rgba(0, 0, 0, 0.8);
 }
-.wc .ic {
+#view-auth .wc .ic {
   position: relative;
   width: 52px;
   height: 52px;
@@ -1814,14 +1816,14 @@ body {
   color: #ff8ac6;
   font-size: 1.3rem;
 }
-.wc .ic img {
+#view-auth .wc .ic img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.wc b {
+#view-auth .wc b {
   color: #f1f0ff;
   font-size: 0.9rem;
   font-weight: 600;
@@ -1831,14 +1833,14 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.wc small {
+#view-auth .wc small {
   color: rgba(255, 138, 198, 0.92);
   font-size: 0.66rem;
   font-weight: 600;
   letter-spacing: 0.09em;
   text-transform: uppercase;
 }
-.wc .hrt {
+#view-auth .wc .hrt {
   position: absolute;
   top: 12px;
   right: 12px;
@@ -1851,14 +1853,14 @@ body {
   color: rgba(241, 240, 255, 0.6);
   font-size: 0.78rem;
 }
-.wc .hrt i {
+#view-auth .wc .hrt i {
   grid-area: 1 / 1;
   line-height: 1;
 }
-.wc .hrt .on {
+#view-auth .wc .hrt .on {
   opacity: 0;
 }
-.wc .hrt::after {
+#view-auth .wc .hrt::after {
   content: "";
   position: absolute;
   inset: -1px;
@@ -1866,31 +1868,31 @@ body {
   border: 2px solid #e5486f;
   opacity: 0;
 }
-.wc .hrt.is-saved {
+#view-auth .wc .hrt.is-saved {
   background: #e5486f;
   border-color: #e5486f;
   color: #fff;
 }
-.wc .hrt.is-saved .off {
+#view-auth .wc .hrt.is-saved .off {
   opacity: 0;
 }
-.wc .hrt.is-saved .on {
+#view-auth .wc .hrt.is-saved .on {
   opacity: 1;
 }
 /* a few hearts get toggled on their own, so the wall feels alive */
-.wc .hrt.pulse {
+#view-auth .wc .hrt.pulse {
   animation: wcHeartBg 9s ease-in-out infinite;
   animation-delay: var(--d, 0s);
 }
-.wc .hrt.pulse .off {
+#view-auth .wc .hrt.pulse .off {
   animation: apHeartOff 9s ease-in-out infinite;
   animation-delay: var(--d, 0s);
 }
-.wc .hrt.pulse .on {
+#view-auth .wc .hrt.pulse .on {
   animation: apHeartOn 9s ease-in-out infinite;
   animation-delay: var(--d, 0s);
 }
-.wc .hrt.pulse::after {
+#view-auth .wc .hrt.pulse::after {
   animation: apRing 9s ease-out infinite;
   animation-delay: var(--d, 0s);
 }
@@ -1916,7 +1918,7 @@ body {
 }
 
 /* shade: keeps the brand + headline readable over the moving wall */
-.ap-shade {
+#view-auth .ap-shade {
   position: absolute;
   inset: 0;
   z-index: -1;
@@ -1932,7 +1934,7 @@ body {
     ),
     radial-gradient(120% 90% at 50% 40%, transparent 55%, rgba(5, 6, 15, 0.7));
 }
-.ap-eyebrow {
+#view-auth .ap-eyebrow {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -1943,7 +1945,7 @@ body {
   letter-spacing: 0.22em;
   text-transform: uppercase;
 }
-.ap-eyebrow::before {
+#view-auth .ap-eyebrow::before {
   content: "";
   width: 30px;
   height: 1px;
@@ -1951,28 +1953,28 @@ body {
 }
 
 @media (min-width: 961px) and (max-height: 700px) {
-  .ap-eyebrow {
+  #view-auth .ap-eyebrow {
     display: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ap-track,
-  .wc .hrt.pulse,
-  .wc .hrt.pulse i,
-  .wc .hrt.pulse::after {
+  #view-auth .ap-track,
+#view-auth .wc .hrt.pulse,
+#view-auth .wc .hrt.pulse i,
+#view-auth .wc .hrt.pulse::after {
     animation: none !important;
   }
-  .ap-wall {
+  #view-auth .ap-wall {
     animation: none;
     opacity: 1;
   }
 }
 
 /* v6 tuning: narrower tiles so 3 columns fit, and a darker shade behind the headline */
-.ap-col {
+#view-auth .ap-col {
   flex-basis: clamp(150px, 13.2vw, 200px);
 }
-.ap-shade {
+#view-auth .ap-shade {
   background:
     linear-gradient(
       180deg,
@@ -1987,7 +1989,7 @@ body {
 }
 
 /* v6: stronger top shade so the brand never sits on a tile's text */
-.ap-shade {
+#view-auth .ap-shade {
   background:
     linear-gradient(
       180deg,
@@ -2006,19 +2008,19 @@ body {
    v7 — small screens: brand panel pinned on top, only the form scrolls
    ═══════════════════════════════════════════════════════════ */
 @media (max-width: 960px) {
-  html,
-  body {
+  html.route-auth,
+html.route-auth body {
     height: 100%;
     overflow: hidden;
   }
-  .ap-shell {
+  #view-auth .ap-shell {
     display: flex;
     flex-direction: column;
     height: 100dvh;
     min-height: 0;
     overflow: hidden;
   }
-  .ap-aside {
+  #view-auth .ap-aside {
     display: flex;
     position: relative;
     top: auto;
@@ -2028,29 +2030,29 @@ body {
     border-right: 0;
     border-bottom: 1px solid rgba(241, 240, 255, 0.12);
   }
-  .ap-aside .ap-brand {
+  #view-auth .ap-aside .ap-brand {
     font-size: 1.3rem;
   }
-  .ap-aside .ap-brand img {
+  #view-auth .ap-aside .ap-brand img {
     width: 26px;
     height: 26px;
   }
-  .ap-eyebrow,
-  .ap-sub,
-  .ap-points {
+  #view-auth .ap-eyebrow,
+#view-auth .ap-sub,
+#view-auth .ap-points {
     display: none;
   }
-  .ap-head {
+  #view-auth .ap-head {
     font-size: clamp(1.9rem, 8vw, 2.8rem);
     line-height: 1;
   }
-  .ap-col {
+  #view-auth .ap-col {
     flex-basis: clamp(104px, 27vw, 150px);
   }
-  .ap-wall {
+  #view-auth .ap-wall {
     inset: -25% -20%;
   }
-  .ap-shade {
+  #view-auth .ap-shade {
     background: linear-gradient(
       180deg,
       rgba(5, 6, 15, 0.92) 0%,
@@ -2059,7 +2061,7 @@ body {
       rgba(5, 6, 15, 0.95) 100%
     );
   }
-  .ap-main {
+  #view-auth .ap-main {
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
@@ -2067,19 +2069,19 @@ body {
     -webkit-overflow-scrolling: touch;
     padding-bottom: max(24px, env(safe-area-inset-bottom));
   }
-  .ap-top .ap-brand {
+  #view-auth .ap-top .ap-brand {
     display: none;
   }
-  .ap-top {
+  #view-auth .ap-top {
     padding-top: 4px;
   }
 }
 @media (max-width: 960px) and (max-height: 520px) {
-  .ap-aside {
+  #view-auth .ap-aside {
     height: 84px;
     padding-bottom: 10px;
   }
-  .ap-copy {
+  #view-auth .ap-copy {
     display: none;
   }
 }
@@ -2146,29 +2148,29 @@ body {
     transform: translateX(3px);
   }
 }
-@keyframes apRipple {
+@keyframes apx-ripple {
   to {
     transform: scale(2.6);
     opacity: 0;
   }
 }
 
-.auth-form {
+#view-auth .auth-form {
   gap: 20px;
 }
-.step {
+#view-auth .step {
   display: grid;
   gap: 0;
 }
 
 /* question: avatar + bubble */
-.chat-row {
+#view-auth .chat-row {
   display: flex;
   align-items: center;
   gap: 12px;
   margin: 0 0 12px;
 }
-.chat-avatar {
+#view-auth .chat-avatar {
   width: 48px;
   height: 48px;
   flex: none;
@@ -2182,7 +2184,7 @@ body {
   animation: chatPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)
     calc(0.3s + var(--i, 0) * 0.3s) backwards;
 }
-.chat-bubble {
+#view-auth .chat-bubble {
   margin: 0;
   padding: 10px 16px;
   border-radius: 18px 18px 18px 6px;
@@ -2197,17 +2199,17 @@ body {
   animation: chatBubble 0.55s cubic-bezier(0.34, 1.56, 0.64, 1)
     calc(0.5s + var(--i, 0) * 0.3s) backwards;
 }
-.step:nth-of-type(2) .chat-avatar,
-.step:nth-of-type(2) .chat-bubble {
+#view-auth .step:nth-of-type(2) .chat-avatar,
+#view-auth .step:nth-of-type(2) .chat-bubble {
   --i: 1;
 }
-.step:nth-of-type(3) .chat-avatar,
-.step:nth-of-type(3) .chat-bubble {
+#view-auth .step:nth-of-type(3) .chat-avatar,
+#view-auth .step:nth-of-type(3) .chat-bubble {
   --i: 2;
 }
 
 /* little "you" badge sitting on the input's top-right edge */
-.user-row {
+#view-auth .user-row {
   position: relative;
   z-index: 2;
   display: flex;
@@ -2215,7 +2217,7 @@ body {
   margin: 0 14px -14px 0;
   pointer-events: none;
 }
-.user-tag {
+#view-auth .user-tag {
   display: grid;
   place-items: center;
   width: 28px;
@@ -2230,10 +2232,10 @@ body {
 }
 
 /* pill input */
-.fld {
+#view-auth .fld {
   margin: 0;
 }
-.fld-box {
+#view-auth .fld-box {
   gap: 10px;
   min-height: 60px;
   padding: 6px 6px 6px 8px;
@@ -2246,19 +2248,19 @@ body {
     border-color 0.2s,
     box-shadow 0.25s;
 }
-.fld-box:hover {
+#view-auth .fld-box:hover {
   border-color: rgba(7, 9, 20, 0.34);
 }
-.fld-icon {
+#view-auth .fld-icon {
   position: static;
   flex: none;
   width: 42px;
   height: 42px;
 }
-.fld-box input,
-.fld-box input:hover,
-.fld-box input:focus,
-.fld-box:has(.auth-toggle-visibility) input {
+#view-auth .fld-box input,
+#view-auth .fld-box input:hover,
+#view-auth .fld-box input:focus,
+#view-auth .fld-box:has(.auth-toggle-visibility) input {
   flex: 1;
   min-width: 0;
   width: 100%;
@@ -2270,7 +2272,7 @@ body {
   box-shadow: none;
   outline: 0;
 }
-.fld-box:focus-within {
+#view-auth .fld-box:focus-within {
   border-color: transparent;
   background:
     linear-gradient(#fff, #fff) padding-box,
@@ -2282,33 +2284,33 @@ body {
   transform: translateY(-1px);
   animation: apAng 3s linear infinite;
 }
-.fld-box:has(input.error),
-.fld-box:has(input.error):focus-within {
+#view-auth .fld-box:has(input.error),
+#view-auth .fld-box:has(input.error):focus-within {
   background: #fff;
   border-color: #b3261e;
   box-shadow: 0 0 0 4px rgba(179, 38, 30, 0.1);
   animation: apShake 0.45s ease;
   transform: none;
 }
-.fld-box input.error {
+#view-auth .fld-box input.error {
   box-shadow: none;
 }
-.auth-field-error {
+#view-auth .auth-field-error {
   margin: 7px 0 0 8px;
 }
-.auth-toggle-visibility {
+#view-auth .auth-toggle-visibility {
   position: static;
   flex: none;
   width: 34px;
   height: 34px;
   border-radius: 10px;
 }
-.auth-toggle-mode {
+#view-auth .auth-toggle-mode {
   margin: 10px 0 0 8px;
 }
 
 /* round arrow = next field */
-.fld-next {
+#view-auth .fld-next {
   position: relative;
   overflow: hidden;
   flex: none;
@@ -2326,81 +2328,81 @@ body {
     transform 0.2s var(--ease),
     box-shadow 0.2s;
 }
-.fld-next:hover {
+#view-auth .fld-next:hover {
   transform: translateX(2px);
 }
-.fld-next:active {
+#view-auth .fld-next:active {
   transform: scale(0.92);
 }
-.fld-box:focus-within .fld-next {
+#view-auth .fld-box:focus-within .fld-next {
   animation: apPulse 1.8s ease-out infinite;
 }
-.fld-box:focus-within .fld-next i {
+#view-auth .fld-box:focus-within .fld-next i {
   display: inline-block;
   animation: apNudge 1.2s ease-in-out infinite;
 }
 
 /* name + username side by side */
-.pair {
+#view-auth .pair {
   gap: 10px;
 }
-.pair .fld-box {
+#view-auth .pair .fld-box {
   gap: 6px;
   padding-left: 6px;
 }
-.pair .fld-icon {
+#view-auth .pair .fld-icon {
   width: 36px;
   height: 36px;
 }
-.pair .fld-next {
+#view-auth .pair .fld-next {
   width: 38px;
   height: 38px;
 }
-.pair .fld-box input {
+#view-auth .pair .fld-box input {
   font-size: max(16px, 0.95rem);
 }
 
-.pw-meter {
+#view-auth .pw-meter {
   margin: 8px 8px 0;
 }
-.auth-form > .auth-checkbox {
+#view-auth .auth-form > .auth-checkbox {
   margin: 0 2px;
 }
-.auth-row-between {
+#view-auth .auth-row-between {
   margin: 0 2px;
 }
 
 /* buttons: ripple + softer social pills */
-.social-btn {
+#view-auth .social-btn {
   position: relative;
   overflow: hidden;
   border-radius: 16px;
   border: 1.5px solid rgba(7, 9, 20, 0.16);
 }
-.auth-submit {
+#view-auth .auth-submit {
   border-radius: 18px;
   min-height: 58px;
 }
-.ag-ripple {
+#view-auth .ag-ripple {
   position: absolute;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.4);
   transform: scale(0);
-  animation: apRipple 0.6s ease-out forwards;
+  animation: apx-ripple 0.6s ease-out forwards;
   pointer-events: none;
 }
-.social-btn .ag-ripple {
+#view-auth .social-btn .ag-ripple {
   background: rgba(109, 74, 255, 0.2);
 }
 
 /* soft spotlight following the mouse (desktop) */
 @media (hover: hover) and (pointer: fine) {
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     position: relative;
   }
-  .auth-card::after,
-  .auth-card-login::after {
+  #view-auth .auth-card::after,
+#view-auth .auth-card-login::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -2414,59 +2416,59 @@ body {
       transparent 70%
     );
   }
-  .auth-card:hover::after,
-  .auth-card-login:hover::after {
+  #view-auth .auth-card:hover::after,
+#view-auth .auth-card-login:hover::after {
     opacity: 1;
   }
 }
 
 /* once the intro has played, toggling email/username doesn't re-animate */
-body.ag-played .chat-avatar,
-body.ag-played .chat-bubble {
+#view-auth.ag-played .chat-avatar,
+#view-auth.ag-played .chat-bubble {
   animation: none;
 }
 
 @media (max-width: 520px) {
-  .chat-avatar {
+  #view-auth .chat-avatar {
     width: 44px;
     height: 44px;
   }
-  .fld-box {
+  #view-auth .fld-box {
     min-height: 58px;
   }
-  .fld-icon {
+  #view-auth .fld-icon {
     width: 40px;
     height: 40px;
   }
-  .fld-next {
+  #view-auth .fld-next {
     width: 42px;
     height: 42px;
   }
 }
 @media (max-width: 440px) {
-  .pair .fld-next {
+  #view-auth .pair .fld-next {
     width: 42px;
     height: 42px;
   }
 }
 @media (max-width: 380px) {
-  .chat-bubble {
+  #view-auth .chat-bubble {
     font-size: 0.86rem;
     padding: 9px 13px;
   }
-  .fld-box input {
+  #view-auth .fld-box input {
     font-size: 16px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .chat-avatar,
-  .chat-bubble,
-  .fld-box:focus-within,
-  .fld-box:focus-within .fld-next,
-  .fld-box:focus-within .fld-next i {
+  #view-auth .chat-avatar,
+#view-auth .chat-bubble,
+#view-auth .fld-box:focus-within,
+#view-auth .fld-box:focus-within .fld-next,
+#view-auth .fld-box:focus-within .fld-next i {
     animation: none !important;
   }
-  .fld-box:focus-within {
+  #view-auth .fld-box:focus-within {
     border-color: var(--accent);
     background: #fff;
   }
@@ -2498,7 +2500,7 @@ body.ag-played .chat-bubble {
   }
 }
 
-.ap-main {
+#view-auth .ap-main {
   background:
     radial-gradient(
       circle at 12% 8%,
@@ -2517,13 +2519,13 @@ body.ag-played .chat-bubble {
     0 -18px 50px rgba(5, 6, 15, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
-.ap-main::before {
+#view-auth .ap-main::before {
   display: none;
 }
 
 /* inner glass card (all sizes, phones included) */
-.auth-card,
-.auth-card-login {
+#view-auth .auth-card,
+#view-auth .auth-card-login {
   background: linear-gradient(
     160deg,
     rgba(255, 255, 255, 0.82),
@@ -2540,7 +2542,7 @@ body.ag-played .chat-bubble {
 
 /* desktop: curved left edge overlapping the brand side */
 @media (min-width: 961px) {
-  .ap-main {
+  #view-auth .ap-main {
     z-index: 2;
     margin-left: -56px;
     padding-left: calc(clamp(18px, 4vw, 56px) + 44px);
@@ -2550,18 +2552,18 @@ body.ag-played .chat-bubble {
       inset 1px 0 0 rgba(255, 255, 255, 0.8);
     animation: apSheetIn 0.9s var(--ease) both;
   }
-  .ap-copy {
+  #view-auth .ap-copy {
     padding-right: 56px;
   }
 }
 
 /* phone / tablet: bottom sheet over the pinned brand panel */
 @media (max-width: 960px) {
-  .ap-aside {
+  #view-auth .ap-aside {
     height: clamp(200px, 34dvh, 300px);
     padding-bottom: 44px;
   }
-  .ap-main {
+  #view-auth .ap-main {
     position: relative;
     z-index: 2;
     margin-top: -30px;
@@ -2569,11 +2571,11 @@ body.ag-played .chat-bubble {
     border-radius: 34px 34px 0 0;
     animation: apSheetUp 0.8s var(--ease) both;
   }
-  .ap-top {
+  #view-auth .ap-top {
     position: relative;
     padding-top: 14px;
   }
-  .ap-top::before {
+  #view-auth .ap-top::before {
     /* little grab handle */
     content: "";
     position: absolute;
@@ -2585,23 +2587,23 @@ body.ag-played .chat-bubble {
     border-radius: 4px;
     background: rgba(7, 9, 20, 0.2);
   }
-  .ap-center {
+  #view-auth .ap-center {
     padding-top: clamp(10px, 2.5vh, 24px);
   }
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     max-width: 500px;
     padding: 22px 20px 24px;
     border-radius: 28px;
   }
 }
 @media (max-width: 520px) {
-  .ap-main {
+  #view-auth .ap-main {
     padding-inline: 12px;
     border-radius: 30px 30px 0 0;
   }
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     padding: 20px 16px 22px;
     border-radius: 26px;
     background: linear-gradient(
@@ -2618,16 +2620,16 @@ body.ag-played .chat-bubble {
   }
 }
 @media (max-width: 960px) and (max-height: 520px) {
-  .ap-aside {
+  #view-auth .ap-aside {
     height: 84px;
     padding-bottom: 28px;
   }
-  .ap-main {
+  #view-auth .ap-main {
     margin-top: -20px;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  .ap-main {
+  #view-auth .ap-main {
     animation: none;
   }
 }
@@ -2666,95 +2668,95 @@ body.ag-played .chat-bubble {
 
 /* desktop: brand side wider, form panel slimmer, card compact */
 @media (min-width: 961px) {
-  .ap-shell {
+  #view-auth .ap-shell {
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
   }
-  .ap-main {
+  #view-auth .ap-main {
     margin-left: -72px;
     padding-left: calc(clamp(18px, 3vw, 44px) + 60px);
     padding-right: clamp(18px, 3vw, 44px);
   }
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     max-width: 430px;
     padding: 24px 26px;
   }
-  .ap-copy {
+  #view-auth .ap-copy {
     padding-right: 72px;
   }
-  .ap-col {
+  #view-auth .ap-col {
     flex-basis: clamp(150px, 14vw, 210px);
   }
 }
 @media (min-width: 961px) and (max-height: 780px) {
-  .auth-card-head p {
+  #view-auth .auth-card-head p {
     display: none;
   }
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     padding: 18px 24px;
   }
-  .auth-form {
+  #view-auth .auth-form {
     gap: 14px;
   }
 }
 @media (min-width: 1600px) {
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     max-width: 450px;
   }
 }
 
 /* phone / tablet: taller brand area, shorter sheet */
 @media (max-width: 960px) {
-  .ap-aside {
+  #view-auth .ap-aside {
     height: clamp(230px, 38dvh, 340px);
   }
-  .ap-sub {
+  #view-auth .ap-sub {
     display: block;
     font-size: 0.9rem;
     margin-top: 10px;
     max-width: 34ch;
   }
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     max-width: 440px;
   }
 }
 @media (max-width: 960px) and (max-height: 700px) {
-  .ap-sub {
+  #view-auth .ap-sub {
     display: none;
   }
 }
 @media (max-width: 960px) and (max-height: 520px) {
-  .ap-aside {
+  #view-auth .ap-aside {
     height: 84px;
   }
-  .ap-sub {
+  #view-auth .ap-sub {
     display: none;
   }
 }
 
 /* chat bubble: typing text + dots */
-.chat-row {
+#view-auth .chat-row {
   position: relative;
 }
-.chat-avatar,
-.chat-bubble {
+#view-auth .chat-avatar,
+#view-auth .chat-bubble {
   animation: none;
 }
-.chat-bubble {
+#view-auth .chat-bubble {
   position: relative;
 }
-.tw-ghost {
+#view-auth .tw-ghost {
   opacity: 0;
 }
-.tw-live {
+#view-auth .tw-live {
   position: absolute;
   inset: 0;
   padding: inherit;
 }
-.tw-caret::after {
+#view-auth .tw-caret::after {
   content: "";
   display: inline-block;
   width: 2px;
@@ -2764,7 +2766,7 @@ body.ag-played .chat-bubble {
   background: var(--accent);
   animation: twBlink 0.8s steps(1) infinite;
 }
-.tw-dots {
+#view-auth .tw-dots {
   display: none;
   align-items: center;
   gap: 5px;
@@ -2774,54 +2776,54 @@ body.ag-played .chat-bubble {
   border: 1px solid var(--line);
   box-shadow: 0 12px 24px -16px rgba(7, 9, 20, 0.5);
 }
-.tw-dots i {
+#view-auth .tw-dots i {
   width: 7px;
   height: 7px;
   border-radius: 50%;
   background: var(--accent);
   animation: twBounce 1s ease-in-out infinite;
 }
-.tw-dots i:nth-child(2) {
+#view-auth .tw-dots i:nth-child(2) {
   animation-delay: 0.15s;
 }
-.tw-dots i:nth-child(3) {
+#view-auth .tw-dots i:nth-child(3) {
   animation-delay: 0.3s;
 }
 
-.tw-on .step:not(.tw-started) .chat-row {
+#view-auth .tw-on .step:not(.tw-started) .chat-row {
   visibility: hidden;
 }
-.tw-on .tw-started .chat-avatar {
+#view-auth .tw-on .tw-started .chat-avatar {
   animation: chatPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
-.tw-on .tw-started .chat-bubble {
+#view-auth .tw-on .tw-started .chat-bubble {
   animation: chatBubble 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
-.tw-on .tw-wait .chat-bubble {
+#view-auth .tw-on .tw-wait .chat-bubble {
   display: none;
 }
-.tw-on .tw-wait .tw-dots {
+#view-auth .tw-on .tw-wait .tw-dots {
   display: flex;
   animation: chatBubble 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
 }
 
 /* inputs wait for their question, then slide in */
-.tw-on .step:not(.tw-ready) > :not(.chat-row) {
+#view-auth .tw-on .step:not(.tw-ready) > :not(.chat-row) {
   opacity: 0;
   pointer-events: none;
 }
-.tw-on .step.tw-ready > :not(.chat-row) {
+#view-auth .tw-on .step.tw-ready > :not(.chat-row) {
   animation: twSlide 0.55s var(--ease) backwards;
 }
-.tw-on .step.tw-ready > .fld ~ .fld,
-.tw-on .step.tw-ready > .pw-meter {
+#view-auth .tw-on .step.tw-ready > .fld ~ .fld,
+#view-auth .tw-on .step.tw-ready > .pw-meter {
   animation-delay: 0.1s;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .tw-dots,
-  .tw-dots i,
-  .tw-caret::after {
+  #view-auth .tw-dots,
+#view-auth .tw-dots i,
+#view-auth .tw-caret::after {
     animation: none !important;
   }
 }
@@ -2830,87 +2832,87 @@ body.ag-played .chat-bubble {
    v11 — polish pass: badge clear of arrow, tighter desktop card,
    short phones, landscape phones as side-by-side
    ═══════════════════════════════════════════════════════════ */
-.user-row {
+#view-auth .user-row {
   margin-right: 66px;
 }
-.auth-card-head h1,
-.auth-card h1,
-.auth-card-login h1 {
+#view-auth .auth-card-head h1,
+#view-auth .auth-card h1,
+#view-auth .auth-card-login h1 {
   font-size: clamp(1.7rem, 2.3vw, 2.2rem);
   line-height: 1.05;
 }
-.auth-form {
+#view-auth .auth-form {
   gap: 16px;
 }
-.chat-row {
+#view-auth .chat-row {
   margin-bottom: 10px;
 }
 
 @media (min-width: 961px) and (max-height: 900px) {
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     padding: 20px 24px;
   }
-  .auth-card-head p {
+  #view-auth .auth-card-head p {
     display: none;
   }
-  .auth-form {
+  #view-auth .auth-form {
     gap: 13px;
   }
-  .ap-top {
+  #view-auth .ap-top {
     padding-bottom: 0;
   }
 }
 
 /* short phones: give the form more room */
 @media (max-width: 960px) and (max-height: 760px) {
-  .ap-aside {
+  #view-auth .ap-aside {
     height: clamp(165px, 25dvh, 220px);
     padding-bottom: 38px;
   }
-  .ap-head {
+  #view-auth .ap-head {
     font-size: clamp(1.6rem, 7vw, 2.2rem);
   }
-  .ap-sub {
+  #view-auth .ap-sub {
     display: none;
   }
-  .auth-card-head p {
+  #view-auth .auth-card-head p {
     display: none;
   }
-  .ap-top {
+  #view-auth .ap-top {
     padding-top: 12px;
   }
 }
 
 /* landscape phones: brand panel left (pinned), form right (scrolls) */
 @media (max-width: 960px) and (max-height: 520px) {
-  html,
-  body {
+  html.route-auth,
+html.route-auth body {
     overflow: hidden;
   }
-  .ap-shell {
+  #view-auth .ap-shell {
     flex-direction: row;
   }
-  .ap-aside {
+  #view-auth .ap-aside {
     flex: 0 0 38%;
     height: 100%;
     padding: 14px 24px 18px 22px;
     border-bottom: 0;
     border-right: 1px solid rgba(241, 240, 255, 0.12);
   }
-  .ap-copy {
+  #view-auth .ap-copy {
     display: block;
     padding-right: 36px;
   }
-  .ap-head {
+  #view-auth .ap-head {
     font-size: clamp(1.4rem, 4.4vw, 2rem);
   }
-  .ap-eyebrow,
-  .ap-points,
-  .ap-sub {
+  #view-auth .ap-eyebrow,
+#view-auth .ap-points,
+#view-auth .ap-sub {
     display: none;
   }
-  .ap-main {
+  #view-auth .ap-main {
     flex: 1 1 0;
     height: 100%;
     margin-top: 0;
@@ -2919,11 +2921,11 @@ body.ag-played .chat-bubble {
     border-radius: 34px 0 0 34px;
     animation-name: apSheetIn;
   }
-  .ap-top::before {
+  #view-auth .ap-top::before {
     display: none;
   }
-  .auth-card,
-  .auth-card-login {
+  #view-auth .auth-card,
+#view-auth .auth-card-login {
     max-width: 430px;
     padding: 16px 18px;
   }
@@ -2933,10 +2935,10 @@ body.ag-played .chat-bubble {
    v12 — user badge back in its original spot (top-right edge of the
    input) + on phones the brand panel takes almost half the screen
    ═══════════════════════════════════════════════════════════ */
-.user-row {
+#view-auth .user-row {
   margin: 0 4px -15px 0;
 }
-.user-tag {
+#view-auth .user-tag {
   width: 30px;
   height: 30px;
   font-size: 15px;
@@ -2946,25 +2948,25 @@ body.ag-played .chat-bubble {
 }
 
 @media (max-width: 960px) {
-  .ap-aside {
+  #view-auth .ap-aside {
     height: clamp(300px, 48dvh, 470px);
     padding-bottom: 52px;
   }
-  .ap-eyebrow {
+  #view-auth .ap-eyebrow {
     display: flex;
   }
-  .ap-sub {
+  #view-auth .ap-sub {
     display: block;
     font-size: 0.95rem;
     max-width: 36ch;
   }
-  .ap-head {
+  #view-auth .ap-head {
     font-size: clamp(2.1rem, 9.6vw, 3.5rem);
   }
-  .ap-col {
+  #view-auth .ap-col {
     flex-basis: clamp(120px, 31vw, 190px);
   }
-  .ap-shade {
+  #view-auth .ap-shade {
     background: linear-gradient(
       180deg,
       rgba(5, 6, 15, 0.82) 0%,
@@ -2975,32 +2977,32 @@ body.ag-played .chat-bubble {
   }
 }
 @media (max-width: 960px) and (max-height: 760px) {
-  .ap-aside {
+  #view-auth .ap-aside {
     height: clamp(240px, 43dvh, 360px);
     padding-bottom: 44px;
   }
-  .ap-eyebrow {
+  #view-auth .ap-eyebrow {
     display: none;
   }
-  .ap-sub {
+  #view-auth .ap-sub {
     display: block;
   }
-  .ap-head {
+  #view-auth .ap-head {
     font-size: clamp(1.9rem, 8.4vw, 2.8rem);
   }
 }
 @media (max-width: 960px) and (max-height: 520px) {
   /* landscape phones stay side by side */
-  .ap-aside {
+  #view-auth .ap-aside {
     flex: 0 0 38%;
     height: 100%;
     padding: 14px 24px 18px 22px;
   }
-  .ap-sub,
-  .ap-eyebrow {
+  #view-auth .ap-sub,
+#view-auth .ap-eyebrow {
     display: none;
   }
-  .ap-head {
+  #view-auth .ap-head {
     font-size: clamp(1.4rem, 4.4vw, 2rem);
   }
 }
@@ -3559,14 +3561,14 @@ body #socialConfirmOverlay #socialConfirmBody > :nth-child(13) {
 }
 @media (prefers-reduced-motion: reduce) {
   body #socialConfirmOverlay #socialConfirmCard,
-  body #socialConfirmOverlay #socialConfirmCard::before,
-  body #socialConfirmOverlay #socialConfirmCard::after,
-  body #socialConfirmOverlay #socialConfirmAvatarWrap::before,
-  body #socialConfirmOverlay #socialConfirmAvatarWrap::after,
-  body #socialConfirmOverlay #socialConfirmContinue,
-  body #socialConfirmOverlay #socialConfirmContinue::after,
-  body #socialConfirmOverlay #socialConfirmBody > *,
-  body #socialConfirmOverlay #socialConfirmBrand i {
+body #socialConfirmOverlay #socialConfirmCard::before,
+body #socialConfirmOverlay #socialConfirmCard::after,
+body #socialConfirmOverlay #socialConfirmAvatarWrap::before,
+body #socialConfirmOverlay #socialConfirmAvatarWrap::after,
+body #socialConfirmOverlay #socialConfirmContinue,
+body #socialConfirmOverlay #socialConfirmContinue::after,
+body #socialConfirmOverlay #socialConfirmBody > *,
+body #socialConfirmOverlay #socialConfirmBrand i {
     animation: none;
   }
 }
@@ -3748,38 +3750,7 @@ body #socialConfirmOverlay #socialConfirmName::after {
 }
 @media (prefers-reduced-motion: reduce) {
   body #socialConfirmOverlay #socialConfirmName,
-  body #socialConfirmOverlay #socialConfirmName::after {
-    animation: none;
-  }
-}
-
-/* smooth fade between pages (home <-> login <-> signup) in supporting browsers */
-@keyframes vtOut {
-  to {
-    opacity: 0;
-    transform: scale(0.985);
-    filter: blur(6px);
-  }
-}
-@keyframes vtIn {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
-    filter: blur(6px);
-  }
-}
-@view-transition {
-  navigation: auto;
-}
-::view-transition-old(root) {
-  animation: vtOut 0.28s ease both;
-}
-::view-transition-new(root) {
-  animation: vtIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-@media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root) {
+body #socialConfirmOverlay #socialConfirmName::after {
     animation: none;
   }
 }
