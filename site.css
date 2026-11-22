@@ -4872,7 +4872,16 @@ html.js .split .wd {
   }
 }
 
-/* (cross-document @view-transition removed: login/signup/legal are now views inside index.html, no page navigation) */
+/* smooth fade between pages (home <-> login <-> signup) in supporting browsers */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root) {
+  animation: vtOut 0.28s ease both;
+}
+::view-transition-new(root) {
+  animation: vtIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
 
 /* ghost numbers sit at the far right of the section, clear of the heading */
 .sec-head {
@@ -5099,6 +5108,10 @@ html.js .split .wd {
   .ls-skel,
   .field input:focus,
   .field textarea:focus {
+    animation: none;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
     animation: none;
   }
 }
@@ -5742,4 +5755,34 @@ nav.footer-col a:hover::before {
 }
 .footer-bottom a.ft-top:hover {
   transform: none;
+}
+
+
+/* ═════════ v2.5 — hero polish (no boxes on the portrait) ═════════ */
+/* portrait: soft light sweeping behind the person + warm floor glow */
+.hero-arch::before {
+  content: "";
+  position: absolute;
+  inset: -60%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 68%,
+    rgba(255, 138, 198, 0.3) 80%,
+    transparent 92%
+  );
+  mix-blend-mode: screen;
+  animation: gxSpin 11s linear infinite;
+  pointer-events: none;
+}
+.hero-arch {
+  box-shadow:
+    0 40px 90px -30px rgba(34, 211, 238, 0.35),
+    0 80px 120px -50px rgba(255, 79, 163, 0.4),
+    inset 0 0 80px rgba(34, 211, 238, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-arch::before {
+    animation: none !important;
+  }
 }
