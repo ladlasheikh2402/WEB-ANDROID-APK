@@ -5743,32 +5743,3 @@ nav.footer-col a:hover::before {
 .footer-bottom a.ft-top:hover {
   transform: none;
 }
-
-/* ═════════ v2.5 — hero polish (no boxes on the portrait) ═════════ */
-/* portrait: soft light sweeping behind the person + warm floor glow */
-.hero-arch::before {
-  content: "";
-  position: absolute;
-  inset: -60%;
-  background: conic-gradient(
-    from 0deg,
-    transparent 0 68%,
-    rgba(255, 138, 198, 0.3) 80%,
-    transparent 92%
-  );
-  mix-blend-mode: screen;
-  animation: gxSpin 11s linear infinite;
-  pointer-events: none;
-}
-.hero-arch {
-  box-shadow:
-    0 40px 90px -30px rgba(34, 211, 238, 0.35),
-    0 80px 120px -50px rgba(255, 79, 163, 0.4),
-    inset 0 0 80px rgba(34, 211, 238, 0.12);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-arch::before {
-    animation: none !important;
-  }
-}
