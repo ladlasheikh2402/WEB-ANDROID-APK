@@ -5757,6 +5757,7 @@ nav.footer-col a:hover::before {
   transform: none;
 }
 
+
 /* ═════════ v2.5 — hero polish (no boxes on the portrait) ═════════ */
 /* portrait: soft light sweeping behind the person + warm floor glow */
 .hero-arch::before {

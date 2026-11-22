@@ -29,7 +29,7 @@ BADLI HUI FILES
                      ki wajah se install fail hota tha. Theek kar di, cache version v2.
 
 JO FILES LAZY LOAD HOTI HAIN (sirf login/signup khulne par)
-  auth-pro.css, auth.js, auth-glass.js, auth-typing.js, Google Fonts (Bricolage Grotesque + Inter).
+  auth-pro.css, auth.js, auth-glass.js, auth-typing.js. (Google Fonts aur Bootstrap Icons index.html mein pehle se linked hain.)
   auth-pro.css poori site par asar daalti hai (body, *, button ...) isliye login band hote hi hata di jati hai.
 
 JAN BUJH KAR NAHI JORI

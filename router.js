@@ -21,7 +21,6 @@
   var TYPE = { 'login': 'auth', 'signup': 'auth', 'privacy-policy': 'legal', 'terms-of-service': 'legal', 'data-deletion': 'legal' };
   var AUTH_CSS = 'auth-pro.css';
   var AUTH_JS = ['auth.js', 'auth-glass.js', 'auth-typing.js'];
-  var FONTS = 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@400;500;600&display=swap';
 
   var root = null, cur = null, savedY = 0, savedTitle = '', authLink = null, authLoaded = null, legalOff = null, token = 0;
 
@@ -33,12 +32,7 @@
   function fileOf(u) { return (u.pathname.split('/').pop() || ''); }
 
   /* ── assets ── */
-  function ensureFonts() {
-    if (document.getElementById('pgFonts')) return;
-    var l = document.createElement('link'); l.id = 'pgFonts'; l.rel = 'stylesheet'; l.href = FONTS; document.head.appendChild(l);
-  }
   function loadAuthCss() {
-    ensureFonts();
     if (authLoaded) return authLoaded;
     authLink = document.createElement('link'); authLink.rel = 'stylesheet'; authLink.href = AUTH_CSS; authLink.id = 'pgAuthCss';
     authLoaded = new Promise(function (res) {
