@@ -147,6 +147,10 @@
     var href = a.getAttribute('href'); if (!href) return;
     var inView = !!(root && root.contains(a));
 
+    /* #/login, #/signup, #/privacy-policy … = pages of this app: open them (works from the home page AND from inside a page) */
+    var rm = /^#\/([a-z-]+)(?:\?(.*))?$/.exec(href);
+    if (rm && TYPE[rm[1]]) { e.preventDefault(); go(rm[1], new URLSearchParams(rm[2] || '')); return; }
+
     if (inView && href.charAt(0) === '#') {                       // table-of-contents / in-page anchors: scroll, don't change the URL
       e.preventDefault();
       var el = href.length > 1 ? document.getElementById(href.slice(1)) : null;
@@ -172,6 +176,7 @@
     root = document.getElementById('pgRoot');
     if (!root) return;
     window.addEventListener('hashchange', sync);
+    window.addEventListener('pageshow', function (e) { if (e.persisted) sync(); });   // Android back/forward cache
     sync();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();

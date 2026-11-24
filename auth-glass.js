@@ -32,6 +32,21 @@
       }
     });
   });
+  /* ── scroll hint: no scrollbar, just a soft fade while there is more to scroll ── */
+  var sc = document.querySelector('.ap-scroll');
+  if (sc) {
+    var hint = function () {
+      sc.classList.toggle('has-more', sc.scrollHeight - sc.clientHeight - sc.scrollTop > 6);
+      sc.classList.toggle('has-less', sc.scrollTop > 6);
+    };
+    sc.addEventListener('scroll', hint, { passive: true });
+    if (window.__apHint) window.removeEventListener('resize', window.__apHint);   // login page is re-mounted on every open
+    window.__apHint = hint; window.addEventListener('resize', hint);
+    if (window.ResizeObserver) new ResizeObserver(hint).observe(sc);
+    if (window.MutationObserver) new MutationObserver(hint).observe(sc, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style', 'hidden'] });
+    hint(); setTimeout(hint, 600); setTimeout(hint, 2500);
+  }
+
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) return;   // animation nahi chahiye to yahin ruk jao

@@ -111,6 +111,10 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
 
+    <script>
+      /* opened directly on #/login, #/privacy-policy … → hide the home page before first paint */
+      (function () { if (/^#\/(login|signup|privacy-policy|terms-of-service|data-deletion)(\?|$)/.test(location.hash)) document.documentElement.classList.add('pg-mode'); })();
+    </script>
     <link href="site.css" rel="stylesheet" />
     <link href="animations.css" rel="stylesheet" />
     <link href="courses.css" rel="stylesheet" />
@@ -238,7 +242,7 @@
       <div class="bar-end">
         <ul class="nav-signin-list">
           <li class="nav-signin-item">
-            <a href="#" class="signin-nav-btn" id="navSigninBtn"
+            <a href="#/login" class="signin-nav-btn" id="navSigninBtn"
               ><span>Sign In</span
               ><i class="bi bi-box-arrow-in-right signin-nav-arrow"></i
             ></a>
@@ -3120,9 +3124,9 @@
             😎
           </p>
           <p class="footer-legal">
-            <a href="privacy-policy.html">Privacy</a
-            ><a href="terms-of-service.html">Terms</a
-            ><a href="data-deletion.html">Delete your data</a>
+            <a href="#/privacy-policy">Privacy</a
+            ><a href="#/terms-of-service">Terms</a
+            ><a href="#/data-deletion">Delete your data</a>
             <a href="#home" class="ft-top nav-btn" data-target="home"
               >Back to top <i class="bi bi-arrow-up" aria-hidden="true"></i
             ></a>
@@ -3234,7 +3238,8 @@
 
       <div class="ap-center">
         <div class="auth-card-login">
-          <nav class="ap-tabs" aria-label="Account"><a href="login.html" class="is-active" aria-current="page">Sign in</a><a href="signup.html">Create account</a></nav>
+          <nav class="ap-tabs" aria-label="Account"><a href="#/login" class="is-active" aria-current="page">Sign in</a><a href="#/signup">Create account</a></nav>
+          <div class="ap-scroll">
           <div class="auth-card-head">
             <h1>Welcome back</h1>
             <p>Sign in to continue to your account.</p>
@@ -3285,7 +3290,8 @@
             <div id="recaptcha-container"></div>
           </div>
 
-          <p class="auth-switch">Don’t have an account? <a href="signup.html">Sign up</a></p>
+          <p class="auth-switch">Don’t have an account? <a href="#/signup">Sign up</a></p>
+          </div>
         </div>
       </div>
     </main>
@@ -3322,7 +3328,8 @@
 
       <div class="ap-center">
         <div class="auth-card">
-          <nav class="ap-tabs" aria-label="Account"><a href="login.html">Sign in</a><a href="signup.html" class="is-active" aria-current="page">Create account</a></nav>
+          <nav class="ap-tabs" aria-label="Account"><a href="#/login">Sign in</a><a href="#/signup" class="is-active" aria-current="page">Create account</a></nav>
+          <div class="ap-scroll">
           <div class="auth-card-head">
             <h1>Create your account</h1>
             <p>It’s free and takes less than a minute.</p>
@@ -3356,7 +3363,7 @@
             </div>
             <label class="auth-checkbox" style="align-items:flex-start">
               <input type="checkbox" id="signupTerms" style="margin-top:1px">
-              <span class="auth-terms">I agree to the <a href="privacy-policy.html">Privacy Policy</a> and <a href="terms-of-service.html">Terms of Service</a>.</span>
+              <span class="auth-terms">I agree to the <a href="#/privacy-policy">Privacy Policy</a> and <a href="#/terms-of-service">Terms of Service</a>.</span>
             </label>
             <button type="submit" class="auth-submit" id="signupSubmitBtn"><span class="spin"></span><span class="auth-submit-label">Create account</span><i class="bi bi-arrow-right" aria-hidden="true"></i></button>
           </form>
@@ -3381,7 +3388,8 @@
             <div id="recaptcha-container"></div>
           </div>
 
-          <p class="auth-switch">Already have an account? <a href="login.html">Sign in</a></p>
+          <p class="auth-switch">Already have an account? <a href="#/login">Sign in</a></p>
+          </div>
         </div>
       </div>
     </main>
@@ -3392,7 +3400,7 @@
 </template>
 
 <template id="tpl-privacy-policy" data-title="Privacy Policy | Ladla Sheikh">
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#pg-main">Skip to content</a>
 
     <header class="site-header">
       <a class="brand" href="index.html" aria-label="Ladla Sheikh — home"
@@ -3408,7 +3416,7 @@
       </div>
     </header>
 
-    <main id="main">
+    <main id="pg-main">
       <section class="legal-hero s-dark" aria-labelledby="legalTitle">
         <i class="lg-spark a" aria-hidden="true">✦</i
         ><i class="lg-spark b" aria-hidden="true">✦</i
@@ -3420,9 +3428,9 @@
             Last updated: <strong>20 September 2026</strong>
           </p>
           <nav class="legal-tabs" aria-label="Legal pages">
-            <a href="privacy-policy.html" aria-current="page">Privacy Policy</a
-            ><a href="terms-of-service.html">Terms of Service</a
-            ><a href="data-deletion.html">Delete your data</a>
+            <a href="#/privacy-policy" aria-current="page">Privacy Policy</a
+            ><a href="#/terms-of-service">Terms of Service</a
+            ><a href="#/data-deletion">Delete your data</a>
           </nav>
         </div>
       </section>
@@ -3717,7 +3725,7 @@
               provider) for as long as your account exists. This site doesn't
               currently have a self-service "delete account" button — if you'd
               like your account and data removed, see
-              <a href="data-deletion.html">how to delete your data</a> and we'll
+              <a href="#/data-deletion">how to delete your data</a> and we'll
               remove or anonymize it within a reasonable period, except where
               we're legally required to retain it. Contact form messages are
               kept only for as long as needed to respond to you and for a
@@ -3907,9 +3915,9 @@
             😎
           </p>
           <p class="footer-legal">
-            <a href="privacy-policy.html">Privacy</a
-            ><a href="terms-of-service.html">Terms</a
-            ><a href="data-deletion.html">Delete your data</a>
+            <a href="#/privacy-policy">Privacy</a
+            ><a href="#/terms-of-service">Terms</a
+            ><a href="#/data-deletion">Delete your data</a>
           </p>
         </div>
       </div>
@@ -3920,7 +3928,7 @@
 </template>
 
 <template id="tpl-terms-of-service" data-title="Terms of Service | Ladla Sheikh">
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#pg-main">Skip to content</a>
 
     <header class="site-header">
       <a class="brand" href="index.html" aria-label="Ladla Sheikh — home"
@@ -3936,7 +3944,7 @@
       </div>
     </header>
 
-    <main id="main">
+    <main id="pg-main">
       <section class="legal-hero s-dark" aria-labelledby="legalTitle">
         <i class="lg-spark a" aria-hidden="true">✦</i
         ><i class="lg-spark b" aria-hidden="true">✦</i
@@ -3948,10 +3956,10 @@
             Last updated: <strong>19 September 2026</strong>
           </p>
           <nav class="legal-tabs" aria-label="Legal pages">
-            <a href="privacy-policy.html">Privacy Policy</a
-            ><a href="terms-of-service.html" aria-current="page"
+            <a href="#/privacy-policy">Privacy Policy</a
+            ><a href="#/terms-of-service" aria-current="page"
               >Terms of Service</a
-            ><a href="data-deletion.html">Delete your data</a>
+            ><a href="#/data-deletion">Delete your data</a>
           </nav>
         </div>
       </section>
@@ -4088,7 +4096,7 @@
             <p>
               You can stop using the site at any time and ask us to delete your
               account and data (see
-              <a href="data-deletion.html">how to delete your data</a>). We may
+              <a href="#/data-deletion">how to delete your data</a>). We may
               suspend or close accounts that break these terms.
             </p>
 
@@ -4113,7 +4121,7 @@
               <a href="mailto:ladlasheikh2402@gmail.com"
                 >ladlasheikh2402@gmail.com</a
               >. How we handle your personal information is explained in our
-              <a href="privacy-policy.html">Privacy Policy</a>.
+              <a href="#/privacy-policy">Privacy Policy</a>.
             </p>
           </article>
         </div>
@@ -4191,9 +4199,9 @@
             😎
           </p>
           <p class="footer-legal">
-            <a href="privacy-policy.html">Privacy</a
-            ><a href="terms-of-service.html">Terms</a
-            ><a href="data-deletion.html">Delete your data</a>
+            <a href="#/privacy-policy">Privacy</a
+            ><a href="#/terms-of-service">Terms</a
+            ><a href="#/data-deletion">Delete your data</a>
           </p>
         </div>
       </div>
@@ -4204,7 +4212,7 @@
 </template>
 
 <template id="tpl-data-deletion" data-title="Delete your data | Ladla Sheikh">
-    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="skip-link" href="#pg-main">Skip to content</a>
 
     <header class="site-header">
       <a class="brand" href="index.html" aria-label="Ladla Sheikh — home"
@@ -4220,7 +4228,7 @@
       </div>
     </header>
 
-    <main id="main">
+    <main id="pg-main">
       <section class="legal-hero s-dark" aria-labelledby="legalTitle">
         <i class="lg-spark a" aria-hidden="true">✦</i
         ><i class="lg-spark b" aria-hidden="true">✦</i
@@ -4232,9 +4240,9 @@
             Last updated: <strong>19 September 2026</strong>
           </p>
           <nav class="legal-tabs" aria-label="Legal pages">
-            <a href="privacy-policy.html">Privacy Policy</a
-            ><a href="terms-of-service.html">Terms of Service</a
-            ><a href="data-deletion.html" aria-current="page"
+            <a href="#/privacy-policy">Privacy Policy</a
+            ><a href="#/terms-of-service">Terms of Service</a
+            ><a href="#/data-deletion" aria-current="page"
               >Delete your data</a
             >
           </nav>
@@ -4370,9 +4378,9 @@
             😎
           </p>
           <p class="footer-legal">
-            <a href="privacy-policy.html">Privacy</a
-            ><a href="terms-of-service.html">Terms</a
-            ><a href="data-deletion.html">Delete your data</a>
+            <a href="#/privacy-policy">Privacy</a
+            ><a href="#/terms-of-service">Terms</a
+            ><a href="#/data-deletion">Delete your data</a>
           </p>
         </div>
       </div>

@@ -130,7 +130,7 @@
 
   function goToSignIn(cfg) {
     if (window.PG) window.PG.go('login', { next: cfg.sectionTarget });
-    else window.location.href = 'login.html?next=' + encodeURIComponent(cfg.sectionTarget);
+    else window.location.hash = '#/login?next=' + encodeURIComponent(cfg.sectionTarget);
   }
 
   function handleFavClick(cfg, card, btn, toolId) {

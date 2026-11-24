@@ -258,7 +258,7 @@
         if (profilePanel.classList.contains('open')) closeProfilePanel();
         else openProfilePanel();
       } else {
-        if (window.PG) window.PG.go('login'); else window.location.href = 'login.html';
+        if (window.PG) window.PG.go('login'); else window.location.hash = '#/login';
       }
     });
   }
@@ -271,7 +271,7 @@
      of the address bar. ── */
   document.addEventListener('DOMContentLoaded', function () {
     var hash = window.location.hash ? window.location.hash.slice(1) : '';
-    if (!hash || hash === 'home') return;
+    if (!hash || hash === 'home' || hash.charAt(0) === '/') return;   // '#/login', '#/privacy-policy' … belong to router.js — leave them alone
 
     whenAuthKnown(function () {
       var realLink = document.querySelector('.navbar-nav .nav-btn[data-target="' + hash + '"]');

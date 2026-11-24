@@ -1,0 +1,37 @@
+LADLA SHEIKH — FINAL SITE  (everything runs inside index.html)
+==============================================================
+
+PAGES (all open INSIDE index.html — nothing leaves the page):
+  #/login   #/signup   #/privacy-policy   #/terms-of-service   #/data-deletion
+
+WHAT WAS WRONG  ->  WHAT IS FIXED
+1. login.html was MISSING in the GitHub repo, yet index.html, signup.html, auth-gate.js,
+   favourites.js and firebase-auth.js all pointed to it  -> 404 / blank page.
+   -> login.html and signup.html now exist as tiny redirects into index.html#/login and #/signup
+      (?next= is kept), so old links, bookmarks and the Firebase continue-URL still work.
+2. Every link in index.html (header Sign In, footer, legal pages, login/signup) is now a real
+   in-page link: href="#/login", "#/signup", "#/privacy-policy" ... Works even if a script fails.
+3. router.js bug: while a page was open, clicks on "#/signup" / "#/login" links (the Sign in /
+   Create account tabs) were treated like plain anchors and did nothing. Fixed — they navigate.
+4. "#main": the legal pages copied into index.html carried <a href="#main"> and <main id="main">,
+   which clashed with the home page's own #main (duplicate ids, skip link jumped to the hidden home).
+   -> inside index.html they are now #pg-main. (The standalone privacy/terms/deletion .html files
+      keep their own #main — correct there, they are separate pages for Google / Facebook.)
+5. auth-gate.js erased the "#/login" part of the address on load (deep links lost their route).
+   -> it now ignores "#/..." (router.js owns those).
+6. sw.js (service worker) was cache-first for index.html / JS / CSS: after every update the phone
+   showed the OLD page first and could mix old + new files (Sign In stopped opening the login page).
+   It also tried to precache files that do not exist.  -> new v3 worker: network-first for
+   html/js/css (always newest, offline copy as fallback), cache-first only for images/audio.
+7. Opening index.html#/login directly no longer flashes the home page first.
+8. login / signup: fixed glass card, forms scroll inside (no scrollbar), sizes scale with screen height.
+9. Standalone privacy / terms / deletion pages, when opened INSIDE the Android app
+   (user-agent contains LadlaSheikhApp), redirect to the in-page version automatically.
+
+HOW TO DEPLOY
+  1. Upload ALL files of this folder to the GitHub repo (replace existing).  login.html is NEW.
+  2. Vercel redeploys by itself.  Open https://android-web-apk.vercel.app once in Chrome and reload.
+  3. Build the APK from sheikh-ali-apk-android-project-FIXED.zip (versionCode 2) and install it.
+     If a phone already has the OLD app, it updates over it; the new service worker replaces the
+     old one on first launch.  (If it still looks old: Settings -> Apps -> Sheikh Ali -> Storage ->
+     Clear storage, once.)

@@ -3783,3 +3783,119 @@ body #socialConfirmOverlay #socialConfirmName::after {
     animation: none;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   v2.6 — FIXED GLASS CARD, ONLY THE FORM SCROLLS
+   The glass card now always fits the screen (same shape/style).
+   Tabs stay put; heading + form + social buttons scroll inside it.
+   The page itself no longer scrolls on these screens.
+   ══════════════════════════════════════════════════════════════ */
+html, body { height: 100%; overflow: hidden; }
+.ap-shell { height: 100dvh; min-height: 0; overflow: hidden; }
+.ap-main { height: 100dvh; min-height: 0; overflow: hidden; display: flex; flex-direction: column; }
+.ap-center { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1fr); place-items: center; padding-block: clamp(6px, 1.6vh, 22px); }
+
+.auth-card, .auth-card-login {
+  width: 100%;
+  max-height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.ap-tabs { flex: none; }
+
+.ap-scroll {
+  --mt: 0px;
+  --mb: 0px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  /* swipe / wheel / keyboard still scroll — but there is no scrollbar, like the Ladla Sheikh site */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* breathing room so focus rings / the little arrow bubbles are never clipped */
+  padding: 8px 14px 10px 8px;
+  margin: -8px -14px -4px -8px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 var(--mt), #000 calc(100% - var(--mb)), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 var(--mt), #000 calc(100% - var(--mb)), transparent 100%);
+}
+.ap-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+/* soft fade appears only while more content is hidden in that direction (toggled by auth-glass.js) */
+.ap-scroll.has-more { --mb: 24px; }
+.ap-scroll.has-less { --mt: 18px; }
+.ap-tabs { margin-bottom: clamp(12px, 2.2vh, 22px); }
+
+/* phones / tablets: the shrunken banner leaves the sheet enough room; the sheet itself no longer scrolls */
+@media (max-width: 960px) {
+  .ap-aside { height: clamp(130px, 20dvh, 210px); padding-bottom: 40px; }
+  .ap-sub, .ap-eyebrow { display: none; }
+  .ap-head { font-size: clamp(1.7rem, 7.4vw, 2.6rem); }
+  .ap-main { flex: 1 1 0; height: auto; min-height: 0; overflow: hidden; overscroll-behavior: auto; padding-bottom: max(14px, env(safe-area-inset-bottom)); }
+  .ap-center { place-items: start center; padding-top: clamp(6px, 1.4vh, 16px); padding-bottom: 0; }
+}
+@media (max-width: 960px) and (max-height: 520px) {
+  .ap-aside { height: 100%; padding-bottom: 18px; }
+  .ap-main { height: 100%; }
+  .ap-center { place-items: center; padding-block: 8px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   v2.7 — CONTENT SCALES WITH THE SCREEN HEIGHT
+   Every size inside the card (fields, bubbles, buttons, gaps) is a
+   clamp() of the viewport height, so on normal screens the whole form
+   fits the glass and nothing has to scroll. Only on very short screens
+   (or with the phone keyboard open) does it scroll — without a scrollbar.
+   ══════════════════════════════════════════════════════════════ */
+:is(.auth-card, .auth-card-login) {
+  --fh: clamp(40px, 5.6vh, 54px);                 /* field height          */
+  --ico: max(28px, calc(var(--fh) - 16px));        /* icon tile             */
+  --nxt: max(30px, calc(var(--fh) - 14px));        /* round "next" arrow    */
+  --av: clamp(46px, 6.2vh, 58px);                  /* chat avatar (bigger)  */
+  --gp: clamp(6px, 1.25vh, 13px);                  /* gap between blocks    */
+  --btn: clamp(38px, 5.3vh, 50px);                 /* buttons               */
+  --tag: clamp(20px, 3vh, 30px);                  /* little "you" badge    */
+  padding: clamp(12px, 2.2vh, 22px) clamp(16px, 2vw, 26px);
+}
+@supports (height: 1dvh) {
+  :is(.auth-card, .auth-card-login) {
+    --fh: clamp(40px, 5.6dvh, 54px);
+    --av: clamp(46px, 6.2dvh, 58px);
+    --gp: clamp(6px, 1.25dvh, 13px);
+    --btn: clamp(38px, 5.3dvh, 50px);
+    --tag: clamp(20px, 3dvh, 30px);
+  }
+}
+.ap-tabs { padding: 3px; margin-bottom: clamp(6px, 1.5vh, 18px); }
+.ap-tabs a { min-height: clamp(32px, 4.9vh, 42px); font-size: clamp(0.82rem, 1.7vh, 0.9rem); }
+.auth-card-head h1 { font-size: clamp(1.45rem, 3.7vh, 2.1rem); }
+.auth-card-head::after { margin-top: clamp(8px, 1.6vh, 18px); }
+.auth-form { margin-top: clamp(6px, 1.5vh, 22px); gap: var(--gp); }
+
+:is(.auth-card, .auth-card-login) .chat-row { gap: 12px; margin-bottom: clamp(3px, 0.9vh, 10px); }
+:is(.auth-card, .auth-card-login) .chat-avatar { width: var(--av); height: var(--av); }
+:is(.auth-card, .auth-card-login) .chat-bubble { padding: clamp(7px, 1.2vh, 10px) clamp(12px, 1.6vh, 16px); font-size: clamp(0.84rem, 1.9vh, 0.92rem); line-height: 1.42; }
+:is(.auth-card, .auth-card-login) .user-row { margin: 0 12px calc(var(--tag) / -2) 0; }
+:is(.auth-card, .auth-card-login) .user-tag { width: var(--tag); height: var(--tag); font-size: calc(var(--tag) / 2); }
+:is(.auth-card, .auth-card-login) .fld-box { min-height: var(--fh); padding: 4px 5px 4px 7px; }
+:is(.auth-card, .auth-card-login) .fld-box input { padding-block: clamp(4px, 1vh, 10px); }
+:is(.auth-card, .auth-card-login) .fld-icon { width: var(--ico); height: var(--ico); }
+:is(.auth-card, .auth-card-login) .fld-next { width: var(--nxt); height: var(--nxt); }
+:is(.auth-card, .auth-card-login) .pair .fld-icon { width: max(26px, calc(var(--ico) - 4px)); height: max(26px, calc(var(--ico) - 4px)); }
+:is(.auth-card, .auth-card-login) .pair .fld-next { width: var(--nxt); height: var(--nxt); }
+:is(.auth-card, .auth-card-login) .auth-toggle-mode { min-height: clamp(24px, 3.8vh, 32px); margin-top: clamp(2px, 0.9vh, 10px); }
+:is(.auth-card, .auth-card-login) .pw-meter { margin-top: clamp(4px, 0.9vh, 8px); }
+:is(.auth-card, .auth-card-login) .auth-submit,
+:is(.auth-card, .auth-card-login) .social-btn { min-height: var(--btn); }
+:is(.auth-card, .auth-card-login) .auth-divider { margin: clamp(8px, 1.8vh, 20px) 0 clamp(6px, 1.3vh, 14px); }
+:is(.auth-card, .auth-card-login) .auth-switch { margin-top: clamp(6px, 1.6vh, 20px); }
+
+.ap-top { padding-bottom: 0; }
+.ap-center { padding-block: clamp(4px, 1.2vh, 18px); }
+@media (min-width: 961px) {
+  .ap-main { padding-block: clamp(12px, 2.2vh, 32px); }
+}
+@media (max-width: 960px) { .auth-card-head p { display: none; } }

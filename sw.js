@@ -1,229 +1,99 @@
-/* ═══════════════════════════════════════════════════════
-   LADLA SHEIKH — SERVICE WORKER  (sw.js)
-   Version: 1.0
-   - Caches website for offline use
-   - Fast loading on repeat visits
-═══════════════════════════════════════════════════════ */
-
-const CACHE_NAME = 'ladla-sheikh-v2';
-
-/* Files to cache on install */
-const CACHE_FILES = [
+/* Ladla Sheikh — service worker v3
+   • HTML / JS / CSS / JSON  → NETWORK FIRST (always the newest code; cached copy only when offline)
+   • images, audio, fonts     → cache first (fast, saved as they are used)
+   • never touches other sites (Firebase, Google, YouTube …) and never caches video / audio ranges
+   Why: the old worker served the previous index.html / scripts first, so after an update the app could mix
+   old and new files (e.g. old script + new page) and the Sign In button stopped opening the login page. */
+const VERSION = 'v3';
+const SHELL_CACHE = 'ladla-shell-' + VERSION;
+const RUNTIME_CACHE = 'ladla-runtime-' + VERSION;
+const SHELL = [
   '/',
   '/index.html',
+  '/images/Hero-image.png',
+  '/favicon.svg',
+  '/favicon.ico',
+  '/favicon-32x32.png',
+  '/favicon-16x16.png',
+  '/favicon-48x48.png',
+  '/favicon-96x96.png',
+  '/apple-touch-icon.png',
+  '/manifest.json',
   '/site.css',
-  '/site.js',
+  '/animations.css',
   '/courses.css',
+  '/router.css',
+  '/legal.css',
+  '/site.js',
   '/courses.js',
   '/luxury.js',
-  '/visitor-counter.js',
-  '/router.css',
-  '/router.js',
-  '/legal.css',
-  '/legal.js',
-  '/auth-pro.css',
-  '/auth-typing.js',
-  '/data-deletion.html',
-  '/auth-gate.js',
-  '/auth.js',
-  '/favicon-96x96.png',
-  '/firebase-auth.js',
-  '/auth-glass.js',
   '/favourites.js',
-  '/animations.css',
+  '/firebase-auth.js',
+  '/auth-gate.js',
+  '/visitor-counter.js',
   '/animations.js',
-  '/ladla-sheikh-banner.png',
-  '/privacy-policy.html',
-  '/signup.html',
-  '/splash192.jpg',
-  '/splash512.jpg',
-  '/terms-of-service.html',
+  '/legal.js',
+  '/router.js',
+  '/auth-pro.css',
+  '/auth.js',
+  '/auth-glass.js',
+  '/auth-typing.js',
   '/web-app-manifest-192x192.png',
-  '/login.html',
-  '/sitemap.xml',
-  '/manifest.json',
-  '/favicon.ico',
-  '/favicon-16x16.png',
-  '/favicon-32x32.png',
-  '/apple-touch-icon.png',
-  '/Name of Allah.mp3',
-  '/google-search.png',
-  '/web-app-manifest-512x512.png',
-  '/images/10.png',
-  '/images/11.png',
-  '/images/12.png',
-  '/images/13.png',
-  '/images/14.png',
-  '/images/15.png',
-  '/images/16.png',
-  '/images/17.png',
-  '/images/18.png',
-  '/images/19.png',
-  '/images/2.png',
-  '/images/20.png',
-  '/images/3.png',
-  '/images/4.png',
-  '/images/5.png',
-  '/images/6.png',
-  '/images/7.png',
-  '/images/8.png',
-  '/images/9.png',
-  '/images/AD Maker.png',
-  '/images/Add Music.png',
-  '/images/Ali Ahmad.jpg',
-  '/images/Alight Motion.png',
-  '/images/App Lock.png',
-  '/images/CamScanner.png',
-  '/images/form-image.jpg',
-  '/images/Gallery Plus.png',
-  '/images/Hero-image.png',
-  '/images/Ladla Sheikh.png',
-  '/images/Ladla_Sheikh_WhatsApp.jpg',
-  '/images/Lucky-patter.png',
-  '/images/Magic Eraser.png',
-  '/images/Netflix.png',
-  '/images/Nord VPN.png',
-  '/images/Photo Lab.png',
-  '/images/PhotoLeap.png',
-  '/images/SHAREit.png',
-  '/images/Sheikh Ali Ahmad.jpg',
-  '/images/Sheikh Ali.jpeg',
-  '/images/Sheikh Ali.jpg',
-  '/images/Snapchat-premium.png',
-  '/images/Spotify.png',
-  '/images/Urdu Designer.png',
-  '/images/Video Downloader.png',
-  '/images/about-img.png',
-  '/images/about-image.png', 
-  '/images/about.jpg',
-  '/images/app-cloner.png',
-  '/images/appcreator.jpeg',
-  '/images/avee-player.png',
-  '/images/bg and object-remove.png',
-  '/images/capcut-premium.jpeg',
-  '/images/capcut-pro.jpeg',
-  '/images/clone-app.png',
-  '/images/easypaisa-fake-ss.jpeg',
-  '/images/easypaisa.png',
-  '/images/edit-screenshot.png',
-  '/images/evee-player.png',
-  '/images/facemoji.png',
-  '/images/facepic.png',
-  '/images/fake-chat.png',
-  '/images/fitroom.png',
-  '/images/footer-img.png',
-  '/images/grok-ai.png',
-  '/images/hero-bg.jpg',
-  '/images/hero-person.png',
-  '/images/image.png',
-  '/images/inshot-premium.jpeg',
-  '/images/inshot-pro.webp',
-  '/images/instagram.png',
-  '/images/kinemaster-premium.jpeg',
-  '/images/kinemaster-pro.jpeg',
-  '/images/ladla-og.png',
-  '/images/ladla-sheikh-whatsapp.jpeg',
-  '/images/lightroom-premium.png',
-  '/images/lock-apk.png',
-  '/images/mobile-lock-apk.png',
-  '/images/mobile-lock.png',
-  '/images/mobile-reset-apk.png',
-  '/images/mobile-virus.png',
-  '/images/own-toolkit.jpeg',
-  '/images/patcher.png',
-  '/images/photo-editor.png',
-  '/images/photoshop.png',
-  '/images/picsart.png',
-  '/images/pixellab-pro.png',
-  '/images/sheikh-designer.jpg',
-  '/images/sheikh-enhancer.jpeg',
-  '/images/sheikh-enhancer.png',
-  '/images/sheikh.jpg',
-  '/images/simdatabase.jpg',
-  '/images/simdatabase2.png',
-  '/images/snaptube.png',
-  '/images/splash-screen.png',
-  '/images/telegram-fake-chat.png',
-  '/images/telegram-premium.png',
-  '/images/tiktok-live.jpeg',
-  '/images/tiktok-pro.jpeg',
-  '/images/tiktok-service.png',
-  '/images/toolkit-gen.jpeg',
-  '/images/uk-account.png',
-  '/images/virus-apk.png',
-  '/images/wa-beta.jpeg',
-  '/images/wa-beta.png',
-  '/images/wa-meta.png',
-  '/images/whatsapp-fake-chat.jpg',
-  '/images/whatsapp-fake-chat.png',
-  '/images/without-update.png',
-  '/images/youtube.png'
+  '/web-app-manifest-512x512.png'
 ];
 
-/* ── INSTALL: cache all files ── */
-self.addEventListener('install', function (e) {
-  e.waitUntil(
-    caches.open(CACHE_NAME).then(function (cache) {
-      console.log('[SW] Caching files...');
-      // add one by one so a single missing file can never break the whole install
-      return Promise.all(CACHE_FILES.map(function (u) { return cache.add(u).catch(function () {}); }));
-    })
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(SHELL_CACHE).then((cache) =>
+      // one by one: a single missing file must never make the whole install fail
+      Promise.all(SHELL.map((url) => cache.add(new Request(url, { cache: 'reload' })).catch(() => null)))
+    ).then(() => self.skipWaiting())
   );
-  self.skipWaiting();
 });
 
-/* ── ACTIVATE: remove old caches ── */
-self.addEventListener('activate', function (e) {
-  e.waitUntil(
-    caches.keys().then(function (keys) {
-      return Promise.all(
-        keys
-          .filter(function (key) { return key !== CACHE_NAME; })
-          .map(function (key) {
-            console.log('[SW] Removing old cache:', key);
-            return caches.delete(key);
-          })
-      );
-    })
+self.addEventListener('activate', (event) => {
+  event.waitUntil(
+    caches.keys()
+      .then((keys) => Promise.all(keys.filter((k) => k !== SHELL_CACHE && k !== RUNTIME_CACHE).map((k) => caches.delete(k))))
+      .then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
-/* ── FETCH: serve from cache, fallback to network ── */
-self.addEventListener('fetch', function (e) {
-  /* Skip non-GET and chrome-extension requests */
-  if (e.request.method !== 'GET') return;
-  if (e.request.url.startsWith('chrome-extension')) return;
+const isCode = (url, req) => req.mode === 'navigate' || /\.(?:html|js|css|json|webmanifest)$/i.test(url.pathname) || url.pathname === '/';
 
-  e.respondWith(
-    caches.match(e.request).then(function (cached) {
-      if (cached) {
-        /* Serve from cache — also update in background */
-        fetch(e.request).then(function (response) {
-          if (response && response.status === 200) {
-            caches.open(CACHE_NAME).then(function (cache) {
-              cache.put(e.request, response);
-            });
-          }
-        }).catch(function () {});
-        return cached;
+function networkFirst(req, cacheName) {
+  return fetch(req)
+    .then((res) => {
+      if (res && res.status === 200 && res.type === 'basic') {
+        const copy = res.clone();
+        caches.open(cacheName).then((c) => c.put(req, copy)).catch(() => {});
       }
-
-      /* Not in cache — fetch from network */
-      return fetch(e.request).then(function (response) {
-        if (!response || response.status !== 200) return response;
-
-        /* Cache new resources */
-        var responseClone = response.clone();
-        caches.open(CACHE_NAME).then(function (cache) {
-          cache.put(e.request, responseClone);
-        });
-        return response;
-      }).catch(function () {
-        /* Offline fallback */
-        return caches.match('/index.html');
-      });
+      return res;
     })
-  );
-});
+    .catch(() =>
+      caches.match(req, { ignoreSearch: true }).then((hit) => hit || (req.mode === 'navigate' ? caches.match('/index.html') : Response.error()))
+    );
+}
 
+function cacheFirst(req) {
+  return caches.match(req).then((hit) => {
+    if (hit) return hit;
+    return fetch(req).then((res) => {
+      if (res && res.status === 200 && (res.type === 'basic' || res.type === 'cors')) {
+        const copy = res.clone();
+        caches.open(RUNTIME_CACHE).then((c) => c.put(req, copy)).catch(() => {});
+      }
+      return res;
+    });
+  });
+}
+
+self.addEventListener('fetch', (event) => {
+  const req = event.request;
+  if (req.method !== 'GET') return;
+  if (req.headers.has('range')) return;                       // audio / video streaming: let the browser handle it
+  const url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;           // Firebase, Google, fonts … untouched
+  if (isCode(url, req)) event.respondWith(networkFirst(req, SHELL_CACHE));
+  else event.respondWith(cacheFirst(req));
+});
