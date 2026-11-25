@@ -3150,7 +3150,10 @@
             ><s></s><s></s><s></s><s></s
           ></span>
         </button>
-        <div class="aw-pop">
+        <div class="aw-pop" role="group" aria-label="Volume">
+          <button type="button" class="aw-mute" aria-label="Mute / unmute">
+            <i class="bi bi-volume-up-fill" aria-hidden="true"></i>
+          </button>
           <input
             type="range"
             class="aw-vol"
@@ -3160,6 +3163,7 @@
             value="60"
             aria-label="Volume"
           />
+          <output class="aw-pct" aria-hidden="true">60</output>
         </div>
       </div>
     </div>
