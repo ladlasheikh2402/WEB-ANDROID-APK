@@ -8,9 +8,12 @@
    ══════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
+  /* mountable: router.js calls this every time #/login or #/signup is shown (root = #view-auth) */
+  window.AuthPages = window.AuthPages || { mounts: [] };
+  window.AuthPages.mounts.push(function (root, ctx) {
 
   /* ── 1. arrow = next field ── */
-  document.querySelectorAll('.fld-next').forEach(function (btn) {
+  root.querySelectorAll('.fld-next').forEach(function (btn) {
     btn.addEventListener('click', function () {
       var form = btn.closest('form');
       var current = btn.closest('.fld').querySelector('input');
@@ -32,39 +35,36 @@
       }
     });
   });
-  /* ── scroll hint: no scrollbar, just a soft fade while there is more to scroll ── */
-  var sc = document.querySelector('.ap-scroll');
-  if (sc) {
-    var hint = function () {
-      sc.classList.toggle('has-more', sc.scrollHeight - sc.clientHeight - sc.scrollTop > 6);
-      sc.classList.toggle('has-less', sc.scrollTop > 6);
-    };
-    sc.addEventListener('scroll', hint, { passive: true });
-    if (window.__apHint) window.removeEventListener('resize', window.__apHint);   // login page is re-mounted on every open
-    window.__apHint = hint; window.addEventListener('resize', hint);
-    if (window.ResizeObserver) new ResizeObserver(hint).observe(sc);
-    if (window.MutationObserver) new MutationObserver(hint).observe(sc, { childList: true, subtree: true, attributes: true, attributeFilter: ['class', 'style', 'hidden'] });
-    hint(); setTimeout(hint, 600); setTimeout(hint, 2500);
-  }
 
+  /* ── 1b. brand-wall: soft parallax inside the left panel (was an inline <script> in login/signup.html) ── */
+  (function () {
+    var a = root.querySelector('.ap-aside'), w = root.querySelector('.ap-wall');
+    if (!a || !w || !matchMedia('(hover:hover)').matches || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    a.addEventListener('pointermove', function (e) {
+      var r = a.getBoundingClientRect();
+      w.style.setProperty('--tx', (((e.clientX - r.left) / r.width - 0.5) * -26).toFixed(1) + 'px');
+      w.style.setProperty('--ty', (((e.clientY - r.top) / r.height - 0.5) * -18).toFixed(1) + 'px');
+    });
+    a.addEventListener('pointerleave', function () { w.style.setProperty('--tx', '0px'); w.style.setProperty('--ty', '0px'); });
+  })();
 
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) return;   // animation nahi chahiye to yahin ruk jao
 
-  var body = document.body;
+  var body = root;   // the ag-played class now lives on #view-auth (was <body>)
 
   /* intro khatam hone ke baad intro-animations band (taake email/username
      toggle karne par field dobara na "aaye") */
-  clearTimeout(window.__agTimer);
-  var playedTimer = window.__agTimer = setTimeout(function () { body.classList.add('ag-played'); }, 4800);
-  var toggle = document.getElementById('loginToggleMode');
+  var playedTimer = setTimeout(function () { body.classList.add('ag-played'); }, 4800);
+  ctx.onUnmount(function () { clearTimeout(playedTimer); });
+  var toggle = root.querySelector('#loginToggleMode');
   if (toggle) toggle.addEventListener('click', function () {
     clearTimeout(playedTimer);
     body.classList.add('ag-played');
   });
 
   /* ── 2. parallax (sirf mouse wale desktop par) ── */
-  var scene = document.querySelector('.ag-scene');
+  var scene = root.querySelector('.ag-scene');
   var fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
   if (scene && fine) {
     var tx = 0, ty = 0, cx = 0, cy = 0, raf = 0;
@@ -79,18 +79,18 @@
         raf = 0;
       }
     };
-    if (window.__agMove) window.removeEventListener('mousemove', window.__agMove);
-    window.__agMove = function (e) {
+    var onMove = function (e) {
       if (window.innerWidth <= 900) return;
       tx = (e.clientX / window.innerWidth - 0.5) * 2;
       ty = (e.clientY / window.innerHeight - 0.5) * 2;
       if (!raf) raf = requestAnimationFrame(tick);
     };
-    window.addEventListener('mousemove', window.__agMove, { passive: true });
+    window.addEventListener('mousemove', onMove, { passive: true });
+    ctx.onUnmount(function () { window.removeEventListener('mousemove', onMove); if (raf) cancelAnimationFrame(raf); });
   }
 
   /* ── 3. card spotlight ── */
-  var card = document.querySelector('.auth-card, .auth-card-login');
+  var card = root.querySelector('.auth-card, .auth-card-login');
   if (card && fine) {
     card.addEventListener('mousemove', function (e) {
       var r = card.getBoundingClientRect();
@@ -100,8 +100,7 @@
   }
 
   /* ── 4. ripple ── */
-  if (window.__agClick) document.removeEventListener('click', window.__agClick);
-  window.__agClick = function (e) {
+  root.addEventListener('click', function (e) {
     var host = e.target.closest && e.target.closest('.fld-next, .auth-submit, .social-btn');
     if (!host) return;
     var r = host.getBoundingClientRect();
@@ -113,6 +112,6 @@
     dot.style.top = (e.clientY - r.top - size / 2) + 'px';
     host.appendChild(dot);
     dot.addEventListener('animationend', function () { dot.remove(); });
-  };
-  document.addEventListener('click', window.__agClick);
+  });
+  });
 })();

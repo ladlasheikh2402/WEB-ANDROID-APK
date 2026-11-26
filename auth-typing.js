@@ -8,7 +8,10 @@
    ══════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
-  var form = document.querySelector('.auth-form');
+  /* mountable: router.js calls this every time #/login or #/signup is shown (root = #view-auth) */
+  window.AuthPages = window.AuthPages || { mounts: [] };
+  window.AuthPages.mounts.push(function (root, ctx) {
+  var form = root.querySelector('.auth-form');
   if (!form) return;
   var steps = Array.prototype.slice.call(form.querySelectorAll('.step'));
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -32,6 +35,7 @@
   form.classList.add('tw-on');
 
   var timers = [], done = false;
+  ctx.onUnmount(function () { done = true; timers.forEach(clearTimeout); });
   function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
 
   function finish() {
@@ -75,4 +79,5 @@
   form.addEventListener('pointerdown', finish);
   form.addEventListener('submit', finish);
   later(function () { run(0); }, 200);
+  });
 })();

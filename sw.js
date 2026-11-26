@@ -1,99 +1,104 @@
-/* Ladla Sheikh — service worker v3
-   • HTML / JS / CSS / JSON  → NETWORK FIRST (always the newest code; cached copy only when offline)
-   • images, audio, fonts     → cache first (fast, saved as they are used)
-   • never touches other sites (Firebase, Google, YouTube …) and never caches video / audio ranges
-   Why: the old worker served the previous index.html / scripts first, so after an update the app could mix
-   old and new files (e.g. old script + new page) and the Sign In button stopped opening the login page. */
-const VERSION = 'v3';
-const SHELL_CACHE = 'ladla-shell-' + VERSION;
-const RUNTIME_CACHE = 'ladla-runtime-' + VERSION;
-const SHELL = [
+/* ═══════════════════════════════════════════════════════
+   LADLA SHEIKH — SERVICE WORKER  (sw.js)  v2
+   - the site opens offline (cached home page + core files)
+   - pages: network first (you always get the newest deploy), cache only when offline
+   - css / js / images: instant from cache, refreshed in the background
+   - never touches other websites (Firebase, YouTube, GitHub downloads), audio/video or .apk/.zip files
+═══════════════════════════════════════════════════════ */
+
+const CACHE_NAME = 'ladla-sheikh-v3';
+
+/* Small core set. A missing file can NOT break the install (each one is added separately). */
+const CORE_FILES = [
   '/',
   '/index.html',
-  '/images/Hero-image.png',
-  '/favicon.svg',
-  '/favicon.ico',
-  '/favicon-32x32.png',
-  '/favicon-16x16.png',
-  '/favicon-48x48.png',
-  '/favicon-96x96.png',
-  '/apple-touch-icon.png',
   '/manifest.json',
   '/site.css',
   '/animations.css',
   '/courses.css',
-  '/router.css',
-  '/legal.css',
-  '/site.js',
-  '/courses.js',
-  '/luxury.js',
-  '/favourites.js',
-  '/firebase-auth.js',
-  '/auth-gate.js',
-  '/visitor-counter.js',
-  '/animations.js',
-  '/legal.js',
-  '/router.js',
   '/auth-pro.css',
+  '/legal.css',
+  '/router.css',
+  '/site.js',
+  '/animations.js',
+  '/luxury.js',
+  '/courses.js',
+  '/favourites.js',
+  '/auth-gate.js',
+  '/firebase-auth.js',
   '/auth.js',
   '/auth-glass.js',
   '/auth-typing.js',
+  '/legal.js',
+  '/router.js',
+  '/visitor-counter.js',
+  '/favicon.ico',
+  '/favicon-32x32.png',
+  '/apple-touch-icon.png',
   '/web-app-manifest-192x192.png',
   '/web-app-manifest-512x512.png'
 ];
 
-self.addEventListener('install', (event) => {
+const SKIP_EXT = /\.(mp3|mp4|webm|m4a|ogg|wav|apk|xapk|zip|rar|7z|exe|msi|iso)$/i;
+
+/* ── INSTALL ── */
+self.addEventListener('install', function (event) {
   event.waitUntil(
-    caches.open(SHELL_CACHE).then((cache) =>
-      // one by one: a single missing file must never make the whole install fail
-      Promise.all(SHELL.map((url) => cache.add(new Request(url, { cache: 'reload' })).catch(() => null)))
-    ).then(() => self.skipWaiting())
+    caches.open(CACHE_NAME).then(function (cache) {
+      return Promise.all(CORE_FILES.map(function (url) {
+        return cache.add(url).catch(function () { /* file not found: ignore */ });
+      }));
+    }).then(function () { return self.skipWaiting(); })
   );
 });
 
-self.addEventListener('activate', (event) => {
+/* ── ACTIVATE: delete old caches ── */
+self.addEventListener('activate', function (event) {
   event.waitUntil(
-    caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== SHELL_CACHE && k !== RUNTIME_CACHE).map((k) => caches.delete(k))))
-      .then(() => self.clients.claim())
+    caches.keys().then(function (keys) {
+      return Promise.all(keys.filter(function (k) { return k !== CACHE_NAME; }).map(function (k) { return caches.delete(k); }));
+    }).then(function () { return self.clients.claim(); })
   );
 });
 
-const isCode = (url, req) => req.mode === 'navigate' || /\.(?:html|js|css|json|webmanifest)$/i.test(url.pathname) || url.pathname === '/';
-
-function networkFirst(req, cacheName) {
-  return fetch(req)
-    .then((res) => {
-      if (res && res.status === 200 && res.type === 'basic') {
-        const copy = res.clone();
-        caches.open(cacheName).then((c) => c.put(req, copy)).catch(() => {});
-      }
-      return res;
-    })
-    .catch(() =>
-      caches.match(req, { ignoreSearch: true }).then((hit) => hit || (req.mode === 'navigate' ? caches.match('/index.html') : Response.error()))
-    );
-}
-
-function cacheFirst(req) {
-  return caches.match(req).then((hit) => {
-    if (hit) return hit;
-    return fetch(req).then((res) => {
-      if (res && res.status === 200 && (res.type === 'basic' || res.type === 'cors')) {
-        const copy = res.clone();
-        caches.open(RUNTIME_CACHE).then((c) => c.put(req, copy)).catch(() => {});
-      }
-      return res;
-    });
-  });
-}
-
-self.addEventListener('fetch', (event) => {
-  const req = event.request;
+/* ── FETCH ── */
+self.addEventListener('fetch', function (event) {
+  var req = event.request;
   if (req.method !== 'GET') return;
-  if (req.headers.has('range')) return;                       // audio / video streaming: let the browser handle it
-  const url = new URL(req.url);
-  if (url.origin !== self.location.origin) return;           // Firebase, Google, fonts … untouched
-  if (isCode(url, req)) event.respondWith(networkFirst(req, SHELL_CACHE));
-  else event.respondWith(cacheFirst(req));
+
+  var url = new URL(req.url);
+  if (url.origin !== self.location.origin) return;          // other websites: browser handles it
+  if (req.headers.has('range')) return;                      // audio / video streaming
+  if (SKIP_EXT.test(url.pathname)) return;                   // music, videos, downloads
+  if (url.pathname.indexOf('/__/') === 0) return;            // firebase auth helper paths
+
+  /* pages: network first -> cached home page when offline */
+  if (req.mode === 'navigate') {
+    event.respondWith(
+      fetch(req).then(function (res) {
+        if (res && res.status === 200 && (url.pathname === '/' || url.pathname === '/index.html')) {
+          var copy = res.clone();
+          caches.open(CACHE_NAME).then(function (c) { c.put('/index.html', copy); });
+        }
+        return res;
+      }).catch(function () {
+        return caches.match('/index.html').then(function (hit) { return hit || caches.match('/'); });
+      })
+    );
+    return;
+  }
+
+  /* css / js / images / fonts: cache first, refresh in the background */
+  event.respondWith(
+    caches.match(req).then(function (cached) {
+      var network = fetch(req).then(function (res) {
+        if (res && res.status === 200 && res.type === 'basic') {
+          var copy = res.clone();
+          caches.open(CACHE_NAME).then(function (c) { c.put(req, copy); });
+        }
+        return res;
+      }).catch(function () { return cached; });
+      return cached || network;
+    })
+  );
 });

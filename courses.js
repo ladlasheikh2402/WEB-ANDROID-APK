@@ -245,7 +245,6 @@ const COURSE_CONFIG = {
   const toTop = () => { const y = root.getBoundingClientRect().top + window.scrollY - 96; window.scrollTo({ top: Math.max(0, y), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); };
   function renderGrid(scroll) {
     teardown(); teardown = () => {}; clearInterval(wmTimer);
-    if (window.LSAudio) { LSAudio.clearVideos(); LSAudio.resumeAfterVideo(); }   // left the player → music may come back
     root.innerHTML = C.courses.map(c => {
       const un = !!store.get('crs_key_' + c.id, null), t = secs(c), dn = done(c).length, last = store.get('crs_last_' + c.id, 0), res = dn > 0 || last > 0, pct = Math.round(dn / c.parts.length * 100), freeN = c.parts.filter(p => p.free).length, ttl = c.hl ? esc(c.title).replace(esc(c.hl), m => '<b>' + m + '</b>') : esc(c.title), lr = (c.learn || []).map(x => typeof x === 'string' ? { i: 'bi-check-circle-fill', t: x, d: '', c: '#ce55fd' } : x);
       return `<div class="crs-course" data-id="${esc(c.id)}">
@@ -431,7 +430,7 @@ const COURSE_CONFIG = {
           if (yt && yt.loadVideoById) return yt.loadVideoById(y);
           yt = new YT.Player('crs-ytp', { host: 'https://www.youtube-nocookie.com', videoId: y,
             playerVars: { rel: 0, modestbranding: 1, playsinline: 1, iv_load_policy: 3, disablekb: 1, fs: 0, autoplay: 1 },
-            events: { onStateChange: e => { const A = window.LSAudio; if (A) { if (e.data === 1) A.videoStart('yt'); else if (e.data === 2 || e.data === 0) A.videoStop('yt'); } if (e.data === 0) ended(); }, onError: () => msg('bi-exclamation-triangle-fill', 'Video load nahi hui', 'YouTube video private ya embed band hai. Unlisted rakhein.') } });
+            events: { onStateChange: e => { if (e.data === 0) ended(); }, onError: () => msg('bi-exclamation-triangle-fill', 'Video load nahi hui', 'YouTube video private ya embed band hai. Unlisted rakhein.') } });
         }).catch(() => msg('bi-wifi-off', 'YouTube load nahi hua', 'Internet check karein.'));
       } else { v.src = s; v.load(); v.play().catch(() => {}); }
       list();
