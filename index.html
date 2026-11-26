@@ -113,11 +113,7 @@
 
     <script>
       /* running inside the Android app (WebView adds "LadlaSheikhApp" to the user-agent): the PWA "Install" popup is pointless there */
-      if (/LadlaSheikhApp/.test(navigator.userAgent)) {
-        document.documentElement.classList.add('in-app');
-        /* weak phone / old WebView (the app adds " lite" to the user-agent): lighter effects, same design */
-        if (/LadlaSheikhApp[^ ]* lite/.test(navigator.userAgent)) document.documentElement.classList.add('lite');
-      }
+      if (/LadlaSheikhApp/.test(navigator.userAgent)) document.documentElement.classList.add('in-app');
     </script>
     <script>
       /* route guard: opened directly on #/login, #/privacy ... -> hide the home page before first paint */

@@ -589,7 +589,6 @@ em {
 /* mobile menu */
 .mobile-menu {
   position: fixed;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   z-index: 800;
   background: var(--ink);
@@ -709,7 +708,6 @@ em {
   display: grid;
   place-items: center;
   position: fixed;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   z-index: 2000;
   background: var(--ink);
@@ -849,7 +847,6 @@ em {
   overflow: clip;
   isolation: isolate;
   padding: calc(var(--hdr) + 30px) 0 0;
-  min-height: 100vh;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
@@ -915,7 +912,6 @@ em {
 }
 .hero-name {
   margin-top: clamp(14px, 2.4vh, 26px);
-  font-size: clamp(4.4rem, min(12.6vw, 16vh), 11.5rem);
   font-size: clamp(4.4rem, min(12.6vw, 16svh), 11.5rem);
   line-height: 0.84;
   letter-spacing: -0.025em;
@@ -1007,7 +1003,6 @@ em {
 }
 .hero-arch {
   position: absolute;
-  top: 9%; right: 4%; bottom: 0; left: 4%;
   inset: 9% 4% 0 4%;
   border-radius: 999px 999px 0 0;
   background: linear-gradient(180deg, #5636e0 0%, #1a1650 60%, #0d1030 100%);
@@ -1017,7 +1012,6 @@ em {
 .hero-arch::after {
   content: "";
   position: absolute;
-  top: 14px; right: 14px; bottom: 0; left: 14px;
   inset: 14px 14px 0;
   border-radius: 999px 999px 0 0;
   border: 1px solid rgba(255, 79, 163, 0.28);
@@ -1609,7 +1603,6 @@ a.ppc-btn:hover {
 .tcp-fav-btn::before {
   content: "";
   position: absolute;
-  top: -8px; right: -8px; bottom: -8px; left: -8px;
   inset: -8px;
 }
 .tcp-fav-btn-icon {
@@ -2201,7 +2194,6 @@ a.ppc-btn:hover {
 .project-card-pro::after {
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   border-radius: inherit;
   pointer-events: none;
@@ -2505,7 +2497,6 @@ html.js .rv {
   .project-card-pro::before {
     content: "";
     position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
     inset: 0;
     z-index: -1;
     border-radius: inherit;
@@ -2552,7 +2543,6 @@ html.js .rv {
 .btn-primary::after {
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   background: linear-gradient(
     110deg,
@@ -2615,7 +2605,6 @@ html.js .rv {
   content: "";
   position: absolute;
   z-index: -1;
-  top: -25%; right: -10%; bottom: auto; left: auto;
   inset: -25% -10% auto auto;
   width: 70%;
   height: 90%;
@@ -2929,7 +2918,6 @@ html:not(.js) .sec-head .eyebrow::before {
 .about-photo.noimg::before {
   content: "LS";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   display: grid;
   place-items: center;
@@ -3072,7 +3060,6 @@ html:not(.js) .sec-head .eyebrow::before {
 /* hero background photo (your original images/hero-bg.jpg) */
 .hero-bg {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   z-index: -1;
   overflow: hidden;
@@ -3080,7 +3067,6 @@ html:not(.js) .sec-head .eyebrow::before {
 }
 .hb-photo {
   position: absolute;
-  top: -4%; right: -4%; bottom: -4%; left: -4%;
   inset: -4%;
   background: #070914 url("images/hero-bg.jpg") center 30% / cover no-repeat;
   opacity: 0.42;
@@ -3098,7 +3084,6 @@ html:not(.js) .sec-head .eyebrow::before {
 }
 .hb-fade {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   background:
     radial-gradient(
@@ -3123,7 +3108,6 @@ html:not(.js) .sec-head .eyebrow::before {
 }
 .hb-grid {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   background-image:
     linear-gradient(rgba(255, 79, 163, 0.07) 1px, transparent 1px),
@@ -3215,7 +3199,6 @@ html {
   margin-bottom: 0;
 }
 .hero .hero-arch {
-  top: 9%; right: 4%; bottom: 0; left: 4%;
   inset: 9% 4% 0 4%; /* bottom: 0 → same floor as the photo */
   translate: none !important;
   box-shadow: none;
@@ -3241,7 +3224,6 @@ html {
 .splash-on .splash::before {
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   background:
     radial-gradient(
@@ -3379,7 +3361,6 @@ html {
 .tcp-fav-btn.burst::after {
   content: "";
   position: absolute;
-  top: -1px; right: -1px; bottom: -1px; left: -1px;
   inset: -1px;
   border-radius: 50%;
   border: 2px solid #e5486f;
@@ -3520,7 +3501,6 @@ button {
 body::after {
   content: "";
   position: fixed;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   z-index: 850;
   pointer-events: none;
@@ -3670,7 +3650,6 @@ body {
   /* the ink curtain itself, with the curved bottom edge */
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   z-index: -2;
   background: var(--ink);
@@ -3683,7 +3662,6 @@ body {
 }
 .sp-grid {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   border-radius: 0 0 50% 50% / 0 0 8vw 8vw;
   pointer-events: none;
@@ -3763,7 +3741,6 @@ body {
 }
 .sp-rail i {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   background: linear-gradient(90deg, var(--brass), #ffc2e2);
   transform: scaleX(0);
@@ -3823,7 +3800,6 @@ html {
 .page-section::after {
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   z-index: -1;
   pointer-events: none;
@@ -3957,7 +3933,6 @@ html {
   content: "";
   position: absolute;
   z-index: 0;
-  top: -2%; right: -10%; bottom: 12%; left: -10%;
   inset: -2% -10% 12% -10%;
   border-radius: 50%;
   pointer-events: none;
@@ -4015,7 +3990,6 @@ html {
 .project-card-pro::before {
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   z-index: 3;
   border-radius: inherit;
@@ -4054,7 +4028,6 @@ html {
 .s-sand::before {
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   z-index: -1;
   pointer-events: none;
@@ -4081,7 +4054,6 @@ html {
 /* phones: lighter graphics */
 @media (max-width: 700px) {
   .hero-art::before {
-    top: 4%; right: -4%; bottom: 14%; left: -4%;
     inset: 4% -4% 14% -4%;
   }
   .hero-art::after {
@@ -4207,7 +4179,6 @@ h3 {
 .btn-primary::after {
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   pointer-events: none;
   translate: -130% 0;
@@ -4271,7 +4242,6 @@ h3 {
 /* gold dust canvas + cursor ring */
 .gx-dust {
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   width: 100%;
   height: 100%;
@@ -4416,7 +4386,6 @@ h3 {
   content: "";
   position: absolute;
   z-index: -1;
-  top: -25%; right: -15%; bottom: -25%; left: -15%;
   inset: -25% -15%;
   pointer-events: none;
   opacity: 0.85;
@@ -4585,7 +4554,6 @@ html.js .split .wd {
 .hb-photo::after {
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   mix-blend-mode: color;
   opacity: 0.7;
@@ -4671,7 +4639,6 @@ html.js .split .wd {
 .install-card::before {
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   border-radius: inherit;
   padding: 1.5px;
@@ -4752,7 +4719,6 @@ html.js .split .wd {
 .ic-icon::after {
   content: "";
   position: absolute;
-  top: 0; right: 0; bottom: 0; left: 0;
   inset: 0;
   border-radius: inherit;
   border: 2px solid #ff4fa3;
@@ -4988,7 +4954,6 @@ html.js .split .wd {
 }
 #gx-top svg {
   position: absolute;
-  top: 2px; right: 2px; bottom: 2px; left: 2px;
   inset: 2px;
   width: 44px;
   height: 44px;
@@ -5191,7 +5156,6 @@ html.menu-open .aw-dock {
 .aw-dock .aw-btn.playing::before {
   content: "";
   position: absolute;
-  top: -1px; right: -1px; bottom: -1px; left: -1px;
   inset: -1px;
   border-radius: inherit;
   border: 1px solid rgba(255, 79, 163, 0.7);

@@ -6,7 +6,7 @@
    - never touches other websites (Firebase, YouTube, GitHub downloads), audio/video or .apk/.zip files
 ═══════════════════════════════════════════════════════ */
 
-const CACHE_NAME = 'ladla-sheikh-v3';
+const CACHE_NAME = 'ladla-sheikh-v2';
 
 /* Small core set. A missing file can NOT break the install (each one is added separately). */
 const CORE_FILES = [

@@ -20,15 +20,3 @@ html.route-pending body { opacity: 0; animation: routeReveal 0.01s 2.5s forwards
 
 /* inside the Android app: no "Install the app" popup */
 html.in-app .install-card { display: none !important; }
-
-/* weak phones / old WebViews (class "lite" is set from the app's user-agent):
-   no blur layers and no endless animations on the login / signup screens -> opens instantly, never half-drawn */
-html.lite #view-auth,
-html.lite #view-auth *,
-html.lite #view-auth *::before,
-html.lite #view-auth *::after {
-  -webkit-backdrop-filter: none !important;
-  backdrop-filter: none !important;
-  animation-iteration-count: 1 !important;
-}
-html.lite .site-header { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(10, 12, 32, 0.92); }
