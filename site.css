@@ -4872,7 +4872,16 @@ html.js .split .wd {
   }
 }
 
-/* (cross-document @view-transition removed: login/signup/legal are now views inside index.html, no page navigation) */
+/* smooth fade between pages (home <-> login <-> signup) in supporting browsers */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root) {
+  animation: vtOut 0.28s ease both;
+}
+::view-transition-new(root) {
+  animation: vtIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
 
 /* ghost numbers sit at the far right of the section, clear of the heading */
 .sec-head {
@@ -5099,6 +5108,10 @@ html.js .split .wd {
   .ls-skel,
   .field input:focus,
   .field textarea:focus {
+    animation: none;
+  }
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
     animation: none;
   }
 }
@@ -5743,3 +5756,120 @@ nav.footer-col a:hover::before {
 .footer-bottom a.ft-top:hover {
   transform: none;
 }
+
+
+/* ═════════ v2.5 — hero polish (no boxes on the portrait) ═════════ */
+/* portrait: soft light sweeping behind the person + warm floor glow */
+.hero-arch::before {
+  content: "";
+  position: absolute;
+  inset: -60%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 0 68%,
+    rgba(255, 138, 198, 0.3) 80%,
+    transparent 92%
+  );
+  mix-blend-mode: screen;
+  animation: gxSpin 11s linear infinite;
+  pointer-events: none;
+}
+.hero-arch {
+  box-shadow:
+    0 40px 90px -30px rgba(34, 211, 238, 0.35),
+    0 80px 120px -50px rgba(255, 79, 163, 0.4),
+    inset 0 0 80px rgba(34, 211, 238, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-arch::before {
+    animation: none !important;
+  }
+}
+/* ═════════ v2.8 — volume control: slides out beside the audio button ═════════ */
+.aw-dock .aw { flex-direction: row-reverse; }
+.aw-dock .aw-pop {
+  position: absolute;
+  top: 50%;
+  bottom: auto;
+  right: calc(100% + 12px);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 18px 7px 7px;
+  border-radius: 999px;
+  background: rgba(13, 16, 36, 0.9);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(241, 240, 255, 0.22);
+  box-shadow: 0 22px 46px -14px rgba(0, 0, 0, 0.8), 0 0 0 4px rgba(255, 79, 163, 0);
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(22px, -50%) scale(0.86);
+  transform-origin: right center;
+  transition: opacity 0.22s ease, visibility 0.22s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+}
+.aw-dock .aw:hover .aw-pop,
+.aw-dock .aw:focus-within .aw-pop {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(0, -50%) scale(1);
+  box-shadow: 0 22px 46px -14px rgba(0, 0, 0, 0.8), 0 0 0 4px rgba(255, 79, 163, 0.1);
+}
+/* invisible bridge so the pill does not close while the mouse travels from the button to it */
+.aw-dock .aw::after { top: 0; bottom: 0; left: auto; right: 100%; width: 16px; height: auto; }
+
+.aw-mute {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.05rem;
+  color: #f1f0ff;
+  background: rgba(241, 240, 255, 0.08);
+  transition: background 0.25s, color 0.25s, transform 0.3s var(--ease);
+}
+.aw-mute:hover { background: var(--brass); color: #0a0620; transform: scale(1.08); }
+.aw-mute:active { transform: scale(0.92); }
+
+/* slider: gradient fill that follows the value (--v is set by site.js), thumb grows on hover / drag */
+.aw-dock .aw-vol {
+  --v: 60%;
+  width: clamp(96px, 22vw, 140px);
+  height: 6px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--brass), #ff8ac6 var(--v), rgba(241, 240, 255, 0.2) var(--v));
+  transition: height 0.2s var(--ease);
+}
+.aw-dock .aw-vol:hover,
+.aw-dock .aw-vol:active { height: 8px; }
+.aw-dock .aw-vol::-webkit-slider-runnable-track { height: 100%; background: transparent; border-radius: 6px; }
+.aw-dock .aw-vol::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  margin-top: -6px;
+  background: #fff;
+  border: 3px solid var(--brass);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 0 0 rgba(255, 79, 163, 0.35);
+  transition: transform 0.25s var(--ease), box-shadow 0.25s;
+}
+.aw-dock .aw-vol:hover::-webkit-slider-thumb { transform: scale(1.18); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 0 7px rgba(255, 79, 163, 0.28); }
+.aw-dock .aw-vol:active::-webkit-slider-thumb { transform: scale(1.05); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5), 0 0 0 10px rgba(255, 79, 163, 0.22); }
+.aw-dock .aw-vol::-moz-range-track { height: 6px; border-radius: 6px; background: transparent; }
+.aw-dock .aw-vol::-moz-range-thumb { width: 12px; height: 12px; background: #fff; border: 3px solid var(--brass); box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); transition: transform 0.25s var(--ease); }
+.aw-dock .aw-vol:hover::-moz-range-thumb { transform: scale(1.18); }
+.aw-dock .aw-vol:focus-visible { outline: 2px solid var(--brass); outline-offset: 6px; }
+
+.aw-pct {
+  flex: none;
+  min-width: 2.7ch;
+  text-align: right;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: #cfd1ea;
+}
+.aw-pct::after { content: "%"; opacity: 0.6; margin-left: 1px; }
+@media (prefers-reduced-motion: reduce) { .aw-dock .aw-pop { transition: opacity 0.2s, visibility 0.2s; transform: translate(0, -50%); } }

@@ -112,25 +112,14 @@
     <link rel="manifest" href="/manifest.json" />
 
     <script>
-      /* running inside the Android app (WebView adds "LadlaSheikhApp" to the user-agent): the PWA "Install" popup is pointless there */
-      if (/LadlaSheikhApp/.test(navigator.userAgent)) document.documentElement.classList.add('in-app');
-    </script>
-    <script>
-      /* route guard: opened directly on #/login, #/privacy ... -> hide the home page before first paint */
-      (function () {
-        var h = location.hash;
-        if (h.indexOf('#/') !== 0) return;
-        var n = h.slice(2).split('?')[0].replace(/\/+$/, ''), c = document.documentElement.classList;
-        if (n === 'login' || n === 'signup') c.add('route-auth', 'route-pending');
-        else if (n === 'privacy' || n === 'terms' || n === 'data-deletion') c.add('route-legal', 'route-pending');
-      })();
+      /* opened directly on #/login, #/privacy-policy … → hide the home page before first paint */
+      (function () { if (/^#\/(login|signup|privacy-policy|terms-of-service|data-deletion)(\?|$)/.test(location.hash)) document.documentElement.classList.add('pg-mode'); })();
     </script>
     <link href="site.css" rel="stylesheet" />
     <link href="animations.css" rel="stylesheet" />
     <link href="courses.css" rel="stylesheet" />
-    <link href="auth-pro.css" rel="stylesheet" />
-    <link href="legal.css" rel="stylesheet" />
-    <link href="router.css" rel="stylesheet" />
+  <link href="router.css" rel="stylesheet" />
+  <link href="legal.css" rel="stylesheet" />
     <script src="site.js" defer></script>
     <script src="courses.js" defer></script>
     <script src="luxury.js" defer></script>
@@ -139,11 +128,8 @@
     <script src="auth-gate.js" defer></script>
     <script type="module" src="visitor-counter.js"></script>
     <script type="module" src="animations.js"></script>
-    <script src="auth.js" defer></script>
-    <script src="auth-glass.js" defer></script>
-    <script src="auth-typing.js" defer></script>
-    <script src="legal.js" defer></script>
-    <script src="router.js" defer></script>
+  <script src="legal.js" defer></script>
+  <script src="router.js" defer></script>
 
     <script type="application/ld+json">
       {
@@ -256,7 +242,7 @@
       <div class="bar-end">
         <ul class="nav-signin-list">
           <li class="nav-signin-item">
-            <a href="#" class="signin-nav-btn" id="navSigninBtn"
+            <a href="#/login" class="signin-nav-btn" id="navSigninBtn"
               ><span>Sign In</span
               ><i class="bi bi-box-arrow-in-right signin-nav-arrow"></i
             ></a>
@@ -390,13 +376,13 @@
                 ><span
                   class="typed"
                   id="typed"
-                  data-words="Web Development|UI/UX Design|Graphic Design|Video Editing"
+                  data-words="Web Developer|UI/UX Designer|Graphic Designer|Video Editor"
                   aria-hidden="true"
-                  >Web Development</span
+                  >Web Developer</span
                 ><span class="caret" aria-hidden="true"></span></span
               ><span class="sr-only"
-                >Web Development, UI/UX Design, Graphic Design, Video
-                Editing</span
+                >Web Developer, UI/UX Designer, Graphic Designer, Video
+                Editor</span
               >
             </p>
           </div>
@@ -405,15 +391,6 @@
             <i class="spark s1" aria-hidden="true">✦</i
             ><i class="spark s2" aria-hidden="true">✦</i
             ><i class="spark s3" aria-hidden="true">✦</i>
-            <span class="hero-chip hc1" aria-hidden="true"
-              ><b><i class="bi bi-code-slash"></i>Web Dev</b></span
-            >
-            <span class="hero-chip hc2" aria-hidden="true"
-              ><b><i class="bi bi-bezier2"></i>UI/UX</b></span
-            >
-            <span class="hero-chip hc3" aria-hidden="true"
-              ><b><i class="bi bi-camera-reels-fill"></i>Video Edit</b></span
-            >
             <img
               class="hero-photo"
               src="images/Hero-image.png"
@@ -432,11 +409,7 @@
               video uploads.
             </p>
             <p class="hero-from">From Sheikh Ali Ahmad</p>
-            <a
-              href="#my-courses"
-              class="hero-new nav-btn"
-              data-target="my-courses"
-            >
+            <a href="#my-courses" class="hero-new nav-btn" data-target="my-courses">
               <span class="hn-tag">New</span>
               <span class="hn-txt">Full Stack Web Development Course</span>
               <i class="bi bi-arrow-right" aria-hidden="true"></i>
@@ -489,24 +462,24 @@
           <div class="marq">
             <div class="marq-track">
               <ul class="marq-group">
-                <li><i>✦</i>Web Development</li>
-                <li><i>✦</i>UI/UX Design</li>
-                <li><i>✦</i>Graphic Design</li>
-                <li><i>✦</i>Video Editing</li>
-                <li><i>✦</i>Web Development</li>
-                <li><i>✦</i>UI/UX Design</li>
-                <li><i>✦</i>Graphic Design</li>
-                <li><i>✦</i>Video Editing</li>
+                <li><i>✦</i>Web Developer</li>
+                <li><i>✦</i>UI/UX Designer</li>
+                <li><i>✦</i>Graphic Designer</li>
+                <li><i>✦</i>Video Editor</li>
+                <li><i>✦</i>Web Developer</li>
+                <li><i>✦</i>UI/UX Designer</li>
+                <li><i>✦</i>Graphic Designer</li>
+                <li><i>✦</i>Video Editor</li>
               </ul>
               <ul class="marq-group" aria-hidden="true">
-                <li><i>✦</i>Web Development</li>
-                <li><i>✦</i>UI/UX Design</li>
-                <li><i>✦</i>Graphic Design</li>
-                <li><i>✦</i>Video Editing</li>
-                <li><i>✦</i>Web Development</li>
-                <li><i>✦</i>UI/UX Design</li>
-                <li><i>✦</i>Graphic Design</li>
-                <li><i>✦</i>Video Editing</li>
+                <li><i>✦</i>Web Developer</li>
+                <li><i>✦</i>UI/UX Designer</li>
+                <li><i>✦</i>Graphic Designer</li>
+                <li><i>✦</i>Video Editor</li>
+                <li><i>✦</i>Web Developer</li>
+                <li><i>✦</i>UI/UX Designer</li>
+                <li><i>✦</i>Graphic Designer</li>
+                <li><i>✦</i>Video Editor</li>
               </ul>
             </div>
           </div>
@@ -3000,706 +2973,6 @@
       </section>
     </main>
 
-    <!-- login / signup are mounted here from <template id="tpl-login|tpl-signup"> (see bottom of <body>) -->
-    <div id="view-auth" class="route-view" hidden></div>
-
-    <!-- ═══ VIEW: Privacy Policy  (route #/privacy — was privacy-policy.html) ═══ -->
-    <section id="view-privacy" class="route-view legal-page" aria-label="Privacy Policy" hidden>
-      <section class="legal-hero s-dark" aria-labelledby="lg-pp-title">
-        <i class="lg-spark a" aria-hidden="true">✦</i
-        ><i class="lg-spark b" aria-hidden="true">✦</i
-        ><i class="lg-spark c" aria-hidden="true">✦</i>
-        <div class="wrap">
-          <p class="eyebrow">Legal</p>
-          <h1 id="lg-pp-title">Privacy <em>Policy</em></h1>
-          <p class="legal-updated">
-            Last updated: <strong>20 September 2026</strong>
-          </p>
-          <nav class="legal-tabs" aria-label="Legal pages">
-            <a href="#/privacy" aria-current="page">Privacy Policy</a
-            ><a href="#/terms">Terms of Service</a
-            ><a href="#/data-deletion">Delete your data</a>
-          </nav>
-        </div>
-      </section>
-
-      <section class="legal-body s-light">
-        <div class="wrap legal-grid">
-          <aside class="legal-toc" aria-label="On this page">
-            <strong>On this page</strong>
-            <ol>
-              <li><a href="#lg-pp-info-we-collect">Information we collect</a></li>
-              <li><a href="#lg-pp-how-we-use">How we use your information</a></li>
-              <li>
-                <a href="#lg-pp-social-login">Signing in with Google / GitHub</a>
-              </li>
-              <li>
-                <a href="#lg-pp-downloads">Tools, downloads and third-party apps</a>
-              </li>
-              <li><a href="#lg-pp-cookies">Cookies and local storage</a></li>
-              <li><a href="#lg-pp-sharing">How we share information</a></li>
-              <li><a href="#lg-pp-security">How we protect your data</a></li>
-              <li><a href="#lg-pp-retention">Data retention</a></li>
-              <li><a href="#lg-pp-your-rights">Your rights and choices</a></li>
-              <li><a href="#lg-pp-children">Children's privacy</a></li>
-              <li><a href="#lg-pp-third-party">Third-party links and services</a></li>
-              <li><a href="#lg-pp-changes">Changes to this policy</a></li>
-              <li><a href="#lg-pp-contact">Contact us</a></li>
-            </ol>
-          </aside>
-          <article class="legal-shell">
-            <p>
-              This Privacy Policy explains how
-              <strong>Ladla Sheikh</strong> ("we", "us", "our", operated by
-              Sheikh Ali Ahmad, Okara, Pakistan, at
-              <a href="https://ladla-sheikh.vercel.app/"
-                >ladla-sheikh.vercel.app</a
-              >) collects, uses, shares and protects your information when you
-              visit the site, create an account or sign in, browse or download
-              tools, install the site as an app (PWA), or use our contact form.
-              Some sections of the site (About, Tools, Methods, Contact) require
-              you to be signed in — the Home section is always public. By using
-              this website you agree to the collection and use of information as
-              described here. If you don't agree, please don't use the site.
-            </p>
-
-            <h2 id="lg-pp-info-we-collect">1. Information we collect</h2>
-
-            <h3>Account information</h3>
-            <p>
-              Some sections of the site (About, Tools, Methods, Contact) require
-              an account — the Home section is always open to everyone. When you
-              create an account or sign in, we collect:
-            </p>
-            <ul>
-              <li>
-                <strong>Email/password sign-up:</strong> your name, a username,
-                your email address, and a password. Your password is handled
-                entirely by Firebase Authentication (Google's authentication
-                service) — it's hashed and stored by Firebase, and we never see
-                or store your actual password ourselves (see
-                <a href="#lg-pp-security">How we protect your data</a>).
-              </li>
-              <li>
-                <strong>Social sign-in (Google / GitHub):</strong> the basic
-                profile info that provider shares with us — typically your name
-                and email address. We never see or store your social account
-                password.
-              </li>
-            </ul>
-            <p>
-              Your account's name, username, email and sign-in provider are
-              stored in our Firebase Realtime Database. A small flag is also
-              kept in your browser's local storage so the site remembers you're
-              signed in between visits.
-            </p>
-
-            <h3>Information you give us directly</h3>
-            <ul>
-              <li>
-                Contact form submissions — your name, email, phone number and
-                message.
-              </li>
-              <li>
-                Anything you choose to send us via WhatsApp, Telegram, or email
-                when you reach out through the links on the site.
-              </li>
-            </ul>
-
-            <h3>Information collected automatically</h3>
-            <ul>
-              <li>
-                Device and usage data — browser type, general location (from IP
-                address), pages visited, and how you interact with the site
-                (this may come from our hosting provider's standard logs and, if
-                enabled, analytics tools).
-              </li>
-              <li>
-                If you install the site as an app (PWA — "Add to Home Screen"),
-                basic install/usage state so the install prompt behaves
-                correctly. This is stored on your device.
-              </li>
-              <li>
-                If you play the background audio on the site, your last
-                volume/play preference, stored locally on your device only — we
-                don't receive this.
-              </li>
-            </ul>
-
-            <h2 id="lg-pp-how-we-use">2. How we use your information</h2>
-            <ul>
-              <li>
-                To create and manage your account, and let you sign in securely.
-              </li>
-              <li>
-                To respond to messages sent through the contact form or via
-                WhatsApp/Telegram/email.
-              </li>
-              <li>
-                To keep the site secure — detecting abuse, spam, and automated
-                sign-up/form submissions.
-              </li>
-              <li>
-                To understand how the site is used so we can improve it and the
-                tools we share.
-              </li>
-              <li>To meet legal obligations where applicable.</li>
-            </ul>
-            <p>
-              We do <strong>not</strong> sell your personal information to
-              anyone.
-            </p>
-
-            <h2 id="lg-pp-social-login">3. Signing in with Google / GitHub</h2>
-            <p>
-              When you choose "Continue with Google" or "Continue with GitHub",
-              you're shown that provider's own sign-in screen to authenticate,
-              via Firebase Authentication. We only receive the profile fields
-              the provider allows — usually your name and email address —
-              governed by that provider's own consent screen. Your use of Google
-              or GitHub is also subject to their own privacy policies. We
-              recommend reviewing them:
-            </p>
-            <ul>
-              <li>
-                <a
-                  href="https://policies.google.com/privacy"
-                  target="_blank"
-                  rel="noopener"
-                  >Google Privacy Policy</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement"
-                  target="_blank"
-                  rel="noopener"
-                  >GitHub Privacy Statement</a
-                >
-              </li>
-            </ul>
-            <p>
-              Facebook, phone-number (SMS) and Apple sign-in are not currently
-              offered on this site — if any of these are added later, this
-              policy will be updated to cover them.
-            </p>
-
-            <h2 id="lg-pp-downloads">4. Tools, downloads and third-party apps</h2>
-            <p>
-              The tools, mods and APKs listed on this site (WhatsApp/Telegram
-              mods, premium "unlocked" versions of third-party apps, editing and
-              design tools, and similar files) are hosted and downloaded
-              directly from GitHub Releases, not from our own servers. When you
-              tap "Download":
-            </p>
-            <ul>
-              <li>
-                You leave this site and download the file directly from GitHub.
-                GitHub's own privacy policy and terms apply to that download.
-              </li>
-              <li>
-                We don't track who downloads which file, and we don't receive
-                any personal data from that action.
-              </li>
-              <li>
-                Installing and using any downloaded APK is at your own
-                discretion and risk — please review app permissions before
-                installing, especially for modified versions of third-party
-                apps.
-              </li>
-            </ul>
-            <p>
-              A few listed tools are explicitly labelled for educational/demo
-              purposes only (for example, fake-chat or prank-style tools). We
-              don't collect any data from your use of these tools, and you're
-              responsible for using them lawfully and only with people who
-              consent.
-            </p>
-
-            <h2 id="lg-pp-cookies">5. Cookies and local storage</h2>
-            <p>We use a small amount of local storage and cookies to:</p>
-            <ul>
-              <li>
-                Keep you signed in between visits (Firebase Authentication
-                stores your session on your device).
-              </li>
-              <li>
-                Remember install-prompt state and your preferences (e.g. audio
-                volume) on your device.
-              </li>
-              <li>
-                Understand aggregate site usage, if analytics tools are enabled.
-              </li>
-            </ul>
-            <p>
-              You can clear cookies and local storage at any time from your
-              browser settings. Doing so may sign you out or reset saved
-              preferences (like the install prompt or audio volume).
-            </p>
-
-            <h2 id="lg-pp-sharing">6. How we share information</h2>
-            <p>We share information only in these situations:</p>
-            <ul>
-              <li>
-                <strong>Service providers</strong> who help us run the site —
-                our hosting provider (Vercel) and Firebase (Google) for
-                authentication and our database. They only receive what's needed
-                to perform their function, and are bound to protect it.
-              </li>
-              <li>
-                <strong>GitHub</strong> — tool/APK downloads are served directly
-                from GitHub Releases; GitHub receives whatever standard request
-                data your browser sends when downloading a file (see
-                <a href="#lg-pp-downloads">Tools, downloads and third-party apps</a>).
-              </li>
-              <li>
-                <strong>Legal reasons</strong> — if required by law, court
-                order, or to protect the rights, safety, or property of Ladla
-                Sheikh, our users, or the public.
-              </li>
-              <li>
-                <strong>Business transfers</strong> — if the site or business is
-                ever transferred, your data may transfer as part of that, under
-                the same protections described here.
-              </li>
-            </ul>
-
-            <h2 id="lg-pp-security">7. How we protect your data</h2>
-            <p>We take the following measures to keep your data safe:</p>
-            <ul>
-              <li>
-                <strong
-                  >Passwords are never stored or seen by us in plain
-                  text.</strong
-                >
-                Email/password sign-in is handled entirely by Firebase
-                Authentication, which hashes and stores your password using
-                industry-standard methods — we don't have access to it.
-              </li>
-              <li>
-                <strong>All traffic is encrypted in transit</strong> via
-                HTTPS/TLS.
-              </li>
-              <li>
-                <strong>Database access rules</strong> restrict who can write
-                account data — a signed-in user can only create or edit their
-                own profile, and usernames can't be taken over once claimed.
-              </li>
-              <li>
-                <strong>Access is limited</strong> to Ladla Sheikh (Sheikh Ali
-                Ahmad) only — we don't have a team with broader access to your
-                account or messages.
-              </li>
-              <li>
-                <strong>Rate limiting and abuse detection</strong> on
-                sign-up/sign-in and the contact form to reduce brute-force,
-                credential-stuffing and spam attempts.
-              </li>
-              <li>
-                <strong>Regular dependency and security updates</strong> to
-                close known vulnerabilities on the site itself.
-              </li>
-            </ul>
-            <p>
-              No method of transmission or storage is 100% secure, so while we
-              work hard to protect your information, we can't guarantee absolute
-              security. Please also do your part: use a strong, unique password,
-              and never share your login details.
-            </p>
-
-            <h2 id="lg-pp-retention">8. Data retention</h2>
-            <p>
-              We keep your account information (name, username, email, sign-in
-              provider) for as long as your account exists. This site doesn't
-              currently have a self-service "delete account" button — if you'd
-              like your account and data removed, see
-              <a href="#/data-deletion">how to delete your data</a> and we'll
-              remove or anonymize it within a reasonable period, except where
-              we're legally required to retain it. Contact form messages are
-              kept only for as long as needed to respond to you and for a
-              reasonable period afterward for reference, unless you ask us to
-              delete them sooner.
-            </p>
-
-            <h2 id="lg-pp-your-rights">9. Your rights and choices</h2>
-            <p>Depending on where you live, you may have the right to:</p>
-            <ul>
-              <li>Access the personal data we hold about you.</li>
-              <li>Correct inaccurate data.</li>
-              <li>Request deletion of your account and data.</li>
-              <li>Ask for a copy of the data we hold about you.</li>
-              <li>
-                Withdraw consent for further communication with us at any time.
-              </li>
-            </ul>
-            <p>To exercise any of these, contact us using the details below.</p>
-
-            <h2 id="lg-pp-children">10. Children's privacy</h2>
-            <p>
-              This site is not directed at children under 13 (or the minimum age
-              in your region), and we don't knowingly collect personal data from
-              children, including through account sign-up. If you believe a
-              child has provided us with personal data, please contact us and
-              we'll remove it.
-            </p>
-
-            <h2 id="lg-pp-third-party">11. Third-party links and embedded content</h2>
-            <p>
-              Our site links out to and/or authenticates through third-party
-              platforms — including
-              <a
-                href="https://policies.google.com/privacy"
-                target="_blank"
-                rel="noopener"
-                >Google</a
-              >,
-              <a
-                href="https://www.youtube.com/@ladla.sheikh.2402"
-                target="_blank"
-                rel="noopener"
-                >YouTube</a
-              >,
-              <a
-                href="https://whatsapp.com/channel/0029Vao1lnR1nozDF8jBNh3B"
-                target="_blank"
-                rel="noopener"
-                >WhatsApp</a
-              >,
-              <a
-                href="https://t.me/+94FrpOJan0plZGQ0"
-                target="_blank"
-                rel="noopener"
-                >Telegram</a
-              >, and
-              <a
-                href="https://github.com/ladlasheikh2402"
-                target="_blank"
-                rel="noopener"
-                >GitHub</a
-              >
-              (for sign-in and/or tool downloads). If you click through and
-              interact with these, their own privacy policies apply, and we
-              aren't responsible for how they handle your data. If you message
-              us on WhatsApp or Telegram, that conversation is also governed by
-              WhatsApp's/Telegram's own privacy policy in addition to this one.
-            </p>
-
-            <h2 id="lg-pp-changes">12. Changes to this policy</h2>
-            <p>
-              We may update this Privacy Policy from time to time. Changes take
-              effect when posted on this page, with the "Last updated" date
-              revised accordingly. For significant changes, we'll make a
-              reasonable effort to notify you (e.g. via email or a site notice).
-            </p>
-
-            <h2 id="lg-pp-contact">13. Contact us</h2>
-            <p>
-              If you have questions about this Privacy Policy or want to
-              exercise your data rights, reach out:
-            </p>
-            <ul>
-              <li>
-                Via the <a href="#contact-me">contact form</a> on our
-                site
-              </li>
-              <li>
-                By email:
-                <a href="mailto:ladlasheikh2402@gmail.com"
-                  >ladlasheikh2402@gmail.com</a
-                >
-              </li>
-              <li>
-                On WhatsApp:
-                <a
-                  href="https://wa.me/923143702270"
-                  target="_blank"
-                  rel="noopener"
-                  >+92 314 3702270</a
-                >
-              </li>
-            </ul>
-
-            <p class="legal-fine">
-              This policy is a general-purpose template written for this
-              website's actual features. It is not legal advice — please have a
-              qualified lawyer review and adapt it (especially the "Your rights"
-              and retention sections) to the specific laws that apply where your
-              users are located (e.g. GDPR in the EU/UK, CCPA in California)
-              before relying on it in production.
-            </p>
-          </article>
-        </div>
-      </section>
-
-    </section>
-
-    <!-- ═══ VIEW: Terms of Service  (route #/terms — was terms-of-service.html) ═══ -->
-    <section id="view-terms" class="route-view legal-page" aria-label="Terms of Service" hidden>
-      <section class="legal-hero s-dark" aria-labelledby="lg-tos-title">
-        <i class="lg-spark a" aria-hidden="true">✦</i
-        ><i class="lg-spark b" aria-hidden="true">✦</i
-        ><i class="lg-spark c" aria-hidden="true">✦</i>
-        <div class="wrap">
-          <p class="eyebrow">Legal</p>
-          <h1 id="lg-tos-title">Terms of <em>Service</em></h1>
-          <p class="legal-updated">
-            Last updated: <strong>19 September 2026</strong>
-          </p>
-          <nav class="legal-tabs" aria-label="Legal pages">
-            <a href="#/privacy">Privacy Policy</a
-            ><a href="#/terms" aria-current="page"
-              >Terms of Service</a
-            ><a href="#/data-deletion">Delete your data</a>
-          </nav>
-        </div>
-      </section>
-
-      <section class="legal-body s-light">
-        <div class="wrap legal-grid">
-          <aside class="legal-toc" aria-label="On this page">
-            <strong>On this page</strong>
-            <ol>
-              <li><a href="#lg-tos-who-can-use">Who can use this site</a></li>
-              <li><a href="#lg-tos-your-account">Your account</a></li>
-              <li><a href="#lg-tos-tools">The tools and downloads on this site</a></li>
-              <li><a href="#lg-tos-acceptable-use">How you may use the site</a></li>
-              <li><a href="#lg-tos-content">Content and ownership</a></li>
-              <li><a href="#lg-tos-links">Links to other platforms</a></li>
-              <li><a href="#lg-tos-availability">Availability and changes</a></li>
-              <li><a href="#lg-tos-ending">Ending your account</a></li>
-              <li><a href="#lg-tos-liability">Liability</a></li>
-              <li><a href="#lg-tos-changes">Changes to these terms</a></li>
-              <li><a href="#lg-tos-contact">Contact</a></li>
-            </ol>
-          </aside>
-          <article class="legal-shell">
-            <p>
-              <strong>Ladla Sheikh</strong> (<a
-                href="https://ladla-sheikh.vercel.app/"
-                >ladla-sheikh.vercel.app</a
-              >) is a personal tech website by Sheikh Ali Ahmad, sharing
-              programming tutorials, tech methods and a collection of free and
-              premium tools. Some parts of the site — like unlocking certain
-              tools — need an account, made with an email and password or with
-              Google or GitHub. By creating an account or using the site, you
-              agree to these terms. If you don't agree, please don't use the
-              site.
-            </p>
-
-            <h2 id="lg-tos-who-can-use">1. Who can use this site</h2>
-            <p>
-              You should be at least 13 years old to create an account. If
-              you're under 18, please only use the site with a parent or
-              guardian's permission.
-            </p>
-
-            <h2 id="lg-tos-your-account">2. Your account</h2>
-            <p>
-              You're responsible for keeping your login details safe and for
-              anything that happens under your account. Give us real information
-              when you sign up, and don't create an account for anyone but
-              yourself.
-            </p>
-
-            <h2 id="lg-tos-tools">3. The tools and downloads on this site</h2>
-            <p>
-              Many of the downloads on this site are modified ("mod") or
-              unlocked versions of other companies' apps — for example WhatsApp,
-              CapCut, KineMaster, Telegram, Snapchat and similar apps. A few
-              sections, like the fake-chat and screenshot generators, are
-              clearly labelled as being
-              <strong>for educational or entertainment purposes only</strong>.
-            </p>
-            <ul>
-              <li>
-                These tools are not made, reviewed or supported by the original
-                app companies, and using a modified app can go against that
-                company's own terms.
-              </li>
-              <li>
-                Downloads are provided as they are, with no guarantee that a
-                tool will keep working, stay safe, or stay available — app
-                stores and companies regularly block modified apps.
-              </li>
-              <li>
-                You use every tool at your own risk and are responsible for how
-                you use it. Don't use any tool — including the ones marked "for
-                educational purposes only" — to prank, trick, scare, impersonate
-                or harm someone without their knowledge and consent, or to break
-                the law.
-              </li>
-              <li>
-                "Premium" or "unlocked" labels describe what the tool offers;
-                they don't mean Ladla Sheikh is affiliated with or endorsed by
-                the original company.
-              </li>
-            </ul>
-
-            <h2 id="lg-tos-acceptable-use">4. How you may use the site</h2>
-            <p>You agree not to:</p>
-            <ul>
-              <li>
-                use any tool on this site to harm, deceive, stalk or defraud
-                another person;
-              </li>
-              <li>
-                try to get into accounts, systems or data that aren't yours;
-              </li>
-              <li>
-                disrupt the site, for example with automated attacks or
-                excessive requests;
-              </li>
-              <li>
-                resell, relabel or redistribute the site's tools or content as
-                your own.
-              </li>
-            </ul>
-
-            <h2 id="lg-tos-content">5. Content and ownership</h2>
-            <p>
-              The site's own design, text, videos, branding and original tools
-              belong to Ladla Sheikh. Third-party app names, logos and
-              trademarks mentioned on the site (like WhatsApp, Instagram,
-              CapCut, Adobe or Netflix) belong to their respective owners and
-              are used only to describe what a tool does.
-            </p>
-
-            <h2 id="lg-tos-links">6. Links to other platforms</h2>
-            <p>
-              The site links to external platforms — YouTube, WhatsApp,
-              Telegram, GitHub releases and others — for downloads and to follow
-              Ladla Sheikh's content. Those platforms have their own terms and
-              privacy practices, which this site doesn't control.
-            </p>
-
-            <h2 id="lg-tos-availability">7. Availability and changes</h2>
-            <p>
-              The site, its tools and downloads are provided as they are. We try
-              to keep everything working, but can't promise the site will always
-              be available, error-free, or that any specific tool will keep
-              working. We may change, pause, rename, or remove tools, pages or
-              features at any time, including anything currently marked "Coming
-              Soon."
-            </p>
-
-            <h2 id="lg-tos-ending">8. Ending your account</h2>
-            <p>
-              You can stop using the site at any time and ask us to delete your
-              account and data (see
-              <a href="#/data-deletion">how to delete your data</a>). We may
-              suspend or close accounts that break these terms.
-            </p>
-
-            <h2 id="lg-tos-liability">9. Liability</h2>
-            <p>
-              To the extent the law allows, Ladla Sheikh is not liable for
-              losses, damage, or account issues (including issues with your
-              accounts on third-party apps) that result from using this site,
-              its tools, or anything downloaded from it.
-            </p>
-
-            <h2 id="lg-tos-changes">10. Changes to these terms</h2>
-            <p>
-              We may update these terms from time to time. When we do, we'll
-              change the date at the top of this page. Continuing to use the
-              site after that means you accept the updated terms.
-            </p>
-
-            <h2 id="lg-tos-contact">11. Contact</h2>
-            <p>
-              Questions about these terms? Email
-              <a href="mailto:ladlasheikh2402@gmail.com"
-                >ladlasheikh2402@gmail.com</a
-              >. How we handle your personal information is explained in our
-              <a href="#/privacy">Privacy Policy</a>.
-            </p>
-          </article>
-        </div>
-      </section>
-
-    </section>
-
-    <!-- ═══ VIEW: Delete your data  (route #/data-deletion — was data-deletion.html) ═══ -->
-    <section id="view-data-deletion" class="route-view legal-page" aria-label="Delete your data" hidden>
-      <section class="legal-hero s-dark" aria-labelledby="lg-dd-title">
-        <i class="lg-spark a" aria-hidden="true">✦</i
-        ><i class="lg-spark b" aria-hidden="true">✦</i
-        ><i class="lg-spark c" aria-hidden="true">✦</i>
-        <div class="wrap">
-          <p class="eyebrow">Legal</p>
-          <h1 id="lg-dd-title">Delete your <em>data</em></h1>
-          <p class="legal-updated">
-            Last updated: <strong>19 September 2026</strong>
-          </p>
-          <nav class="legal-tabs" aria-label="Legal pages">
-            <a href="#/privacy">Privacy Policy</a
-            ><a href="#/terms">Terms of Service</a
-            ><a href="#/data-deletion" aria-current="page"
-              >Delete your data</a
-            >
-          </nav>
-        </div>
-      </section>
-
-      <section class="legal-body s-light">
-        <div class="wrap legal-grid solo">
-          <article class="legal-shell">
-            <p>
-              You can ask us to delete your Ladla Sheikh account and the
-              personal information linked to it at any time. This page explains
-              what we delete and how to ask.
-            </p>
-
-            <h2>What we delete</h2>
-            <p>When you sign up or sign in, we store:</p>
-            <ul>
-              <li>your name and username;</li>
-              <li>your email address;</li>
-              <li>how you signed in (email and password, Google or GitHub);</li>
-              <li>the date your account was created.</li>
-            </ul>
-            <p>
-              When we process your request, we delete your login account and
-              this profile information.
-            </p>
-
-            <h2>How to ask</h2>
-            <ol>
-              <li>
-                Send an email to
-                <a href="mailto:ladlasheikh2402@gmail.com"
-                  >ladlasheikh2402@gmail.com</a
-                >
-                from the email address linked to your account.
-              </li>
-              <li>Use the subject <strong>Delete my data</strong>.</li>
-              <li>
-                Include your username, or the name on your Google or GitHub
-                account if you signed in that way.
-              </li>
-            </ol>
-            <p>
-              <a
-                class="btn btn-primary"
-                href="mailto:ladlasheikh2402@gmail.com?subject=Delete%20my%20data&amp;body=Please%20delete%20my%20Ladla%20Sheikh%20account%20and%20data.%0D%0A%0D%0AUsername%3A%20"
-              >
-                <i class="bi bi-envelope" aria-hidden="true"></i> Email a
-                deletion request
-              </a>
-            </p>
-
-            <div class="legal-note">
-              <p style="margin: 0">
-                <strong>Timing.</strong> We will delete your data within 30 days
-                of your request and reply to confirm when it is done.
-              </p>
-            </div>
-          </article>
-        </div>
-      </section>
-
-    </section>
-
     <footer class="site-footer">
       <div class="ft-glow" aria-hidden="true"></div>
       <div class="wrap">
@@ -3851,8 +3124,8 @@
             😎
           </p>
           <p class="footer-legal">
-            <a href="#/privacy">Privacy</a
-            ><a href="#/terms">Terms</a
+            <a href="#/privacy-policy">Privacy</a
+            ><a href="#/terms-of-service">Terms</a
             ><a href="#/data-deletion">Delete your data</a>
             <a href="#home" class="ft-top nav-btn" data-target="home"
               >Back to top <i class="bi bi-arrow-up" aria-hidden="true"></i
@@ -3877,7 +3150,10 @@
             ><s></s><s></s><s></s><s></s
           ></span>
         </button>
-        <div class="aw-pop">
+        <div class="aw-pop" role="group" aria-label="Volume">
+          <button type="button" class="aw-mute" aria-label="Mute / unmute">
+            <i class="bi bi-volume-up-fill" aria-hidden="true"></i>
+          </button>
           <input
             type="range"
             class="aw-vol"
@@ -3887,6 +3163,7 @@
             value="60"
             aria-label="Volume"
           />
+          <output class="aw-pct" aria-hidden="true">60</output>
         </div>
       </div>
     </div>
@@ -3930,15 +3207,21 @@
         </button>
       </div>
     </div>
+  
+<!-- ═══════════════════════════════════════════════════════════════
+     IN-PAGE VIEWS — the old login.html, signup.html, privacy-policy.html,
+     terms-of-service.html and data-deletion.html. router.js shows them when the
+     address is  #/login  #/signup  #/privacy-policy  #/terms-of-service  #/data-deletion
+     ═══════════════════════════════════════════════════════════════ -->
+<div id="pgRoot"></div>
 
-    <!-- ═══ VIEW: Login  (route #/login — was login.html). Mounted into #view-auth by router.js ═══ -->
-    <template id="tpl-login">
-<div class="ap-shell">
+<template id="tpl-login" data-title="Sign In | Ladla Sheikh">
+  <div class="ap-shell">
 
     <aside class="ap-aside" aria-hidden="false">
       <div class="ap-wall" aria-hidden="true"><div class="ap-col"><div class="ap-track"><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/ladla-sheikh-whatsapp.jpeg" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Ladla Sheikh WhatsApp</b><small>WhatsApp Mod</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/4.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Pixellab (Premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/10.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Inshot (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/14.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-6s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>CapCut (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/17.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Toolkit Generator</b><small>Dev Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Magic Eraser.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Magic Eraser (premium)</b><small>BG &amp; Object Remover</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/youtube.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>YouTube (premium)</b><small>Social App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/fitroom.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Fitroom (premium)</b><small>Clothing Changer</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/photoshop.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-7s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Adobe Photoshop (premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/ladla-sheikh-whatsapp.jpeg" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Ladla Sheikh WhatsApp</b><small>WhatsApp Mod</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/4.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Pixellab (Premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/10.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Inshot (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/14.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-6s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>CapCut (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/17.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Toolkit Generator</b><small>Dev Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Magic Eraser.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Magic Eraser (premium)</b><small>BG &amp; Object Remover</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/youtube.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>YouTube (premium)</b><small>Social App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/fitroom.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Fitroom (premium)</b><small>Clothing Changer</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/photoshop.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-7s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Adobe Photoshop (premium)</b><small>Graphic Design Tool</small></div></div></div><div class="ap-col"><div class="ap-track"><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/11.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>WhatsApp beta</b><small>WhatsApp Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/15.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Mobile Lock apk</b><small>Security Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/16.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Snapchat (premium)</b><small>AR Camera</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/AD Maker.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>AD Maker (premium)</b><small>Advertising Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/instagram.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Instagram (premium)</b><small>Social App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/facepic.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Facepic (premium)</b><small>Photo Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/photo-editor.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Photo Editor (premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Alight Motion.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Alight Motion (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Urdu Designer.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Urdu Designer (premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/11.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>WhatsApp beta</b><small>WhatsApp Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/15.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Mobile Lock apk</b><small>Security Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/16.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Snapchat (premium)</b><small>AR Camera</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/AD Maker.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>AD Maker (premium)</b><small>Advertising Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/instagram.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Instagram (premium)</b><small>Social App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/facepic.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Facepic (premium)</b><small>Photo Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/photo-editor.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Photo Editor (premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Alight Motion.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Alight Motion (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Urdu Designer.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Urdu Designer (premium)</b><small>Graphic Design Tool</small></div></div></div><div class="ap-col"><div class="ap-track"><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/20.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-0s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Lightroom (premium)</b><small>Photo/Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/facemoji.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Facemoji Keyboard (premium)</b><small>Emoji &amp; Custom Keyboard</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/grok-ai.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Grok AI (premium)</b><small>AI Assistant &amp; Chat</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/picsart.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Picsart (premium)</b><small>Photo Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/avee-player.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Avee PLayer (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/App Lock.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-1s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>App Lock (premium)</b><small>Security Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Spotify.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Spotify (premium)</b><small>Music App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Video Downloader.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Video Downloader (premium)</b><small>Downloader Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/SHAREit.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>SHAREit (premium)</b><small>Sharing Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/20.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-0s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Lightroom (premium)</b><small>Photo/Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/facemoji.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Facemoji Keyboard (premium)</b><small>Emoji &amp; Custom Keyboard</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/grok-ai.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Grok AI (premium)</b><small>AI Assistant &amp; Chat</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/picsart.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Picsart (premium)</b><small>Photo Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/avee-player.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Avee PLayer (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/App Lock.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-1s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>App Lock (premium)</b><small>Security Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Spotify.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Spotify (premium)</b><small>Music App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Video Downloader.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Video Downloader (premium)</b><small>Downloader Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/SHAREit.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>SHAREit (premium)</b><small>Sharing Tool</small></div></div></div></div>
       <span class="ap-shade" aria-hidden="true"></span>
-      <a href="#home" class="ap-brand"><img src="images/footer-img.png" width="30" height="30" alt="" />Ladla <em>Sheikh</em></a>
+      <a href="index.html" class="ap-brand"><img src="images/footer-img.png" width="30" height="30" alt="" />Ladla <em>Sheikh</em></a>
       <div class="ap-copy">
         <p class="ap-eyebrow">Your library</p>
         <h2 class="ap-head"><span>Pick up where</span><span>you left off.</span></h2>
@@ -3953,13 +3236,14 @@
 
     <main class="ap-main">
       <div class="ap-top">
-        <a href="#home" class="ap-brand"><img src="images/footer-img.png" width="30" height="30" alt="" />Ladla <em>Sheikh</em></a>
-        <a href="#home" class="ap-back"><i class="bi bi-arrow-left" aria-hidden="true"></i> Back to site</a>
+        <a href="index.html" class="ap-brand"><img src="images/footer-img.png" width="30" height="30" alt="" />Ladla <em>Sheikh</em></a>
+        <a href="index.html" class="ap-back"><i class="bi bi-arrow-left" aria-hidden="true"></i> Back to site</a>
       </div>
 
       <div class="ap-center">
         <div class="auth-card-login">
           <nav class="ap-tabs" aria-label="Account"><a href="#/login" class="is-active" aria-current="page">Sign in</a><a href="#/signup">Create account</a></nav>
+          <div class="ap-scroll">
           <div class="auth-card-head">
             <h1>Welcome back</h1>
             <p>Sign in to continue to your account.</p>
@@ -4011,21 +3295,23 @@
           </div>
 
           <p class="auth-switch">Don’t have an account? <a href="#/signup">Sign up</a></p>
+          </div>
         </div>
       </div>
     </main>
 
   </div>
-    </template>
 
-    <!-- ═══ VIEW: Signup  (route #/signup — was signup.html). Mounted into #view-auth by router.js ═══ -->
-    <template id="tpl-signup">
-<div class="ap-shell">
+  
+</template>
+
+<template id="tpl-signup" data-title="Create Account | Ladla Sheikh">
+  <div class="ap-shell">
 
     <aside class="ap-aside" aria-hidden="false">
       <div class="ap-wall" aria-hidden="true"><div class="ap-col"><div class="ap-track"><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/ladla-sheikh-whatsapp.jpeg" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Ladla Sheikh WhatsApp</b><small>WhatsApp Mod</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/4.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Pixellab (Premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/10.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Inshot (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/14.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-6s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>CapCut (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/17.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Toolkit Generator</b><small>Dev Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Magic Eraser.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Magic Eraser (premium)</b><small>BG &amp; Object Remover</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/youtube.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>YouTube (premium)</b><small>Social App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/fitroom.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Fitroom (premium)</b><small>Clothing Changer</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/photoshop.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-7s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Adobe Photoshop (premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/ladla-sheikh-whatsapp.jpeg" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Ladla Sheikh WhatsApp</b><small>WhatsApp Mod</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/4.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Pixellab (Premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/10.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Inshot (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/14.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-6s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>CapCut (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/17.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Toolkit Generator</b><small>Dev Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Magic Eraser.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Magic Eraser (premium)</b><small>BG &amp; Object Remover</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/youtube.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>YouTube (premium)</b><small>Social App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/fitroom.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Fitroom (premium)</b><small>Clothing Changer</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/photoshop.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-7s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Adobe Photoshop (premium)</b><small>Graphic Design Tool</small></div></div></div><div class="ap-col"><div class="ap-track"><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/11.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>WhatsApp beta</b><small>WhatsApp Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/15.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Mobile Lock apk</b><small>Security Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/16.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Snapchat (premium)</b><small>AR Camera</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/AD Maker.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>AD Maker (premium)</b><small>Advertising Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/instagram.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Instagram (premium)</b><small>Social App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/facepic.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Facepic (premium)</b><small>Photo Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/photo-editor.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Photo Editor (premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Alight Motion.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Alight Motion (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Urdu Designer.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Urdu Designer (premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/11.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>WhatsApp beta</b><small>WhatsApp Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/15.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Mobile Lock apk</b><small>Security Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/16.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Snapchat (premium)</b><small>AR Camera</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/AD Maker.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>AD Maker (premium)</b><small>Advertising Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/instagram.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Instagram (premium)</b><small>Social App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/facepic.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Facepic (premium)</b><small>Photo Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/photo-editor.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Photo Editor (premium)</b><small>Graphic Design Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Alight Motion.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Alight Motion (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Urdu Designer.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Urdu Designer (premium)</b><small>Graphic Design Tool</small></div></div></div><div class="ap-col"><div class="ap-track"><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/20.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-0s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Lightroom (premium)</b><small>Photo/Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/facemoji.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Facemoji Keyboard (premium)</b><small>Emoji &amp; Custom Keyboard</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/grok-ai.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Grok AI (premium)</b><small>AI Assistant &amp; Chat</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/picsart.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Picsart (premium)</b><small>Photo Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/avee-player.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Avee PLayer (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/App Lock.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-1s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>App Lock (premium)</b><small>Security Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Spotify.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Spotify (premium)</b><small>Music App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Video Downloader.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Video Downloader (premium)</b><small>Downloader Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/SHAREit.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>SHAREit (premium)</b><small>Sharing Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/20.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-0s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Lightroom (premium)</b><small>Photo/Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/facemoji.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Facemoji Keyboard (premium)</b><small>Emoji &amp; Custom Keyboard</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/grok-ai.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Grok AI (premium)</b><small>AI Assistant &amp; Chat</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/picsart.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Picsart (premium)</b><small>Photo Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/avee-player.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Avee PLayer (premium)</b><small>Video Editor</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/App Lock.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt pulse" style="--d:-1s"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>App Lock (premium)</b><small>Security Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Spotify.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Spotify (premium)</b><small>Music App</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/Video Downloader.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt is-saved"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>Video Downloader (premium)</b><small>Downloader Tool</small></div><div class="wc"><span class="ic"><i class="bi bi-box-seam"></i><img src="images/SHAREit.png" alt="" width="52" height="52" decoding="async" onerror="this.remove()"></span><span class="hrt"><i class="bi bi-heart off"></i><i class="bi bi-heart-fill on"></i></span><b>SHAREit (premium)</b><small>Sharing Tool</small></div></div></div></div>
       <span class="ap-shade" aria-hidden="true"></span>
-      <a href="#home" class="ap-brand"><img src="images/footer-img.png" width="30" height="30" alt="" />Ladla <em>Sheikh</em></a>
+      <a href="index.html" class="ap-brand"><img src="images/footer-img.png" width="30" height="30" alt="" />Ladla <em>Sheikh</em></a>
       <div class="ap-copy">
         <p class="ap-eyebrow">Your library</p>
         <h2 class="ap-head"><span>Start your own</span><span>collection.</span></h2>
@@ -4040,13 +3326,14 @@
 
     <main class="ap-main">
       <div class="ap-top">
-        <a href="#home" class="ap-brand"><img src="images/footer-img.png" width="30" height="30" alt="" />Ladla <em>Sheikh</em></a>
-        <a href="#home" class="ap-back"><i class="bi bi-arrow-left" aria-hidden="true"></i> Back to site</a>
+        <a href="index.html" class="ap-brand"><img src="images/footer-img.png" width="30" height="30" alt="" />Ladla <em>Sheikh</em></a>
+        <a href="index.html" class="ap-back"><i class="bi bi-arrow-left" aria-hidden="true"></i> Back to site</a>
       </div>
 
       <div class="ap-center">
         <div class="auth-card">
           <nav class="ap-tabs" aria-label="Account"><a href="#/login">Sign in</a><a href="#/signup" class="is-active" aria-current="page">Create account</a></nav>
+          <div class="ap-scroll">
           <div class="auth-card-head">
             <h1>Create your account</h1>
             <p>It’s free and takes less than a minute.</p>
@@ -4080,7 +3367,7 @@
             </div>
             <label class="auth-checkbox" style="align-items:flex-start">
               <input type="checkbox" id="signupTerms" style="margin-top:1px">
-              <span class="auth-terms">I agree to the <a href="#/privacy">Privacy Policy</a> and <a href="#/terms">Terms of Service</a>.</span>
+              <span class="auth-terms">I agree to the <a href="#/privacy-policy">Privacy Policy</a> and <a href="#/terms-of-service">Terms of Service</a>.</span>
             </label>
             <button type="submit" class="auth-submit" id="signupSubmitBtn"><span class="spin"></span><span class="auth-submit-label">Create account</span><i class="bi bi-arrow-right" aria-hidden="true"></i></button>
           </form>
@@ -4106,11 +3393,1006 @@
           </div>
 
           <p class="auth-switch">Already have an account? <a href="#/login">Sign in</a></p>
+          </div>
         </div>
       </div>
     </main>
 
   </div>
-    </template>
-  </body>
+
+  
+</template>
+
+<template id="tpl-privacy-policy" data-title="Privacy Policy | Ladla Sheikh">
+    <a class="skip-link" href="#pg-main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Ladla Sheikh — home"
+        ><img src="images/footer-img.png" width="30" height="30" alt="" /><span
+          class="bn"
+          >Ladla <em>Sheikh</em></span
+        ></a
+      >
+      <div class="bar-end">
+        <a href="index.html" class="btn btn-sm btn-line"
+          ><i class="bi bi-arrow-left" aria-hidden="true"></i> Back to site</a
+        >
+      </div>
+    </header>
+
+    <main id="pg-main">
+      <section class="legal-hero s-dark" aria-labelledby="legalTitle">
+        <i class="lg-spark a" aria-hidden="true">✦</i
+        ><i class="lg-spark b" aria-hidden="true">✦</i
+        ><i class="lg-spark c" aria-hidden="true">✦</i>
+        <div class="wrap">
+          <p class="eyebrow">Legal</p>
+          <h1 id="legalTitle">Privacy <em>Policy</em></h1>
+          <p class="legal-updated">
+            Last updated: <strong>20 September 2026</strong>
+          </p>
+          <nav class="legal-tabs" aria-label="Legal pages">
+            <a href="#/privacy-policy" aria-current="page">Privacy Policy</a
+            ><a href="#/terms-of-service">Terms of Service</a
+            ><a href="#/data-deletion">Delete your data</a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="legal-body s-light">
+        <div class="wrap legal-grid">
+          <aside class="legal-toc" aria-label="On this page">
+            <strong>On this page</strong>
+            <ol>
+              <li><a href="#info-we-collect">Information we collect</a></li>
+              <li><a href="#how-we-use">How we use your information</a></li>
+              <li>
+                <a href="#social-login">Signing in with Google / GitHub</a>
+              </li>
+              <li>
+                <a href="#downloads">Tools, downloads and third-party apps</a>
+              </li>
+              <li><a href="#cookies">Cookies and local storage</a></li>
+              <li><a href="#sharing">How we share information</a></li>
+              <li><a href="#security">How we protect your data</a></li>
+              <li><a href="#retention">Data retention</a></li>
+              <li><a href="#your-rights">Your rights and choices</a></li>
+              <li><a href="#children">Children's privacy</a></li>
+              <li><a href="#third-party">Third-party links and services</a></li>
+              <li><a href="#changes">Changes to this policy</a></li>
+              <li><a href="#contact">Contact us</a></li>
+            </ol>
+          </aside>
+          <article class="legal-shell">
+            <p>
+              This Privacy Policy explains how
+              <strong>Ladla Sheikh</strong> ("we", "us", "our", operated by
+              Sheikh Ali Ahmad, Okara, Pakistan, at
+              <a href="https://ladla-sheikh.vercel.app/"
+                >ladla-sheikh.vercel.app</a
+              >) collects, uses, shares and protects your information when you
+              visit the site, create an account or sign in, browse or download
+              tools, install the site as an app (PWA), or use our contact form.
+              Some sections of the site (About, Tools, Methods, Contact) require
+              you to be signed in — the Home section is always public. By using
+              this website you agree to the collection and use of information as
+              described here. If you don't agree, please don't use the site.
+            </p>
+
+            <h2 id="info-we-collect">1. Information we collect</h2>
+
+            <h3>Account information</h3>
+            <p>
+              Some sections of the site (About, Tools, Methods, Contact) require
+              an account — the Home section is always open to everyone. When you
+              create an account or sign in, we collect:
+            </p>
+            <ul>
+              <li>
+                <strong>Email/password sign-up:</strong> your name, a username,
+                your email address, and a password. Your password is handled
+                entirely by Firebase Authentication (Google's authentication
+                service) — it's hashed and stored by Firebase, and we never see
+                or store your actual password ourselves (see
+                <a href="#security">How we protect your data</a>).
+              </li>
+              <li>
+                <strong>Social sign-in (Google / GitHub):</strong> the basic
+                profile info that provider shares with us — typically your name
+                and email address. We never see or store your social account
+                password.
+              </li>
+            </ul>
+            <p>
+              Your account's name, username, email and sign-in provider are
+              stored in our Firebase Realtime Database. A small flag is also
+              kept in your browser's local storage so the site remembers you're
+              signed in between visits.
+            </p>
+
+            <h3>Information you give us directly</h3>
+            <ul>
+              <li>
+                Contact form submissions — your name, email, phone number and
+                message.
+              </li>
+              <li>
+                Anything you choose to send us via WhatsApp, Telegram, or email
+                when you reach out through the links on the site.
+              </li>
+            </ul>
+
+            <h3>Information collected automatically</h3>
+            <ul>
+              <li>
+                Device and usage data — browser type, general location (from IP
+                address), pages visited, and how you interact with the site
+                (this may come from our hosting provider's standard logs and, if
+                enabled, analytics tools).
+              </li>
+              <li>
+                If you install the site as an app (PWA — "Add to Home Screen"),
+                basic install/usage state so the install prompt behaves
+                correctly. This is stored on your device.
+              </li>
+              <li>
+                If you play the background audio on the site, your last
+                volume/play preference, stored locally on your device only — we
+                don't receive this.
+              </li>
+            </ul>
+
+            <h2 id="how-we-use">2. How we use your information</h2>
+            <ul>
+              <li>
+                To create and manage your account, and let you sign in securely.
+              </li>
+              <li>
+                To respond to messages sent through the contact form or via
+                WhatsApp/Telegram/email.
+              </li>
+              <li>
+                To keep the site secure — detecting abuse, spam, and automated
+                sign-up/form submissions.
+              </li>
+              <li>
+                To understand how the site is used so we can improve it and the
+                tools we share.
+              </li>
+              <li>To meet legal obligations where applicable.</li>
+            </ul>
+            <p>
+              We do <strong>not</strong> sell your personal information to
+              anyone.
+            </p>
+
+            <h2 id="social-login">3. Signing in with Google / GitHub</h2>
+            <p>
+              When you choose "Continue with Google" or "Continue with GitHub",
+              you're shown that provider's own sign-in screen to authenticate,
+              via Firebase Authentication. We only receive the profile fields
+              the provider allows — usually your name and email address —
+              governed by that provider's own consent screen. Your use of Google
+              or GitHub is also subject to their own privacy policies. We
+              recommend reviewing them:
+            </p>
+            <ul>
+              <li>
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener"
+                  >Google Privacy Policy</a
+                >
+              </li>
+              <li>
+                <a
+                  href="https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub Privacy Statement</a
+                >
+              </li>
+            </ul>
+            <p>
+              Facebook, phone-number (SMS) and Apple sign-in are not currently
+              offered on this site — if any of these are added later, this
+              policy will be updated to cover them.
+            </p>
+
+            <h2 id="downloads">4. Tools, downloads and third-party apps</h2>
+            <p>
+              The tools, mods and APKs listed on this site (WhatsApp/Telegram
+              mods, premium "unlocked" versions of third-party apps, editing and
+              design tools, and similar files) are hosted and downloaded
+              directly from GitHub Releases, not from our own servers. When you
+              tap "Download":
+            </p>
+            <ul>
+              <li>
+                You leave this site and download the file directly from GitHub.
+                GitHub's own privacy policy and terms apply to that download.
+              </li>
+              <li>
+                We don't track who downloads which file, and we don't receive
+                any personal data from that action.
+              </li>
+              <li>
+                Installing and using any downloaded APK is at your own
+                discretion and risk — please review app permissions before
+                installing, especially for modified versions of third-party
+                apps.
+              </li>
+            </ul>
+            <p>
+              A few listed tools are explicitly labelled for educational/demo
+              purposes only (for example, fake-chat or prank-style tools). We
+              don't collect any data from your use of these tools, and you're
+              responsible for using them lawfully and only with people who
+              consent.
+            </p>
+
+            <h2 id="cookies">5. Cookies and local storage</h2>
+            <p>We use a small amount of local storage and cookies to:</p>
+            <ul>
+              <li>
+                Keep you signed in between visits (Firebase Authentication
+                stores your session on your device).
+              </li>
+              <li>
+                Remember install-prompt state and your preferences (e.g. audio
+                volume) on your device.
+              </li>
+              <li>
+                Understand aggregate site usage, if analytics tools are enabled.
+              </li>
+            </ul>
+            <p>
+              You can clear cookies and local storage at any time from your
+              browser settings. Doing so may sign you out or reset saved
+              preferences (like the install prompt or audio volume).
+            </p>
+
+            <h2 id="sharing">6. How we share information</h2>
+            <p>We share information only in these situations:</p>
+            <ul>
+              <li>
+                <strong>Service providers</strong> who help us run the site —
+                our hosting provider (Vercel) and Firebase (Google) for
+                authentication and our database. They only receive what's needed
+                to perform their function, and are bound to protect it.
+              </li>
+              <li>
+                <strong>GitHub</strong> — tool/APK downloads are served directly
+                from GitHub Releases; GitHub receives whatever standard request
+                data your browser sends when downloading a file (see
+                <a href="#downloads">Tools, downloads and third-party apps</a>).
+              </li>
+              <li>
+                <strong>Legal reasons</strong> — if required by law, court
+                order, or to protect the rights, safety, or property of Ladla
+                Sheikh, our users, or the public.
+              </li>
+              <li>
+                <strong>Business transfers</strong> — if the site or business is
+                ever transferred, your data may transfer as part of that, under
+                the same protections described here.
+              </li>
+            </ul>
+
+            <h2 id="security">7. How we protect your data</h2>
+            <p>We take the following measures to keep your data safe:</p>
+            <ul>
+              <li>
+                <strong
+                  >Passwords are never stored or seen by us in plain
+                  text.</strong
+                >
+                Email/password sign-in is handled entirely by Firebase
+                Authentication, which hashes and stores your password using
+                industry-standard methods — we don't have access to it.
+              </li>
+              <li>
+                <strong>All traffic is encrypted in transit</strong> via
+                HTTPS/TLS.
+              </li>
+              <li>
+                <strong>Database access rules</strong> restrict who can write
+                account data — a signed-in user can only create or edit their
+                own profile, and usernames can't be taken over once claimed.
+              </li>
+              <li>
+                <strong>Access is limited</strong> to Ladla Sheikh (Sheikh Ali
+                Ahmad) only — we don't have a team with broader access to your
+                account or messages.
+              </li>
+              <li>
+                <strong>Rate limiting and abuse detection</strong> on
+                sign-up/sign-in and the contact form to reduce brute-force,
+                credential-stuffing and spam attempts.
+              </li>
+              <li>
+                <strong>Regular dependency and security updates</strong> to
+                close known vulnerabilities on the site itself.
+              </li>
+            </ul>
+            <p>
+              No method of transmission or storage is 100% secure, so while we
+              work hard to protect your information, we can't guarantee absolute
+              security. Please also do your part: use a strong, unique password,
+              and never share your login details.
+            </p>
+
+            <h2 id="retention">8. Data retention</h2>
+            <p>
+              We keep your account information (name, username, email, sign-in
+              provider) for as long as your account exists. This site doesn't
+              currently have a self-service "delete account" button — if you'd
+              like your account and data removed, see
+              <a href="#/data-deletion">how to delete your data</a> and we'll
+              remove or anonymize it within a reasonable period, except where
+              we're legally required to retain it. Contact form messages are
+              kept only for as long as needed to respond to you and for a
+              reasonable period afterward for reference, unless you ask us to
+              delete them sooner.
+            </p>
+
+            <h2 id="your-rights">9. Your rights and choices</h2>
+            <p>Depending on where you live, you may have the right to:</p>
+            <ul>
+              <li>Access the personal data we hold about you.</li>
+              <li>Correct inaccurate data.</li>
+              <li>Request deletion of your account and data.</li>
+              <li>Ask for a copy of the data we hold about you.</li>
+              <li>
+                Withdraw consent for further communication with us at any time.
+              </li>
+            </ul>
+            <p>To exercise any of these, contact us using the details below.</p>
+
+            <h2 id="children">10. Children's privacy</h2>
+            <p>
+              This site is not directed at children under 13 (or the minimum age
+              in your region), and we don't knowingly collect personal data from
+              children, including through account sign-up. If you believe a
+              child has provided us with personal data, please contact us and
+              we'll remove it.
+            </p>
+
+            <h2 id="third-party">11. Third-party links and embedded content</h2>
+            <p>
+              Our site links out to and/or authenticates through third-party
+              platforms — including
+              <a
+                href="https://policies.google.com/privacy"
+                target="_blank"
+                rel="noopener"
+                >Google</a
+              >,
+              <a
+                href="https://www.youtube.com/@ladla.sheikh.2402"
+                target="_blank"
+                rel="noopener"
+                >YouTube</a
+              >,
+              <a
+                href="https://whatsapp.com/channel/0029Vao1lnR1nozDF8jBNh3B"
+                target="_blank"
+                rel="noopener"
+                >WhatsApp</a
+              >,
+              <a
+                href="https://t.me/+94FrpOJan0plZGQ0"
+                target="_blank"
+                rel="noopener"
+                >Telegram</a
+              >, and
+              <a
+                href="https://github.com/ladlasheikh2402"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
+              (for sign-in and/or tool downloads). If you click through and
+              interact with these, their own privacy policies apply, and we
+              aren't responsible for how they handle your data. If you message
+              us on WhatsApp or Telegram, that conversation is also governed by
+              WhatsApp's/Telegram's own privacy policy in addition to this one.
+            </p>
+
+            <h2 id="changes">12. Changes to this policy</h2>
+            <p>
+              We may update this Privacy Policy from time to time. Changes take
+              effect when posted on this page, with the "Last updated" date
+              revised accordingly. For significant changes, we'll make a
+              reasonable effort to notify you (e.g. via email or a site notice).
+            </p>
+
+            <h2 id="contact">13. Contact us</h2>
+            <p>
+              If you have questions about this Privacy Policy or want to
+              exercise your data rights, reach out:
+            </p>
+            <ul>
+              <li>
+                Via the <a href="index.html#contact-me">contact form</a> on our
+                site
+              </li>
+              <li>
+                By email:
+                <a href="mailto:ladlasheikh2402@gmail.com"
+                  >ladlasheikh2402@gmail.com</a
+                >
+              </li>
+              <li>
+                On WhatsApp:
+                <a
+                  href="https://wa.me/923143702270"
+                  target="_blank"
+                  rel="noopener"
+                  >+92 314 3702270</a
+                >
+              </li>
+            </ul>
+
+            <p class="legal-fine">
+              This policy is a general-purpose template written for this
+              website's actual features. It is not legal advice — please have a
+              qualified lawyer review and adapt it (especially the "Your rights"
+              and retention sections) to the specific laws that apply where your
+              users are located (e.g. GDPR in the EU/UK, CCPA in California)
+              before relying on it in production.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="brand" href="index.html"
+              ><img
+                src="images/footer-img.png"
+                width="30"
+                height="30"
+                loading="lazy"
+                alt=""
+              /><span>Ladla <em>Sheikh</em></span></a
+            >
+            <p>
+              Passionate web developer &amp; graphic designer creating modern,
+              smooth and premium UI experiences.
+            </p>
+            <div class="soc">
+              <a
+                href="https://www.youtube.com/@ladla.sheikh.2402"
+                aria-label="YouTube"
+                rel="noopener"
+                ><i class="bi bi-youtube"></i
+              ></a>
+              <a
+                href="https://t.me/+94FrpOJan0plZGQ0"
+                aria-label="Telegram"
+                rel="noopener"
+                ><i class="bi bi-telegram"></i
+              ></a>
+              <a
+                href="https://whatsapp.com/channel/0029Vao1lnR1nozDF8jBNh3B"
+                aria-label="WhatsApp channel"
+                rel="noopener"
+                ><i class="bi bi-whatsapp"></i
+              ></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html#home">Home</a></li>
+              <li><a href="index.html#about-me">About</a></li>
+              <li><a href="index.html#my-tools">Tools</a></li>
+              <li><a href="index.html#my-projects">Methods</a></li>
+              <li><a href="index.html#contact-me">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Get In Touch</h4>
+            <ul>
+              <li>Okara, Pakistan</li>
+              <li>
+                <a href="mailto:ladlasheikh2402@gmail.com"
+                  >ladlasheikh2402@gmail.com</a
+                >
+              </li>
+              <li>
+                <a href="https://wa.me/923143702270" rel="noopener"
+                  >+92 314 3702270</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            © 2026 LADLA SHEIKH. All rights reserved. · Made with ❤️ and Passion
+            😎
+          </p>
+          <p class="footer-legal">
+            <a href="#/privacy-policy">Privacy</a
+            ><a href="#/terms-of-service">Terms</a
+            ><a href="#/data-deletion">Delete your data</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer-mark" aria-hidden="true">Ladla <em>Sheikh</em></div>
+    </footer>
+
+    
+</template>
+
+<template id="tpl-terms-of-service" data-title="Terms of Service | Ladla Sheikh">
+    <a class="skip-link" href="#pg-main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Ladla Sheikh — home"
+        ><img src="images/footer-img.png" width="30" height="30" alt="" /><span
+          class="bn"
+          >Ladla <em>Sheikh</em></span
+        ></a
+      >
+      <div class="bar-end">
+        <a href="index.html" class="btn btn-sm btn-line"
+          ><i class="bi bi-arrow-left" aria-hidden="true"></i> Back to site</a
+        >
+      </div>
+    </header>
+
+    <main id="pg-main">
+      <section class="legal-hero s-dark" aria-labelledby="legalTitle">
+        <i class="lg-spark a" aria-hidden="true">✦</i
+        ><i class="lg-spark b" aria-hidden="true">✦</i
+        ><i class="lg-spark c" aria-hidden="true">✦</i>
+        <div class="wrap">
+          <p class="eyebrow">Legal</p>
+          <h1 id="legalTitle">Terms of <em>Service</em></h1>
+          <p class="legal-updated">
+            Last updated: <strong>19 September 2026</strong>
+          </p>
+          <nav class="legal-tabs" aria-label="Legal pages">
+            <a href="#/privacy-policy">Privacy Policy</a
+            ><a href="#/terms-of-service" aria-current="page"
+              >Terms of Service</a
+            ><a href="#/data-deletion">Delete your data</a>
+          </nav>
+        </div>
+      </section>
+
+      <section class="legal-body s-light">
+        <div class="wrap legal-grid">
+          <aside class="legal-toc" aria-label="On this page">
+            <strong>On this page</strong>
+            <ol>
+              <li><a href="#who-can-use">Who can use this site</a></li>
+              <li><a href="#your-account">Your account</a></li>
+              <li><a href="#tools">The tools and downloads on this site</a></li>
+              <li><a href="#acceptable-use">How you may use the site</a></li>
+              <li><a href="#content">Content and ownership</a></li>
+              <li><a href="#links">Links to other platforms</a></li>
+              <li><a href="#availability">Availability and changes</a></li>
+              <li><a href="#ending">Ending your account</a></li>
+              <li><a href="#liability">Liability</a></li>
+              <li><a href="#changes">Changes to these terms</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ol>
+          </aside>
+          <article class="legal-shell">
+            <p>
+              <strong>Ladla Sheikh</strong> (<a
+                href="https://ladla-sheikh.vercel.app/"
+                >ladla-sheikh.vercel.app</a
+              >) is a personal tech website by Sheikh Ali Ahmad, sharing
+              programming tutorials, tech methods and a collection of free and
+              premium tools. Some parts of the site — like unlocking certain
+              tools — need an account, made with an email and password or with
+              Google or GitHub. By creating an account or using the site, you
+              agree to these terms. If you don't agree, please don't use the
+              site.
+            </p>
+
+            <h2 id="who-can-use">1. Who can use this site</h2>
+            <p>
+              You should be at least 13 years old to create an account. If
+              you're under 18, please only use the site with a parent or
+              guardian's permission.
+            </p>
+
+            <h2 id="your-account">2. Your account</h2>
+            <p>
+              You're responsible for keeping your login details safe and for
+              anything that happens under your account. Give us real information
+              when you sign up, and don't create an account for anyone but
+              yourself.
+            </p>
+
+            <h2 id="tools">3. The tools and downloads on this site</h2>
+            <p>
+              Many of the downloads on this site are modified ("mod") or
+              unlocked versions of other companies' apps — for example WhatsApp,
+              CapCut, KineMaster, Telegram, Snapchat and similar apps. A few
+              sections, like the fake-chat and screenshot generators, are
+              clearly labelled as being
+              <strong>for educational or entertainment purposes only</strong>.
+            </p>
+            <ul>
+              <li>
+                These tools are not made, reviewed or supported by the original
+                app companies, and using a modified app can go against that
+                company's own terms.
+              </li>
+              <li>
+                Downloads are provided as they are, with no guarantee that a
+                tool will keep working, stay safe, or stay available — app
+                stores and companies regularly block modified apps.
+              </li>
+              <li>
+                You use every tool at your own risk and are responsible for how
+                you use it. Don't use any tool — including the ones marked "for
+                educational purposes only" — to prank, trick, scare, impersonate
+                or harm someone without their knowledge and consent, or to break
+                the law.
+              </li>
+              <li>
+                "Premium" or "unlocked" labels describe what the tool offers;
+                they don't mean Ladla Sheikh is affiliated with or endorsed by
+                the original company.
+              </li>
+            </ul>
+
+            <h2 id="acceptable-use">4. How you may use the site</h2>
+            <p>You agree not to:</p>
+            <ul>
+              <li>
+                use any tool on this site to harm, deceive, stalk or defraud
+                another person;
+              </li>
+              <li>
+                try to get into accounts, systems or data that aren't yours;
+              </li>
+              <li>
+                disrupt the site, for example with automated attacks or
+                excessive requests;
+              </li>
+              <li>
+                resell, relabel or redistribute the site's tools or content as
+                your own.
+              </li>
+            </ul>
+
+            <h2 id="content">5. Content and ownership</h2>
+            <p>
+              The site's own design, text, videos, branding and original tools
+              belong to Ladla Sheikh. Third-party app names, logos and
+              trademarks mentioned on the site (like WhatsApp, Instagram,
+              CapCut, Adobe or Netflix) belong to their respective owners and
+              are used only to describe what a tool does.
+            </p>
+
+            <h2 id="links">6. Links to other platforms</h2>
+            <p>
+              The site links to external platforms — YouTube, WhatsApp,
+              Telegram, GitHub releases and others — for downloads and to follow
+              Ladla Sheikh's content. Those platforms have their own terms and
+              privacy practices, which this site doesn't control.
+            </p>
+
+            <h2 id="availability">7. Availability and changes</h2>
+            <p>
+              The site, its tools and downloads are provided as they are. We try
+              to keep everything working, but can't promise the site will always
+              be available, error-free, or that any specific tool will keep
+              working. We may change, pause, rename, or remove tools, pages or
+              features at any time, including anything currently marked "Coming
+              Soon."
+            </p>
+
+            <h2 id="ending">8. Ending your account</h2>
+            <p>
+              You can stop using the site at any time and ask us to delete your
+              account and data (see
+              <a href="#/data-deletion">how to delete your data</a>). We may
+              suspend or close accounts that break these terms.
+            </p>
+
+            <h2 id="liability">9. Liability</h2>
+            <p>
+              To the extent the law allows, Ladla Sheikh is not liable for
+              losses, damage, or account issues (including issues with your
+              accounts on third-party apps) that result from using this site,
+              its tools, or anything downloaded from it.
+            </p>
+
+            <h2 id="changes">10. Changes to these terms</h2>
+            <p>
+              We may update these terms from time to time. When we do, we'll
+              change the date at the top of this page. Continuing to use the
+              site after that means you accept the updated terms.
+            </p>
+
+            <h2 id="contact">11. Contact</h2>
+            <p>
+              Questions about these terms? Email
+              <a href="mailto:ladlasheikh2402@gmail.com"
+                >ladlasheikh2402@gmail.com</a
+              >. How we handle your personal information is explained in our
+              <a href="#/privacy-policy">Privacy Policy</a>.
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="brand" href="index.html"
+              ><img
+                src="images/footer-img.png"
+                width="30"
+                height="30"
+                loading="lazy"
+                alt=""
+              /><span>Ladla <em>Sheikh</em></span></a
+            >
+            <p>
+              Passionate web developer &amp; graphic designer creating modern,
+              smooth and premium UI experiences.
+            </p>
+            <div class="soc">
+              <a
+                href="https://www.youtube.com/@ladla.sheikh.2402"
+                aria-label="YouTube"
+                rel="noopener"
+                ><i class="bi bi-youtube"></i
+              ></a>
+              <a
+                href="https://t.me/+94FrpOJan0plZGQ0"
+                aria-label="Telegram"
+                rel="noopener"
+                ><i class="bi bi-telegram"></i
+              ></a>
+              <a
+                href="https://whatsapp.com/channel/0029Vao1lnR1nozDF8jBNh3B"
+                aria-label="WhatsApp channel"
+                rel="noopener"
+                ><i class="bi bi-whatsapp"></i
+              ></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html#home">Home</a></li>
+              <li><a href="index.html#about-me">About</a></li>
+              <li><a href="index.html#my-tools">Tools</a></li>
+              <li><a href="index.html#my-projects">Methods</a></li>
+              <li><a href="index.html#contact-me">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Get In Touch</h4>
+            <ul>
+              <li>Okara, Pakistan</li>
+              <li>
+                <a href="mailto:ladlasheikh2402@gmail.com"
+                  >ladlasheikh2402@gmail.com</a
+                >
+              </li>
+              <li>
+                <a href="https://wa.me/923143702270" rel="noopener"
+                  >+92 314 3702270</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            © 2026 LADLA SHEIKH. All rights reserved. · Made with ❤️ and Passion
+            😎
+          </p>
+          <p class="footer-legal">
+            <a href="#/privacy-policy">Privacy</a
+            ><a href="#/terms-of-service">Terms</a
+            ><a href="#/data-deletion">Delete your data</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer-mark" aria-hidden="true">Ladla <em>Sheikh</em></div>
+    </footer>
+
+    
+</template>
+
+<template id="tpl-data-deletion" data-title="Delete your data | Ladla Sheikh">
+    <a class="skip-link" href="#pg-main">Skip to content</a>
+
+    <header class="site-header">
+      <a class="brand" href="index.html" aria-label="Ladla Sheikh — home"
+        ><img src="images/footer-img.png" width="30" height="30" alt="" /><span
+          class="bn"
+          >Ladla <em>Sheikh</em></span
+        ></a
+      >
+      <div class="bar-end">
+        <a href="index.html" class="btn btn-sm btn-line"
+          ><i class="bi bi-arrow-left" aria-hidden="true"></i> Back to site</a
+        >
+      </div>
+    </header>
+
+    <main id="pg-main">
+      <section class="legal-hero s-dark" aria-labelledby="legalTitle">
+        <i class="lg-spark a" aria-hidden="true">✦</i
+        ><i class="lg-spark b" aria-hidden="true">✦</i
+        ><i class="lg-spark c" aria-hidden="true">✦</i>
+        <div class="wrap">
+          <p class="eyebrow">Legal</p>
+          <h1 id="legalTitle">Delete your <em>data</em></h1>
+          <p class="legal-updated">
+            Last updated: <strong>19 September 2026</strong>
+          </p>
+          <nav class="legal-tabs" aria-label="Legal pages">
+            <a href="#/privacy-policy">Privacy Policy</a
+            ><a href="#/terms-of-service">Terms of Service</a
+            ><a href="#/data-deletion" aria-current="page"
+              >Delete your data</a
+            >
+          </nav>
+        </div>
+      </section>
+
+      <section class="legal-body s-light">
+        <div class="wrap legal-grid solo">
+          <article class="legal-shell">
+            <p>
+              You can ask us to delete your Ladla Sheikh account and the
+              personal information linked to it at any time. This page explains
+              what we delete and how to ask.
+            </p>
+
+            <h2>What we delete</h2>
+            <p>When you sign up or sign in, we store:</p>
+            <ul>
+              <li>your name and username;</li>
+              <li>your email address;</li>
+              <li>how you signed in (email and password, Google or GitHub);</li>
+              <li>the date your account was created.</li>
+            </ul>
+            <p>
+              When we process your request, we delete your login account and
+              this profile information.
+            </p>
+
+            <h2>How to ask</h2>
+            <ol>
+              <li>
+                Send an email to
+                <a href="mailto:ladlasheikh2402@gmail.com"
+                  >ladlasheikh2402@gmail.com</a
+                >
+                from the email address linked to your account.
+              </li>
+              <li>Use the subject <strong>Delete my data</strong>.</li>
+              <li>
+                Include your username, or the name on your Google or GitHub
+                account if you signed in that way.
+              </li>
+            </ol>
+            <p>
+              <a
+                class="btn btn-primary"
+                href="mailto:ladlasheikh2402@gmail.com?subject=Delete%20my%20data&amp;body=Please%20delete%20my%20Ladla%20Sheikh%20account%20and%20data.%0D%0A%0D%0AUsername%3A%20"
+              >
+                <i class="bi bi-envelope" aria-hidden="true"></i> Email a
+                deletion request
+              </a>
+            </p>
+
+            <div class="legal-note">
+              <p style="margin: 0">
+                <strong>Timing.</strong> We will delete your data within 30 days
+                of your request and reply to confirm when it is done.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <a class="brand" href="index.html"
+              ><img
+                src="images/footer-img.png"
+                width="30"
+                height="30"
+                loading="lazy"
+                alt=""
+              /><span>Ladla <em>Sheikh</em></span></a
+            >
+            <p>
+              Passionate web developer &amp; graphic designer creating modern,
+              smooth and premium UI experiences.
+            </p>
+            <div class="soc">
+              <a
+                href="https://www.youtube.com/@ladla.sheikh.2402"
+                aria-label="YouTube"
+                rel="noopener"
+                ><i class="bi bi-youtube"></i
+              ></a>
+              <a
+                href="https://t.me/+94FrpOJan0plZGQ0"
+                aria-label="Telegram"
+                rel="noopener"
+                ><i class="bi bi-telegram"></i
+              ></a>
+              <a
+                href="https://whatsapp.com/channel/0029Vao1lnR1nozDF8jBNh3B"
+                aria-label="WhatsApp channel"
+                rel="noopener"
+                ><i class="bi bi-whatsapp"></i
+              ></a>
+            </div>
+          </div>
+          <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul>
+              <li><a href="index.html#home">Home</a></li>
+              <li><a href="index.html#about-me">About</a></li>
+              <li><a href="index.html#my-tools">Tools</a></li>
+              <li><a href="index.html#my-projects">Methods</a></li>
+              <li><a href="index.html#contact-me">Contact</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Get In Touch</h4>
+            <ul>
+              <li>Okara, Pakistan</li>
+              <li>
+                <a href="mailto:ladlasheikh2402@gmail.com"
+                  >ladlasheikh2402@gmail.com</a
+                >
+              </li>
+              <li>
+                <a href="https://wa.me/923143702270" rel="noopener"
+                  >+92 314 3702270</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>
+            © 2026 LADLA SHEIKH. All rights reserved. · Made with ❤️ and Passion
+            😎
+          </p>
+          <p class="footer-legal">
+            <a href="#/privacy-policy">Privacy</a
+            ><a href="#/terms-of-service">Terms</a
+            ><a href="#/data-deletion">Delete your data</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer-mark" aria-hidden="true">Ladla <em>Sheikh</em></div>
+    </footer>
+
+    
+</template>
+
+</body>
 </html>

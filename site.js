@@ -245,7 +245,7 @@
   if (audio && awGroups.length) {
     var vol = parseFloat(store('ls_vol')); if (isNaN(vol) || vol < 0 || vol > 1) vol = .6;
     audio.volume = vol;
-    var broken = false;
+    var broken = false, autoPaused = false, lastVol = vol || .6, vids = {};
     var paintAudio = function () {
       var on = !audio.paused && !broken;
       awGroups.forEach(function (g) {
@@ -255,6 +255,10 @@
         btn.disabled = broken; if (broken) btn.title = 'Audio file not found';
         ic.className = !on ? 'bi bi-volume-mute-fill' : (vol === 0 ? 'bi bi-volume-off-fill' : (vol < .5 ? 'bi bi-volume-down-fill' : 'bi bi-volume-up-fill'));
         rng.value = Math.round(vol * 100); rng.setAttribute('aria-valuetext', Math.round(vol * 100) + ' percent');
+        rng.style.setProperty('--v', Math.round(vol * 100) + '%');
+        var pc = $('.aw-pct', g), mi = $('.aw-mute i', g);
+        if (pc) pc.textContent = Math.round(vol * 100);
+        if (mi) mi.className = vol === 0 ? 'bi bi-volume-mute-fill' : (vol < .35 ? 'bi bi-volume-off-fill' : (vol < .7 ? 'bi bi-volume-down-fill' : 'bi bi-volume-up-fill'));
       });
     };
     audio.addEventListener('error', function () { broken = true; paintAudio(); }, true);
@@ -262,14 +266,34 @@
     audio.addEventListener('play', paintAudio); audio.addEventListener('pause', paintAudio);
     awGroups.forEach(function (g) {
       $('.aw-btn', g).addEventListener('click', function () {
+        autoPaused = false;                                          // the visitor decides now
         if (audio.paused) { audio.play().then(function () { store('ls_audio', '1'); try { sessionStorage.removeItem('ls_audio_off'); } catch (e) {} }).catch(function () { paintAudio(); }); }
         else { audio.pause(); store('ls_audio', '0'); try { sessionStorage.setItem('ls_audio_off', '1'); } catch (e) {} }   // paused by the visitor → stay quiet this session
       });
       $('.aw-vol', g).addEventListener('input', function (e) {
-        vol = Math.max(0, Math.min(1, e.target.value / 100)); audio.volume = vol; store('ls_vol', String(vol)); paintAudio();
+        vol = Math.max(0, Math.min(1, e.target.value / 100)); if (vol > 0) lastVol = vol; audio.volume = vol; store('ls_vol', String(vol)); paintAudio();
+      });
+      var muteBtn = $('.aw-mute', g);
+      if (muteBtn) muteBtn.addEventListener('click', function () {
+        if (vol > 0) { lastVol = vol; vol = 0; } else { vol = lastVol || .6; }
+        audio.volume = vol; store('ls_vol', String(vol)); paintAudio();
       });
     });
     paintAudio();
+
+    /* ── video ⇄ audio: when ANY video plays on the site the background audio stops by itself ──
+       window.LSAudio is also used by courses.js for the YouTube player (it has no <video> element). */
+    var anyVideo = function () { for (var k in vids) return true; return false; };
+    var LS = window.LSAudio = {
+      videoStart: function (key) { vids[key || 'v'] = 1; if (!audio.paused) { audio.pause(); autoPaused = true; } },
+      videoStop: function (key) { delete vids[key || 'v']; },
+      clearVideos: function () { vids = {}; },
+      // only called when the visitor LEAVES the video (e.g. Back to courses): bring the music back if we were the ones who stopped it
+      resumeAfterVideo: function () { if (!autoPaused || anyVideo() || broken) return; autoPaused = false; audio.play().catch(function () {}); }
+    };
+    var mediaKey = function (el) { return el.__lsk || (el.__lsk = 'm' + Math.random().toString(36).slice(2)); };
+    ['play', 'playing'].forEach(function (n) { doc.addEventListener(n, function (e) { if (e.target && e.target.tagName === 'VIDEO') LS.videoStart(mediaKey(e.target)); }, true); });
+    ['pause', 'ended', 'emptied'].forEach(function (n) { doc.addEventListener(n, function (e) { if (e.target && e.target.tagName === 'VIDEO') LS.videoStop(mediaKey(e.target)); }, true); });
 
     /* autoplay: try right away; browsers usually block it, so the first real tap / key press starts it */
     var userOff = false; try { userOff = sessionStorage.getItem('ls_audio_off') === '1'; } catch (e) {}
@@ -278,6 +302,7 @@
       if (e && e.target && e.target.closest && e.target.closest('.aw-dock')) return;      // the dock button handles itself
       if (e && e.type === 'keydown' && e.key === 'Escape') return;
       if (!audio.paused || broken) return disarm();
+      if (anyVideo()) return;                                           // a video is playing: stay quiet
       audio.play().catch(function () {});
     }
     function disarm() { if (!armed) return; armed = false; evs.forEach(function (n) { doc.removeEventListener(n, firstGesture, true); }); }
